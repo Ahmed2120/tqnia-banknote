@@ -6,15 +6,16 @@ export 'package:provider/provider.dart';
 
 class CategoryProvider extends ChangeNotifier {
   CategoryModel ?category;
-  CategoryProvider(this.idofindex);
+  CategoryProvider();
 
   final _api = DioClient.instance;
     bool isload= false;
    int? idofindex;
-  Future<void> getCategoryDetails() async {
+  Future<void> getCategoryDetails(int id) async {
     isload=true;
     notifyListeners();
-    category = await _api.getCategoryDetails(idofindex!);
+    category = await _api.getCategoryDetails(id);
+
      isload=false;
     notifyListeners();
   }

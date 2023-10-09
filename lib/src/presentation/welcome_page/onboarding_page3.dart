@@ -107,7 +107,7 @@ class OnBoardingPage3 extends StatelessWidget {
                                 buttonRadius: 25,
                                 buttonText: 'Skip',
                                 onpress: () {
-                                  Get.offAll(() => const SplashPage());
+                                  Get.offAll(() => const StartPage());
                                 },
                                 textColor: Colors.grey,
                                 textSize: 18,

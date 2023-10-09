@@ -7,6 +7,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'src/app/providers/category_provider.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
@@ -26,6 +28,9 @@ void main() {
           ),
           ChangeNotifierProvider<CategoriesProvider>(
             create: (_) => CategoriesProvider(),
+          ),
+          ChangeNotifierProvider<CategoryProvider>(
+            create: (_) => CategoryProvider(),
           ),
            ChangeNotifierProvider<CreateFormProvider>(
             create: (_) => CreateFormProvider(),

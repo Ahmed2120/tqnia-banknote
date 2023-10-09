@@ -10,6 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../auth/pages/signin_page.dart';
+
 class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
 
@@ -121,7 +123,7 @@ class SettingPage extends StatelessWidget {
                           .then((value) => Navigator.pushAndRemoveUntil(
                               context,
                               CupertinoPageRoute(
-                                builder: (_) => const StartPage(),
+                                builder: (_) => const SignInPage(),
                               ),
                               (route) => false));
                     },

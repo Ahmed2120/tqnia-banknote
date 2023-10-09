@@ -134,25 +134,37 @@ class _SignInPageState extends State<SignInPage> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 25,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          CupertinoPageRoute(
-                            builder: (_) => const RecoveryPasswordPage(),
-                          ),
-                        );
-                      },
-                      child: const Align(
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          "Forget password",
-                          style: TextStyle(
-                            fontSize: 13,
-                            decoration: TextDecoration.underline,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(children: [
+                          Consumer<AuthProvider>(
+                            builder: (context, authProvider, child) => Checkbox(
+                              // checkColor: ColorResources.white,
+                              activeColor: Theme.of(context).primaryColor,
+                              value: authProvider.remember,
+                              onChanged: authProvider.changeRemember,),),
+
+
+                          const Text('Remember'),]),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (_) => const RecoveryPasswordPage(),
+                              ),
+                            );
+                          },
+                          child: const Text(
+                            "Forget password",
+                            style: TextStyle(
+                              fontSize: 13,
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 30,

@@ -1,7 +1,14 @@
 import 'dart:async';
+import 'package:banknote/src/app/providers/auth_provider.dart';
+import 'package:banknote/src/presentation/auth/pages/signin_page.dart';
 import 'package:banknote/src/presentation/welcome_page/onboarding_page1.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../home/Home/bottomNavigationbar.dart';
 
 
 class SplashPage extends StatefulWidget {
@@ -14,13 +21,20 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    Timer(const Duration(seconds: 1), () {
-      Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (_) => const OnBoardingPage1(),
-        ),
-      );
+    Timer(const Duration(seconds: 1), () async{
+      if( await isOnBoardOpened){
+        if(await isLogin){
+          Get.offAll(() => const ControlView());
+
+          Provider.of<AuthProvider>(context, listen: false).getUserData();
+        }
+        else{
+          Get.offAll(() => const SignInPage());
+        }
+      }else{
+        Get.offAll(() => const OnBoardingPage1());
+
+      }
     });
 
     super.initState();
@@ -41,5 +55,21 @@ class _SplashPageState extends State<SplashPage> {
         ),
       ]),
     );
+  }
+
+  Future<bool>  get isOnBoardOpened async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool isOpened = prefs.getBool('opened') ?? false;
+
+    return isOpened;
+
+  }
+
+  Future<bool>  get isLogin async {
+    final prefs = await SharedPreferences.getInstance();
+    final bool isLogin = prefs.getBool('remember') ?? false;
+
+    return isLogin;
+
   }
 }

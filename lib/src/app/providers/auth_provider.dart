@@ -13,6 +13,9 @@ class AuthProvider extends ChangeNotifier {
   final _api = DioClient.instance;
 
   UserModel? currentUser;
+  bool _remember = false;
+
+  bool get remember => _remember;
 
   bool get authLogged => currentUser != null;
 
@@ -66,6 +69,10 @@ class AuthProvider extends ChangeNotifier {
       email,
       password,
     );
+
+    if(_remember) {
+      storeUserData();
+    }
     notifyListeners();
   }
 
@@ -89,9 +96,59 @@ class AuthProvider extends ChangeNotifier {
   Future<void> logout() async {
     await _api.logout().then((value) async {
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      currentUser = null;
-      await prefs.clear();
+      // currentUser = null;
+      clearUserData();
     });
     notifyListeners();
   }
+
+  changeRemember(bool? val){
+    _remember = !_remember;
+
+    notifyListeners();
+  }
+
+  storeUserData() async{
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool('remember', _remember);
+
+    prefs.setInt('id', currentUser!.id!);
+    prefs.setString('fname', currentUser!.fName!);
+    prefs.setString('lname', currentUser!.lName!);
+    prefs.setString('email', currentUser!.email!);
+    prefs.setString('phone', currentUser!.phone!);
+    prefs.setString('photo', currentUser!.photo!);
+  }
+
+  getUserData() async{
+    final prefs = await SharedPreferences.getInstance();
+
+    currentUser = UserModel(
+      id: prefs.getInt('id'),
+      fName: prefs.getString('fname'),
+      lName: prefs.getString('lname'),
+      email: prefs.getString('email'),
+      phone: prefs.getString('phone'),
+      photo: prefs.getString('photo'),
+    );
+  }
+
+  clearUserData() async{
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.remove('remember');
+
+    prefs.remove('id');
+    prefs.remove('fname');
+    prefs.remove('lname');
+    prefs.remove('email');
+    prefs.remove('phone');
+    prefs.remove('photo');
+
+    _remember = false;
+  }
+
+
+
 }

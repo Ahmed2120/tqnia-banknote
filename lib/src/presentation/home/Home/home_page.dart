@@ -97,10 +97,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (_) => ChangeNotifierProvider<CategoryProvider>.value(
-                            value: CategoryProvider(null),
-                            child: OurCategory(),
-                          ),
+                          builder: (_) => OurCategory(),
                         ),
                       );
                     },
@@ -136,15 +133,15 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: ((context, index) {
                       return InkWell(
                         onTap: (){
+                          Provider.of<CategoryProvider>(context, listen: false).getCategoryDetails(instancOfCategoriesProvider
+                              .categories!.listCategory![index].id!);
+
                           Navigator.push(
                             context,
                             CupertinoPageRoute(
-                              builder: (_) => ChangeNotifierProvider<CategoryProvider>.value(
-                                value: CategoryProvider(instancOfCategoriesProvider
-                                    .categories?.listCategory?[index].id!),
-                                child: SubCategoryPage(title: instancOfCategoriesProvider
-                                    .categories!.listCategory![index].titl??'',),
-                              ),
+                              builder: (_) => SubCategoryPage(title: instancOfCategoriesProvider
+                                  .categories!.listCategory![index].titl??'', catId: instancOfCategoriesProvider
+                                  .categories!.listCategory![index].id!,),
                             ),
                           );
                         },

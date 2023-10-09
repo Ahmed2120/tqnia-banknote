@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../presentation/auth/pages/signin_page.dart';
+import '../../../presentation/welcome_page/start_page.dart';
 
 class WelcomeContainer extends StatelessWidget {
   WelcomeContainer({
@@ -44,7 +45,7 @@ class WelcomeContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () => Get.offAll(() => const SignInPage()),
+                      onTap: () => Get.offAll(() => const StartPage()),
                       child: Container(
                         height: 50,
                         width: 130,
