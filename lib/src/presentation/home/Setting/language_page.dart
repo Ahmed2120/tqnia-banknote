@@ -1,5 +1,8 @@
+import 'package:banknote/src/app/providers/lang_provider.dart';
 import 'package:banknote/src/app/utils/color.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LanguagePage extends StatefulWidget {
   LanguagePage({super.key});
@@ -9,8 +12,26 @@ class LanguagePage extends StatefulWidget {
 }
 
 class _LanguagePageState extends State<LanguagePage> {
-  bool _keep1 = true;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    getLang();
+  }
+  bool _keep1 = false;
  bool _keep2 = false;
+
+
+  getLang() async{
+    if(context.locale.languageCode == 'en'){
+      print('11111111111');
+      _keep1 = true;
+    }else{
+      _keep2 = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,8 +51,8 @@ class _LanguagePageState extends State<LanguagePage> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 20,
                     ),
-                    const Text(
-                      "Language",
+                    Text(
+                      tr("language"),
                       style: TextStyle(fontSize: 20),
                     ),
                     SizedBox(
@@ -41,6 +62,8 @@ class _LanguagePageState extends State<LanguagePage> {
                       onPressed: () {
                         _keep1 = true;
                         _keep2 = false;
+
+                        context.setLocale(Locale('en'));
                         setState(() {});
                       },
                       child: Row(
@@ -66,6 +89,7 @@ class _LanguagePageState extends State<LanguagePage> {
                       onPressed: () {
                         _keep2 = true;
                         _keep1 = false;
+                        context.setLocale(Locale('ar'));
                         setState(() {});
                       },
                       child: Row(

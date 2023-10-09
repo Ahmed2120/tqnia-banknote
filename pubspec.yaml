@@ -25,6 +25,7 @@ dependencies:
   quiver: ^3.2.1
   loading_indicator: ^3.1.1
   easy_localization: ^3.0.3
+  localization: ^2.1.0
   flrx_validator: ^0.6.0
   firebase_messaging: ^14.6.7
   image_picker: ^0.8.7+5
@@ -53,6 +54,7 @@ flutter:
     - assets/images/
     - assets/icon/
     - assets/JSON/
+    - assets/languages/
     - assets\JSON\policy.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

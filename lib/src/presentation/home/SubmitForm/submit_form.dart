@@ -175,7 +175,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       children: [
                         ArrowBackContainer(
                           onpress: () {
-                            Get.back();
+                            Navigator.pop(context);
                           },
                         ),
                         SizedBox(

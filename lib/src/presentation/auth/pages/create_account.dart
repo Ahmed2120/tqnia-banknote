@@ -2,6 +2,7 @@ import 'package:banknote/src/app/data/dio/exception/dio_error_extention.dart';
 import 'package:banknote/src/app/data/models/user_model.dart';
 import 'package:banknote/src/app/providers/auth_provider.dart';
 import 'package:banknote/src/app/utils/color.dart';
+import 'package:banknote/src/app/utils/global_methods.dart';
 import 'package:banknote/src/app/utils/utils.dart';
 import 'package:banknote/src/app/widgets/custom_snackbar.dart';
 import 'package:banknote/src/app/widgets/input_form_field.dart';
@@ -30,8 +31,10 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   String? _lastname;
   String? _email;
   String? _password;
+  String? _confirmPass;
   String? _phone;
-  bool _obscure = true;
+  bool _obscurePass = true;
+  bool _obscureConfirm = true;
   bool _keep = false;
   bool value = true;
   _submit() async {
@@ -164,18 +167,21 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       height: MediaQuery.of(context).size.height / 25,
                     ),
                     InputFormField(
-                      obscure: _obscure,
+                      obscure: _obscurePass,
                       hintText: tr('password'),
                       prefixIcon: Image.asset('assets/icon/Lock.png'),
                       onSaved: (password) => _password = password,
+                      onChanged: (val){
+                        _password = val;
+                      },
                       suffixIcon: InkWell(
                         onTap: () {
-                          _obscure = !_obscure;
+                          _obscurePass = !_obscurePass;
                           setState(() {});
                         },
                         child: Icon(
                           Icons.remove_red_eye_outlined,
-                          color: _obscure
+                          color: _obscurePass
                               ? null
                               : Theme.of(context).colorScheme.primary,
                         ),
@@ -188,6 +194,39 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                               validationMessage: tr('password_validation')),
                         ],
                       ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 25,
+                    ),
+                    InputFormField(
+                      obscure: _obscureConfirm,
+                      hintText: tr('confirm_password'),
+                      prefixIcon: Image.asset('assets/icon/Lock.png'),
+                      onSaved: (confirmPass) => _confirmPass = confirmPass,
+                      suffixIcon: InkWell(
+                        onTap: () {
+                          _obscureConfirm = !_obscureConfirm;
+                          setState(() {});
+                        },
+                        child: Icon(
+                          Icons.remove_red_eye_outlined,
+                          color: _obscureConfirm
+                              ? null
+                              : Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      validator: (val){
+                        if(val!.isEmpty) {
+                          return tr('confirm_password_validation');
+                        }
+                        if(val != _password) {
+                          print(val);
+                          print('_email');
+                          print(_email);
+                          return tr('password_not_match');
+                        }
+                        return null;
+                      }
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 45,
@@ -289,7 +328,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Get.to(() => const SignInPage());
+                        GlobalMethods.navigate(context, const SignInPage());
                       },
                       child: const Center(
                           child: Text(

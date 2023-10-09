@@ -1,6 +1,7 @@
 {
   "welcome": "مرحبا بكم في Banknote",
   "welcome_desc": "هل تريد بعض المساعدة في صحتك للحصول على حياة أفضل؟",
+  "language": "اللغة",
   "login": "تسجيل الدخول",
   "lab_login": "تسجيل الدخول للمعمل",
   "sub_user_login": "تسجيل الدخول المستخدم",
@@ -10,6 +11,7 @@
   "username_validation": "برجاء إدخال اسم المستخدم",
   "password": "كلمة المرور",
   "password_validation": "من فضلك أدخل كلمة المرور",
+  "confirm_password_validation": "من فضلك اعد ادخال كلمة المرور",
   "forgot_password": "نسيت كلمة المرور؟",
   "no_acc": "ليس لديك حساب؟",
   "verification": "تَحَقّق",

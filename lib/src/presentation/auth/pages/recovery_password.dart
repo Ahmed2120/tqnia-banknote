@@ -7,6 +7,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/utils/global_methods.dart';
+
 class RecoveryPasswordPage extends StatelessWidget {
   const RecoveryPasswordPage({super.key});
 
@@ -32,7 +34,7 @@ class RecoveryPasswordPage extends StatelessWidget {
                 children: [
                   ArrowBackContainer(
                     onpress: () {
-                      Get.back();
+                      Navigator.pop(context);
                     },
                   ),
                   const SizedBox(
@@ -77,7 +79,7 @@ class RecoveryPasswordPage extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: Button(
                     onpress: () {
-                      Get.to(() => const NewPassword());
+                      GlobalMethods.navigate(context, const NewPassword());
                     },
                     buttonText: "Next",
                     textColor: Colors.white,

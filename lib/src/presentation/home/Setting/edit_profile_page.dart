@@ -87,7 +87,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   children: [
                     ArrowBackContainer(
                       onpress: () {
-                        Get.back();
+                        Navigator.pop(context);
                       },
                     ),
                     SizedBox(

@@ -8,20 +8,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'src/app/providers/category_provider.dart';
+import 'src/app/providers/lang_provider.dart';
 
-void main() {
+void main() async{
+  print('---------- main ------------');
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('en'), Locale('ar')],
       path: 'assets/languages',
-      fallbackLocale: const Locale('en'),
+      assetLoader: RootBundleAssetLoader(),
       useOnlyLangCode: true,
-      startLocale: const Locale('en'),
+      saveLocale: true,
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider<AppProvider>(
-            create: (_) => AppProvider(),
+          ChangeNotifierProvider(
+            create: (_) => LangProvider(),
+          ),
+          ChangeNotifierProvider<AuthProvider>(
+            create: (_) => AuthProvider(),
           ),
           ChangeNotifierProvider<AuthProvider>(
             create: (_) => AuthProvider(),
@@ -35,7 +42,7 @@ void main() {
            ChangeNotifierProvider<CreateFormProvider>(
             create: (_) => CreateFormProvider(),
           ),
-         
+
         ],
         child: const MyApp(),
       ),
@@ -48,14 +55,26 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-           navigatorKey: NavigationService.navigatorKey,
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          fontFamily: 'Poppins'
-        ),
-        home: const SplashPage());
+    return Consumer<LangProvider>(
+      builder: (context, langProvider, _) {
+        print('____________________');
+        print(langProvider.local);
+        print('context.locale');
+        print(context.locale.languageCode);
+
+        return MaterialApp(
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+               navigatorKey: NavigationService.navigatorKey,
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              fontFamily: 'Poppins'
+            ),
+            home: const SplashPage());
+      }
+    );
   }
 }
 class NavigationService {

@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../app/utils/global_methods.dart';
+
 class OnBoardingPage3 extends StatelessWidget {
   const OnBoardingPage3({super.key});
 
@@ -107,7 +109,7 @@ class OnBoardingPage3 extends StatelessWidget {
                                 buttonRadius: 25,
                                 buttonText: 'Skip',
                                 onpress: () {
-                                  Get.offAll(() => const StartPage());
+                                  GlobalMethods.navigateReplaceALL(context, const StartPage());
                                 },
                                 textColor: Colors.grey,
                                 textSize: 18,

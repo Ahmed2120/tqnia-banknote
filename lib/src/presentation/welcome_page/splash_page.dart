@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:banknote/src/app/providers/auth_provider.dart';
+import 'package:banknote/src/app/utils/global_methods.dart';
 import 'package:banknote/src/presentation/auth/pages/signin_page.dart';
 import 'package:banknote/src/presentation/welcome_page/onboarding_page1.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,15 +25,18 @@ class _SplashPageState extends State<SplashPage> {
     Timer(const Duration(seconds: 1), () async{
       if( await isOnBoardOpened){
         if(await isLogin){
-          Get.offAll(() => const ControlView());
+          if(!mounted) return;
+          GlobalMethods.navigateReplaceALL(context, const ControlView());
 
           Provider.of<AuthProvider>(context, listen: false).getUserData();
         }
         else{
-          Get.offAll(() => const SignInPage());
+          if(!mounted) return;
+          GlobalMethods.navigateReplaceALL(context, const SignInPage());
         }
       }else{
-        Get.offAll(() => const OnBoardingPage1());
+        if(!mounted) return;
+        GlobalMethods.navigateReplaceALL(context, const OnBoardingPage1());
 
       }
     });

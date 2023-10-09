@@ -1,4 +1,5 @@
 import 'package:banknote/src/app/providers/auth_provider.dart';
+import 'package:banknote/src/app/utils/global_methods.dart';
 import 'package:banknote/src/presentation/home/Setting/edit_profile_page.dart';
 import 'package:banknote/src/presentation/home/Category/our_category.dart';
 import 'package:banknote/src/presentation/home/Policy/policy_page.dart';
@@ -85,25 +86,25 @@ class SettingPage extends StatelessWidget {
                   InformationWidget(
                     infoText: 'Edit Profile',
                     onpress: () {
-                      Get.to(const EditProfilePage());
+                      GlobalMethods.navigate(context, const EditProfilePage());
                     },
                   ),
                   InformationWidget(
                     infoText: 'My service',
                     onpress: () {
-                      Get.to(() => const OurCategory());
+                      GlobalMethods.navigate(context, const OurCategory());
                     },
                   ),
                   InformationWidget(
                     infoText: 'Privacy Policy',
                     onpress: () {
-                      Get.to(() => PolicyPage());
+                      GlobalMethods.navigate(context, PolicyPage());
                     },
                   ),
                   InformationWidget(
                     infoText: 'Language',
                     onpress: () {
-                      Get.to(() => LanguagePage());
+                      GlobalMethods.navigate(context, LanguagePage());
                     },
                   ),
                   const SizedBox(

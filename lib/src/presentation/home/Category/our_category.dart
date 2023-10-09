@@ -26,7 +26,7 @@ class OurCategory extends StatelessWidget {
             padding: const EdgeInsets.all(15.0),
             child: ArrowBackContainer(
               onpress: () {
-                Get.back();
+                Navigator.pop(context);
               },
             ),
           ),

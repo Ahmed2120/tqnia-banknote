@@ -3,6 +3,8 @@ import 'package:banknote/src/presentation/home/Setting/setting_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/utils/global_methods.dart';
+
 class NotificationPage extends StatelessWidget {
   const NotificationPage({super.key});
 
@@ -58,7 +60,7 @@ class NotificationPage extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Get.to(const SettingPage());
+                          GlobalMethods.navigate(context, const SettingPage());
                         },
                         child: Text(
                           "Clear All",

@@ -1,4 +1,5 @@
 import 'package:banknote/src/app/utils/color.dart';
+import 'package:banknote/src/app/utils/global_methods.dart';
 import 'package:banknote/src/presentation/welcome_page/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -45,7 +46,7 @@ class WelcomeContainer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
-                      onTap: () => Get.offAll(() => const StartPage()),
+                      onTap: () => GlobalMethods.navigateReplaceALL(context, StartPage()),
                       child: Container(
                         height: 50,
                         width: 130,

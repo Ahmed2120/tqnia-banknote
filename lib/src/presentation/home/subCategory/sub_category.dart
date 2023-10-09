@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
+import '../../../app/utils/global_methods.dart';
 import '../SubmitForm/submit_form.dart';
 
 class SubCategoryPage extends StatefulWidget {
@@ -63,7 +64,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                 padding: const EdgeInsets.all(15.0),
                 child: ArrowBackContainer(
                   onpress: () {
-                    Get.back();
+                    Navigator.pop(context);
                   },
                 ),
               ),
@@ -112,7 +113,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                         itemBuilder: ((context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(() => const SubmitFormPage());
+                              GlobalMethods.navigate(context, const SubmitFormPage());
                             },
                             child: CategoryWidget(
                               category: categoryProvider

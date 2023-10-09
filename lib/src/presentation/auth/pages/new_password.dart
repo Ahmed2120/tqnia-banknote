@@ -8,6 +8,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../app/utils/global_methods.dart';
+
 class NewPassword extends StatelessWidget {
   const NewPassword({super.key});
 
@@ -31,7 +33,7 @@ class NewPassword extends StatelessWidget {
                 children: [
                   ArrowBackContainer(
                     onpress: () {
-                      Get.back();
+                      Navigator.pop(context);
                     },
                   ),
                   const SizedBox(
@@ -89,7 +91,7 @@ class NewPassword extends StatelessWidget {
                 alignment: Alignment.bottomRight,
                 child: Button(
                     onpress: () {
-                      Get.to(() => const ControlView());
+                      GlobalMethods.navigate(context, const ControlView());
                     },
                     buttonText: "Next",
                     textColor: Colors.white,

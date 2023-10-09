@@ -1,6 +1,9 @@
 {
   "welcome": "Welcome to sysmex",
   "welcome_desc": "Do you want some help with your health to get better life?",
+  "language": "Language",
+  "en": "English",
+  "language": "Language",
   "login": "Login",
   "lab_login": "Lab Login",
   "sub_user_login": "Sub User Login",
@@ -10,6 +13,7 @@
   "username_validation": "Please enter your username",
   "password": "Password",
   "password_validation": "Please enter your password",
+  "confirm_password_validation": "Please enter your password again",
   "forgot_password": "Forgot Your Password?",
   "no_acc": "Not have an account?",
   "verification": "Verification",
