@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart' as e;
 import 'package:flutter/material.dart';
 
 import '../../../app/utils/global_methods.dart';
@@ -25,8 +26,8 @@ class ChatPage extends StatelessWidget {
                 height: MediaQuery.of(context).size.height / 35,
               ),
               Center(child: Image.asset("assets/images/logodark.png")),
-              const Text(
-                "Chat",
+              Text(
+                e.tr('chat'),
                 style: TextStyle(fontSize: 20),
               ),
               SizedBox(
@@ -53,7 +54,7 @@ class ChatPage extends StatelessWidget {
                         suffixIcon: Image.asset('assets/icon/Emoji.png'),
                         filled: true,
                         fillColor: const Color(0xFFF9F9F9),
-                        hintText: "Type your message",
+                        hintText: e.tr('type_message'),
                         hintStyle: const TextStyle(
                           fontSize: 12,
                           color: Colors.grey,

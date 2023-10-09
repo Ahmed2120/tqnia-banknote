@@ -1,5 +1,6 @@
 import 'package:banknote/src/app/utils/color.dart';
 import 'package:banknote/src/presentation/home/Setting/setting_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -32,8 +33,8 @@ class NotificationPage extends StatelessWidget {
                        SizedBox(
                      height: MediaQuery.of(context).size.height/30,
                   ),
-                  const Text(
-                    "Notification",
+                  Text(
+                    tr('notification'),
                     style: TextStyle(fontSize: 20),
                   ),
                    SizedBox(
@@ -44,7 +45,7 @@ class NotificationPage extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text("Recent ",
+                          Text(tr('recent'),
                               style: TextStyle(fontSize: 20, color: p4)),
                           Container(
                             height: 25,
@@ -63,7 +64,7 @@ class NotificationPage extends StatelessWidget {
                           GlobalMethods.navigate(context, const SettingPage());
                         },
                         child: Text(
-                          "Clear All",
+                          tr('clear_all'),
                           style: TextStyle(color: p1),
                         ),
                       )

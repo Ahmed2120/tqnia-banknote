@@ -7,6 +7,7 @@ import 'package:banknote/src/presentation/home/Setting/language_page.dart';
 import 'package:banknote/src/presentation/home/Setting/widget/setting_widget.dart';
 import 'package:banknote/src/presentation/welcome_page/start_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,8 +37,8 @@ class SettingPage extends StatelessWidget {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 60,
                   ),
-                  const Text(
-                    "Settings",
+                  Text(
+                    tr('settings'),
                     style: TextStyle(fontSize: 20),
                   ),
                   const SizedBox(
@@ -63,11 +64,11 @@ class SettingPage extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 5,
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Joined",
+                            tr('joined'),
                             style: TextStyle(color: Colors.grey),
                           ),
                           Text("2 month ago")
@@ -84,25 +85,25 @@ class SettingPage extends StatelessWidget {
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   InformationWidget(
-                    infoText: 'Edit Profile',
+                    infoText: tr('edit_profile'),
                     onpress: () {
                       GlobalMethods.navigate(context, const EditProfilePage());
                     },
                   ),
                   InformationWidget(
-                    infoText: 'My service',
+                    infoText: tr('my_service'),
                     onpress: () {
                       GlobalMethods.navigate(context, const OurCategory());
                     },
                   ),
                   InformationWidget(
-                    infoText: 'Privacy Policy',
+                    infoText: tr('privacy_policy'),
                     onpress: () {
                       GlobalMethods.navigate(context, PolicyPage());
                     },
                   ),
                   InformationWidget(
-                    infoText: 'Language',
+                    infoText: tr('language'),
                     onpress: () {
                       GlobalMethods.navigate(context, LanguagePage());
                     },
@@ -128,8 +129,8 @@ class SettingPage extends StatelessWidget {
                               ),
                               (route) => false));
                     },
-                    child: const Text(
-                      "Sign Out",
+                    child: Text(
+                      tr('sign_out'),
                       style: TextStyle(
                           color: Colors.red,
                           fontSize: 22,

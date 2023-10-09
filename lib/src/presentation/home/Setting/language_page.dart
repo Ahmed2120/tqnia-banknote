@@ -53,7 +53,7 @@ class _LanguagePageState extends State<LanguagePage> {
                     ),
                     Text(
                       tr("language"),
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 20,
@@ -63,13 +63,13 @@ class _LanguagePageState extends State<LanguagePage> {
                         _keep1 = true;
                         _keep2 = false;
 
-                        context.setLocale(Locale('en'));
+                        context.setLocale(const Locale('en'));
                         setState(() {});
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('English',style: TextStyle(color: Colors.black),),
+                          Text(tr('en'),style: const TextStyle(color: Colors.black),),
                           _keep1
                               ? Image.asset('assets/icon/Check List Icon.png')
                               : Container(
@@ -89,13 +89,13 @@ class _LanguagePageState extends State<LanguagePage> {
                       onPressed: () {
                         _keep2 = true;
                         _keep1 = false;
-                        context.setLocale(Locale('ar'));
+                        context.setLocale(const Locale('ar'));
                         setState(() {});
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Text('Arabic',style: TextStyle(color: Colors.black),),
+                          Text(tr('ar'),style: const TextStyle(color: Colors.black),),
                           _keep2
                               ? Image.asset('assets/icon/Check List Icon.png')
                               : Container(

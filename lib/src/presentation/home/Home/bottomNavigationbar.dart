@@ -1,5 +1,6 @@
 import 'package:banknote/src/app/Controller/home_view_controller.dart';
 import 'package:banknote/src/app/utils/color.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
@@ -30,14 +31,14 @@ class ControlView extends StatelessWidget {
               height: 30,
               width: 30,
               child: Image.asset("assets/icon/Icon Home Active.png")),
-          title: Text("Home"),
+          title: Text(tr('home')),
         ),
           SalomonBottomBarItem(
           icon: SizedBox(
               height: 30,
               width: 30,
               child: Image.asset("assets/icon/Chat.png")),
-          title: Text("Chat"),
+          title: Text(tr('chat')),
         ),
           SalomonBottomBarItem(
             icon: SizedBox(
@@ -45,14 +46,14 @@ class ControlView extends StatelessWidget {
               width: 30,
               child: Image.asset("assets/icon/Notification.png"),
             ),
-            title: Text("Notification")),
+            title: Text(tr('notification'))),
           SalomonBottomBarItem(
           icon: SizedBox(
             height: 30,
             width: 30,
             child: Image.asset("assets/icon/Setting.png"),
           ),
-          title: Text("Setting"),
+          title: Text(tr('settings')),
         ),
       ],
        currentIndex: controller.navigatorValue,

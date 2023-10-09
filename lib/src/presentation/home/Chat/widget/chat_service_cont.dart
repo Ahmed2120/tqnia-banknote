@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class ChatServicCont extends StatelessWidget {
@@ -34,7 +35,7 @@ class ChatServicCont extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Customers Service", style: TextStyle(fontSize: 16),),
+              Text(tr('customer_service'), style: TextStyle(fontSize: 16),),
               const SizedBox(
                 height: 8,
               ),
@@ -52,8 +53,8 @@ class ChatServicCont extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 3,),
-                  const Text(
-                    "Online",
+                  Text(
+                    tr('online'),
                     style: TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                 ],

@@ -6,6 +6,7 @@ import 'package:banknote/src/app/widgets/custom_snackbar.dart';
 import 'package:banknote/src/presentation/home/Category/our_category.dart';
 import 'package:banknote/src/presentation/home/Category/widget/category_cont.dart';
 import 'package:banknote/src/presentation/home/SubmitForm/submit_form.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -102,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                       );
                     },
                     child: Text(
-                      "See All",
+                      tr('see_all'),
                       style: TextStyle(fontSize: 15, color: p1),
                     ),
                   ),
