@@ -57,15 +57,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<LangProvider>(
       builder: (context, langProvider, _) {
-        print('____________________');
-        print(langProvider.local);
-        print('context.locale');
         print(context.locale.languageCode);
+        context.setLocale(langProvider.local);
 
         return MaterialApp(
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
-            locale: context.locale,
+            locale: langProvider.local,
                navigatorKey: NavigationService.navigatorKey,
             debugShowCheckedModeBanner: false,
             theme: ThemeData(

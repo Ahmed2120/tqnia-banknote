@@ -16,12 +16,12 @@ class _SubCategoryWidgetState extends State<SubCategoryWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        CupertinoPageRoute(
-          builder: (_) => const SubmitFormPage(),
-        ),
-      ),
+      // onTap: () => Navigator.push(
+      //   context,
+      //   CupertinoPageRoute(
+      //     builder: (_) => const SubmitFormPage(),
+      //   ),
+      // ),
       child: Padding(
         padding: EdgeInsets.only(
           left: MediaQuery.of(context).size.width / 45,

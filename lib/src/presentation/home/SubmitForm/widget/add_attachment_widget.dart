@@ -78,6 +78,7 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
     setState(() {
       if (pickedFile != null) {
         _imageFile = File(pickedFile.path);
+        Navigator.pop(context);
       }
     });
   }

@@ -14,6 +14,8 @@ import 'package:loading_indicator/loading_indicator.dart';
 
 import '../../../app/providers/auth_provider.dart';
 import '../../../app/providers/category_provider.dart';
+import '../../../app/utils/global_methods.dart';
+import '../../../app/widgets/alert_dialog.dart';
 import '../subCategory/sub_category.dart';
 
 class HomePage extends StatefulWidget {
@@ -65,7 +67,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Text(
               "Welcome, ${user!.fName}!",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 10,
@@ -88,9 +90,9 @@ class _HomePageState extends State<HomePage> {
                         lang = false;
                       });
                     },
-                    child: const Text(
-                      "Category",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    child: Text(
+                      tr('category'),
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                   ),
                   GestureDetector(
@@ -98,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (_) => OurCategory(),
+                          builder: (_) => const OurCategory(),
                         ),
                       );
                     },
@@ -134,17 +136,40 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: ((context, index) {
                       return InkWell(
                         onTap: (){
-                          Provider.of<CategoryProvider>(context, listen: false).getCategoryDetails(instancOfCategoriesProvider
-                              .categories!.listCategory![index].id!);
+                          final isActive = instancOfCategoriesProvider.categories!.listCategory![index].isActive;
+                          final hasData = instancOfCategoriesProvider.categories!.listCategory![index].isHasData;
 
-                          Navigator.push(
-                            context,
-                            CupertinoPageRoute(
-                              builder: (_) => SubCategoryPage(title: instancOfCategoriesProvider
-                                  .categories!.listCategory![index].titl??'', catId: instancOfCategoriesProvider
-                                  .categories!.listCategory![index].id!,),
-                            ),
-                          );
+                          if(isActive == 0 || hasData == 0){
+                            return;
+                          }else if(hasData == 1){
+                            Provider.of<CategoriesProvider>(context, listen: false).getSubCategories(instancOfCategoriesProvider
+                                .categories!.listCategory![index].id!);
+
+                            Navigator.push(
+                              context,
+                              CupertinoPageRoute(
+                                builder: (_) => SubCategoryPage(title: instancOfCategoriesProvider
+                                    .categories!.listCategory![index].titl??'', catId: instancOfCategoriesProvider
+                                    .categories!.listCategory![index].id!,),
+                              ),
+                            );
+                          }else if(hasData == 2){
+                            final categoryModel = instancOfCategoriesProvider
+                                .categories!.listCategory![index].categoryFormModel;
+                            if(categoryModel!.formUsers != null && categoryModel.members != categoryModel.formUsers!.length) {
+                                GlobalMethods.navigate(
+                                    context,
+                                    SubmitFormPage(
+                                      categoryForm: instancOfCategoriesProvider
+                                          .categories!
+                                          .listCategory![index]
+                                          .categoryFormModel!,
+                                    ));
+                              }else{
+                              ShowMyDialog.showMsg('sorry! Members are complete', isError: true);
+                            }
+                            }
+
                         },
                         child: CategoryWidget(
                           category: instancOfCategoriesProvider

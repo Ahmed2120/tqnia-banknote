@@ -2,7 +2,7 @@ abstract class Connection {
   Connection._();
   static const base = 'banknote.dev.tqnia.me';
   static const baseURL = 'https://$base/api/';
-  static const storage = '${baseURL}uploads/';
+  static const storage = 'https://banknote.dev.tqnia.me/admin/images/';
   
 }
 

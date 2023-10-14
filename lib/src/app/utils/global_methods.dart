@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class GlobalMethods{
-  static void navigate(BuildContext context, Widget widget){
+  static void navigate(BuildContext context, Widget widget, {Function? then}){
     Navigator.push(context,
         MaterialPageRoute(builder: (context) {
           return widget;
-        }));
+        })).then((value) => then != null ? then() : null);
   }
 
   static void navigateReplace(BuildContext context, Widget widget){

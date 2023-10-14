@@ -53,8 +53,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
         password: _password,
         image: _imageFile,
       );
+
+      if(!mounted) return;
+      showCustomSnackBar('User Updated Successfully', context, isError: false);
     } catch (e) {
-      Navigator.pop(context);
       showCustomSnackBar(readableError(e), context, isError: true);
     }
   }
@@ -99,7 +101,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 33,
                 ),
-                const Text("Edit Profile"),
+                Text(tr('edit_profile')),
                 Center(
                   child: Stack(
                     alignment: Alignment.bottomRight,
@@ -121,7 +123,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             : ClipRRect(
                                 borderRadius: BorderRadius.circular(10000.0),
                                 child: CachedNetworkImage(
-                                  imageUrl: "https://banknote.dev.tqnia.me/admin/images/${user?.photo}" ,
+                                  imageUrl: "${user?.photo}" ,
                                   width: 100,
                                   height: 100,
                                   fit: BoxFit.cover,
@@ -154,7 +156,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 33,
                 ),
-                const Text("First Name"),
+                Text(tr('first_name')),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
@@ -174,7 +176,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
-                const Text("Last Name"),
+                Text(tr('last_name')),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
@@ -194,7 +196,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
-                const Text("Email"),
+                Text(tr('email')),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
@@ -217,7 +219,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
-                const Text("Password"),
+                Text(tr('password')),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 50,
                 ),
@@ -253,7 +255,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 Center(
                   child: Button(
                       onpress: _submit,
-                      buttonText: "Save",
+                      buttonText: tr('save'),
                       textColor: Colors.white,
                       buttonColor: p1,
                       buttonRadius: 20,
@@ -281,7 +283,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Choose Profile Photo",
+            tr('choose_photo'),
             style: Theme.of(context)
                 .textTheme
                 .displayLarge
@@ -299,7 +301,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 onPressed: () {
                   _getImage(ImageSource.camera);
                 },
-                label: const Text("camera"),
+                label: Text(tr('camera')),
               ),
               TextButton.icon(
                 icon: const Icon(
@@ -308,7 +310,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 onPressed: () {
                   _getImage(ImageSource.gallery);
                 },
-                label: const Text("Gallery"),
+                label: Text(tr('gallery')),
               ),
             ],
           )

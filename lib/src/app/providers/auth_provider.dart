@@ -35,9 +35,11 @@ class AuthProvider extends ChangeNotifier {
         image: image,
       );
       print(currentUser?.toJson());
+
       if (currentUser!=null) {
         try {
           updateProfileStatus = DataStatus.success;
+          storeUserData();
           notifyListeners();
         } catch (e) {
           log(e.toString());
@@ -48,10 +50,16 @@ class AuthProvider extends ChangeNotifier {
         updateProfileStatus = DataStatus.error;
         notifyListeners();
       }
+    }on DioException catch (e){
+      final error = e.response == null ? e.message : e.response!.data;
+      updateProfileStatus = DataStatus.error;
+      notifyListeners();
+      throw error;
     } catch (e) {
       log(e.toString());
       updateProfileStatus = DataStatus.error;
       notifyListeners();
+      rethrow;
     }
     notifyListeners();
   }

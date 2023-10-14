@@ -64,6 +64,7 @@ class _LanguagePageState extends State<LanguagePage> {
                         _keep2 = false;
 
                         context.setLocale(const Locale('en'));
+                        Provider.of<LangProvider>(context, listen: false).toggleLang(0);
                         setState(() {});
                       },
                       child: Row(
@@ -90,6 +91,7 @@ class _LanguagePageState extends State<LanguagePage> {
                         _keep2 = true;
                         _keep1 = false;
                         context.setLocale(const Locale('ar'));
+                        Provider.of<LangProvider>(context, listen: false).toggleLang(1);
                         setState(() {});
                       },
                       child: Row(

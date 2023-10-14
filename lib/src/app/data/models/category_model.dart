@@ -1,3 +1,5 @@
+import 'category_form_model.dart';
+
 class CategoryModel {
   bool? status;
   String? message;
@@ -37,6 +39,7 @@ class Category {
   int? isActive;
   int? isHasData;
   String? createdAt;
+  CategoryFormModel? categoryFormModel;
 
   Category(
       {this.id,
@@ -47,7 +50,8 @@ class Category {
       this.isDelete,
       this.isActive,
       this.isHasData,
-      this.createdAt});
+      this.createdAt,
+      this.categoryFormModel});
 
   Category.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -59,6 +63,7 @@ class Category {
     isActive = json['is_active'];
     isHasData = json['is_hasData'];
     createdAt = json['created_at'];
+    categoryFormModel = json['form_data2'] == null ? null : CategoryFormModel.fromJson(json['form_data2']);
   }
 
   Map<String, dynamic> toJson() {
@@ -72,6 +77,7 @@ class Category {
     data['is_active'] = this.isActive;
     data['is_hasData'] = this.isHasData;
     data['created_at'] = this.createdAt;
+    data['form_data2'] = this.categoryFormModel;
     return data;
   }
 }

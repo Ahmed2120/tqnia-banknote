@@ -42,9 +42,11 @@ class DioClient {
   static const String _updateProfileEndPoint = "editProfile";
   static const String _createFormEndPoint = "forms/user-form";
   static final String _categoriesPoint =
-      "categories/allCategories_${NavigationService.currentContext.locale.languageCode}";
+      "categories/allCategories_";
+  static final String _subCategoriesPoint =
+      "categories/allSubCategories_";
   static final String _categoryDetailsPoint =
-      "categories/allSubSubCategories_${NavigationService.currentContext.locale.languageCode}";
+      "categories/allSubSubCategories_";
   ////////////////////////////// METHODS //////////////////////////////////////
 
   Future<UserModel> register(UserModel user, String password) async {
@@ -139,6 +141,8 @@ class DioClient {
         },
       ),
     );
+    print('=====================');
+    print(response);
     if (response.data['status'] == true) {
       return UserModel.fromJson(response.data["data"]);
     } else {
@@ -149,7 +153,26 @@ class DioClient {
   Future<CategoryModel> getCategories() async {
     final token = await _getUserToken();
     final response = await _dio.get(
-      '${Connection.baseURL}$_categoriesPoint',
+      '${Connection.baseURL}$_categoriesPoint${NavigationService.currentContext.locale.languageCode}',
+      options: Options(
+        headers: {
+          ..._apiHeaders,
+          'Authorization': token,
+        },
+      ),
+    );
+    if (response.data['status'] == true) {
+      return CategoryModel.fromJson(response.data);
+    } else {
+      throw response.data;
+    }
+  }
+
+  Future<CategoryModel> getSubCategories(int id) async {
+    final token = await _getUserToken();
+    final response = await _dio.get(
+      '${Connection.baseURL}$_subCategoriesPoint${NavigationService.currentContext.locale.languageCode}',
+      queryParameters: {"id": id},
       options: Options(
         headers: {
           ..._apiHeaders,
@@ -167,7 +190,7 @@ class DioClient {
   Future<CategoryModel> getCategoryDetails(int id) async {
     final token = await _getUserToken();
     final response = await _dio.get(
-      '${Connection.baseURL}$_categoryDetailsPoint',
+      '${Connection.baseURL}$_categoryDetailsPoint${NavigationService.currentContext.locale.languageCode}',
       queryParameters: {"id": id},
       options: Options(
         headers: {

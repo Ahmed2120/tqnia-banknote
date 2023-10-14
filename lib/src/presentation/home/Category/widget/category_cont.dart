@@ -1,6 +1,7 @@
 import 'package:banknote/src/app/data/models/category_model.dart';
 import 'package:banknote/src/app/providers/category_provider.dart';
 import 'package:banknote/src/app/utils/color.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:banknote/src/presentation/home/subCategory/sub_category.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -77,8 +78,8 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                           const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                     // const SizedBox(height: 10,),
-                    if(widget.category.isActive == 0)const Text(
-                      '>> Soon <<',
+                    if(widget.category.isActive == 0) Text(
+                      tr('soon'),
                       style:
                           TextStyle(color: Color(0x6F4D566B), fontSize: 11),
                     ),
