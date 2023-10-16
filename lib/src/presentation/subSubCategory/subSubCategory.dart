@@ -123,13 +123,16 @@ class _SubSubCategoryPageState extends State<SubSubCategoryPage> {
                                 return;
                               }
                               else if(hasData == 2){
-                                final categoryModel = categoryProvider
+                                final categoryFormModel = categoryProvider
                                     .category!.listCategory![index].categoryFormModel;
-                                if(categoryModel!.formUsers != null && categoryModel.members != categoryModel.formUsers!.length) {
+                                final categoryModel = categoryProvider
+                                    .category!.listCategory![index];
+                                if(categoryModel!.formUsers != null && categoryFormModel!.members != categoryModel.formUsers!.length) {
                                     GlobalMethods.navigate(
                                         context,
                                         SubmitFormPage(
-                                            categoryForm: categoryModel));
+                                            categoryForm: categoryFormModel,
+                                        formUsers: categoryModel.formUsers,));
                                   }else{
                                   ShowMyDialog.showMsg('sorry! Members are complete', isError: true);
                                 }

@@ -79,14 +79,17 @@ class OurCategory extends StatelessWidget {
                             ),
                           );
                         }else if(hasData == 2){
-                          final categoryModel = category
+                          final categoryFormModel = category
                               .categories!.listCategory![index].categoryFormModel;
-                          if(categoryModel!.formUsers != null && categoryModel.members != categoryModel.formUsers!.length)
+                          final categoryModel = category
+                              .categories!.listCategory![index];
+                          if(categoryModel.formUsers != null && categoryFormModel!.members != categoryModel.formUsers!.length)
                           {
                                   GlobalMethods.navigate(
                                       context,
                                       SubmitFormPage(
-                                        categoryForm: categoryModel,
+                                        categoryForm: categoryFormModel,
+                                        formUsers: categoryModel.formUsers,
                                       ));
                                 }else{
                             ShowMyDialog.showMsg('sorry! Members are complete', isError: true);

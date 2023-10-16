@@ -152,19 +152,28 @@ class DioClient {
 
   Future<CategoryModel> getCategories() async {
     final token = await _getUserToken();
-    final response = await _dio.get(
-      '${Connection.baseURL}$_categoriesPoint${NavigationService.currentContext.locale.languageCode}',
-      options: Options(
-        headers: {
-          ..._apiHeaders,
-          'Authorization': token,
-        },
-      ),
-    );
-    if (response.data['status'] == true) {
-      return CategoryModel.fromJson(response.data);
-    } else {
-      throw response.data;
+    try{
+      final response = await _dio.get(
+        '${Connection.baseURL}$_categoriesPoint${NavigationService.currentContext.locale.languageCode}',
+        options: Options(
+          headers: {
+            ..._apiHeaders,
+            'Authorization': token,
+          },
+        ),
+      );
+      if (response.data['status'] == true) {
+        return CategoryModel.fromJson(response.data);
+      } else {
+        throw response.data;
+      }
+    } on DioException catch(e){
+      print('llllllllllllllll');
+      print(e);
+      rethrow;
+    }
+    catch(e){
+      rethrow;
     }
   }
 
@@ -206,19 +215,33 @@ class DioClient {
     }
   }
 Future<FormModel> createForm({
-    required String firstName,
-    required String phone,
-    required String city,
-    required String detailLocation,
+    required int? id,
+    required String? firstName,
+    required String? lastName,
+    required String? title,
+    required String? email,
+    required String? desc,
+    required String? date,
+    required String? phone,
+    required String? city,
+    required String? detailLocation,
+    required int? price,
+    required int? number,
     File? image,
   }) async {
     final token = await _getUserToken();
     FormData data = FormData.fromMap({
+      'id': id,
       'first_name': firstName,
+      'last_name': lastName,
+      'title': title,
+      'email': email,
+      'description': desc,
+      'date': date,
       'phone': phone,
       'city': city,
       'Detail_Location': detailLocation,
-      'id': 3,
+      'number': number,
       if (image != null) 'photo': await MultipartFile.fromFile(image.path),
     }, ListFormat.multiCompatible);
 

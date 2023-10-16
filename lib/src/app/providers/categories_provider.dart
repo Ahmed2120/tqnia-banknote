@@ -13,7 +13,7 @@ class CategoriesProvider extends ChangeNotifier {
   Future<void> getCategoryhData() async {
     isload=true;
     notifyListeners();
-   
+   print('////////////////////');
     categories = await _api.getCategories();
    
     isload=false;

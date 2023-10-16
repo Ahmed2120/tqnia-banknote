@@ -10,7 +10,7 @@ class CategoryFormModel{
   String? date;
   int? members;
   List<FormData>? formData;
-  List<FormUsers>? formUsers;
+
 
   CategoryFormModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -20,28 +20,16 @@ class CategoryFormModel{
     date = json['date'];
     members = json['members'];
     formData = json['forms']?.map<FormData>((e)=> FormData.fromJson(e)).toList();
-    formUsers = json['form_users']?.map<FormUsers>((e)=> FormUsers.fromJson(e)).toList();
   }
 }
 
 class FormData{
-  String? inputName;
+  String inputName;
+  FormData({required this.inputName});
 
-  FormData.fromJson(Map<String, dynamic> json) {
+  FormData.fromJson(Map<String, dynamic> json) :
 
-    inputName = json['inputName'];
+    inputName = json['input_name'];
 
-  }
-}
 
-class FormUsers{
-  int? number;
-  int? formDataId;
-
-  FormUsers.fromJson(Map<String, dynamic> json) {
-
-    number = json['number'];
-    formDataId = json['form_data_id'];
-
-  }
 }

@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 String readableError(e) {
   if (e is Map<String, dynamic>) {
-    if (e['error'] == 1 && e['message'] != null) {
+    if (!e['status'] && e['message'] != null) {
       return '${e['message']}';
     }
     if (e.values.first is List) {

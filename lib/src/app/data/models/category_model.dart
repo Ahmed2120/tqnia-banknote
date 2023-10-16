@@ -40,6 +40,7 @@ class Category {
   int? isHasData;
   String? createdAt;
   CategoryFormModel? categoryFormModel;
+  List<FormUsers>? formUsers;
 
   Category(
       {this.id,
@@ -64,6 +65,7 @@ class Category {
     isHasData = json['is_hasData'];
     createdAt = json['created_at'];
     categoryFormModel = json['form_data2'] == null ? null : CategoryFormModel.fromJson(json['form_data2']);
+    formUsers = json['form_users'] != null ? json['form_users'].map<FormUsers>((e)=> FormUsers.fromJson(e)).toList() : [];
   }
 
   Map<String, dynamic> toJson() {
@@ -79,5 +81,17 @@ class Category {
     data['created_at'] = this.createdAt;
     data['form_data2'] = this.categoryFormModel;
     return data;
+  }
+}
+
+class FormUsers{
+  int? number;
+  int? formDataId;
+
+  FormUsers.fromJson(Map<String, dynamic> json) {
+
+    number = json['number'];
+    formDataId = json['form_data_id'];
+
   }
 }

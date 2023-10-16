@@ -2,9 +2,11 @@ import 'dart:io';
 
 import 'package:banknote/src/app/data/dio/exception/dio_error_extention.dart';
 import 'package:banknote/src/app/data/models/category_form_model.dart';
+import 'package:banknote/src/app/data/models/category_model.dart';
 import 'package:banknote/src/app/providers/form_provider.dart';
 import 'package:banknote/src/app/utils/color.dart';
 import 'package:banknote/src/app/utils/global_methods.dart';
+import 'package:banknote/src/app/widgets/alert_dialog.dart';
 import 'package:banknote/src/app/widgets/button.dart';
 import 'package:banknote/src/app/widgets/custom_snackbar.dart';
 import 'package:banknote/src/app/widgets/input_form_field.dart';
@@ -18,12 +20,14 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
+import '../Home/bottomNavigationbar.dart';
 import 'widget/custom_dropdown.dart';
 
 class SubmitFormPage extends StatefulWidget {
-  const SubmitFormPage({super.key, required this.categoryForm});
+  const SubmitFormPage({super.key, required this.categoryForm, required this.formUsers});
 
   final CategoryFormModel categoryForm;
+  final List<FormUsers>? formUsers;
 
   @override
   State<SubmitFormPage> createState() => _SubmitFormPageState();
@@ -35,7 +39,8 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
   void initState() {
     super.initState();
 
-    print(widget.categoryForm.date);
+    print('widget.categoryForm.formData........');
+    print(widget.categoryForm.formData![0].inputName);
     print(widget.categoryForm.price);
       _titleController.text = widget.categoryForm.title ?? '';
       _priceController.text = widget.categoryForm.price.toString() ?? '';
@@ -61,59 +66,46 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
   File? _imageFile;
 
   _submit() async {
-    // final form = Provider.of<CreateFormProvider>(context,listen: false);
-    // if (!_formKey.currentState!.validate()) {
-    //   if (!_autoValidate) setState(() => _autoValidate = true);
-    //   return;
-    // }
-    // _formKey.currentState!.save();
+    final form = Provider.of<CreateFormProvider>(context,listen: false);
+    if (!_formKey.currentState!.validate()) {
+      if (!_autoValidate) setState(() => _autoValidate = true);
+      return;
+    }
+    if(widget.categoryForm.formData != null
+        && form.containsInputType(widget.categoryForm.formData!, 'photo') && _imageFile == null){
+      ShowMyDialog.showMsg('Please select an image');
+      return;
+    }
+    _formKey.currentState!.save();
 
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext builder) {
-        return SizedBox(
-          height:
-          MediaQuery.of(context).size.height / 2,
-          child: Column(
-            children: [
-              SizedBox(
-                height:
-                MediaQuery.of(context).size.height /
-                    60,
-              ),
-
-              SizedBox(
-                height:
-                MediaQuery.of(context).size.height /
-                    3,
-                child: Lottie.asset('assets/JSON/done.json'),
-              ),
-              SizedBox(
-                height:
-                MediaQuery.of(context).size.height /
-                    60,
-              ),
-              const Text("Congratulation !!"),
-            ],
-          ),
-        );
-      },
-    );
     try {
-      // await form.createForm(
-      //   _firstname!,
-      //   _phone!,
-      //   _city!,
-      //   _detailLocation!,
-      //   image: _imageFile,
-      // );
+      await form.createForm(
+        id: widget.categoryForm.id!,
+        title: widget.categoryForm.title,
+        desc: widget.categoryForm.description,
+        date: widget.categoryForm.date,
+        price: widget.categoryForm.price,
+        firstName: _firstname,
+        lastName: _lastname,
+        phone: _phone,
+        city: _city,
+        number: numberOfMember!,
+        email: _email,
+        detailLocation: _detailLocation,
+        image: _imageFile,
+      );
+      showBottomSheetResponse('assets/JSON/done.json', "Congratulation !!",
+        then:()=> GlobalMethods.navigateReplaceALL(context, const ControlView())
+      );
     } catch (e) {
       Navigator.pop(context);
+      showBottomSheetResponse('assets/JSON/warning.json', readableError(e));
       showCustomSnackBar(readableError(e), context, isError: true);
     }
   }
 
   _cancel() async {
+    showBottomSheetResponse('assets/JSON/warning.json', 'readableError(e)', then: ()=> GlobalMethods.navigateReplaceALL(context, const ControlView()));
     // final form = Provider.of<CreateFormProvider>(context,listen: false);
     // if (!_formKey.currentState!.validate()) {
     //   if (!_autoValidate) setState(() => _autoValidate = true);
@@ -121,37 +113,6 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
     // }
     // _formKey.currentState!.save();
 
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext builder) {
-        return SizedBox(
-          height:
-          MediaQuery.of(context).size.height / 2,
-          child: Column(
-            children: [
-              SizedBox(
-                height:
-                MediaQuery.of(context).size.height /
-                    60,
-              ),
-
-              SizedBox(
-                height:
-                MediaQuery.of(context).size.height /
-                    3,
-                child: Lottie.asset('assets/JSON/warning.json', width: 50, height: 50),
-              ),
-              SizedBox(
-                height:
-                MediaQuery.of(context).size.height /
-                    80,
-              ),
-              const Text("Wait, you are already registered on this service"),
-            ],
-          ),
-        );
-      },
-    );
     try {
       // await form.createForm(
       //   _firstname!,
@@ -224,14 +185,14 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 70,
                       ),
-                      const Text(
-                        "Please fill in the following information",
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
+                      Text(
+                        tr('fill_information'),
+                        style: const TextStyle(color: Colors.grey, fontSize: 12),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 50,
                       ),
-                      const Text("Title"),
+                      Text(tr('title')),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 60,
                       ),
@@ -252,7 +213,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                         height: MediaQuery.of(context).size.height / 50,
                       ),
 
-                      const Text("Price"),
+                      Text(tr("price")),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 60,
                       ),
@@ -273,7 +234,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                         height: MediaQuery.of(context).size.height / 50,
                       ),
 
-                      const Text("Description"),
+                      Text(tr("description")),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 60,
                       ),
@@ -297,13 +258,14 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       if(widget.categoryForm.formData != null
                       && formProvider.containsInputType(widget.categoryForm.formData!, 'first_name'))
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("First Name"),
+                          Text(tr('first_name')),
                           SizedBox(
                             height: MediaQuery.of(context).size.height / 60,
                           ),
                           InputFormField(
-                            hintText: tr('Enter your first Name'),
+                            hintText: tr('enter_first_name'),
                             onSaved: (firstname) => _firstname = firstname,
                             prefixIcon: Image.asset('assets/icon/Profile.png'),
                             validator: Validator(
@@ -324,13 +286,14 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       if(widget.categoryForm.formData != null
                           && formProvider.containsInputType(widget.categoryForm.formData!, 'last_name'))
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Last Name"),
+                            Text(tr('last_name')),
                             SizedBox(
                               height: MediaQuery.of(context).size.height / 60,
                             ),
                             InputFormField(
-                              hintText: tr('Enter your first Name'),
+                              hintText: tr('enter_last_name'),
                               onSaved: (lastname) => _lastname = lastname,
                               prefixIcon: Image.asset('assets/icon/Profile.png'),
                               validator: Validator(
@@ -351,8 +314,9 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       if(widget.categoryForm.formData != null
                           && formProvider.containsInputType(widget.categoryForm.formData!, 'email'))
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Email"),
+                            Text(tr("email")),
                             SizedBox(
                               height: MediaQuery.of(context).size.height / 60,
                             ),
@@ -378,8 +342,9 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       if(widget.categoryForm.formData != null
                           && formProvider.containsInputType(widget.categoryForm.formData!, 'phone'))
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Text("Phone Number"),
+                            Text(tr('Phone Number')),
                             SizedBox(
                               height: MediaQuery.of(context).size.height / 60,
                             ),
@@ -402,7 +367,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                         ),
 
 
-                      const Text("Date"),
+                      Text(tr('date')),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 60,
                       ),
@@ -470,7 +435,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                           child: ListTile(
                             contentPadding: EdgeInsets.zero,
                             leading: Icon(Icons.date_range, color: p7,),
-                            trailing: Icon(Icons.arrow_drop_down),
+                            trailing: const Icon(Icons.arrow_drop_down),
                             title: Text(_date!),
                             horizontalTitleGap: 0,
                             onTap: (){
@@ -501,7 +466,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                                                         },
                                                         use24hFormat: true,
                                                         maximumDate: DateTime.now()
-                                                            .add(Duration(days: 365)),
+                                                            .add(const Duration(days: 365)),
                                                         minimumYear: DateTime.now().year - 4,
                                                         maximumYear: DateTime.now().year + 2,
                                                         minuteInterval: 1,
@@ -544,13 +509,14 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       if(widget.categoryForm.formData != null
                           && formProvider.containsInputType(widget.categoryForm.formData!, 'city'))
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("City / Province"),
+                          Text(tr('city')),
                           SizedBox(
                             height: MediaQuery.of(context).size.height / 60,
                           ),
                           InputFormField(
-                            hintText: tr('Enter your City'),
+                            hintText: tr('enter_city'),
                             onSaved: (city) => _city = city,
                             prefixIcon: Icon(Icons.location_on_outlined,color: p7,size: 35,),
                             validator: Validator(
@@ -571,8 +537,9 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       if(widget.categoryForm.formData != null
                           && formProvider.containsInputType(widget.categoryForm.formData!, 'Detail_Location'))
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text("Detail Location"),
+                          Text(tr('detail_location')),
                           SizedBox(
                             height: MediaQuery.of(context).size.height / 70,
                           ),
@@ -587,7 +554,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                             ),
                             decoration: InputDecoration(
                               hintText:
-                              "Type detailed location to make it easier for us to pick up the package",
+                              tr('detail_location_desc'),
                               hintStyle: const TextStyle(
                                 fontSize: 14,
                                 color: Colors.grey,
@@ -607,26 +574,34 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       ),
 
 
-                      const Text("number of members"),
+                      Text(tr("number_members")),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 70,
                       ),
-                      CustomDropDown(list: formProvider.getNumberOfMembersList(widget.categoryForm.formUsers??[], widget.categoryForm.members!), onChange: (val){
+                      CustomDropDown(list: formProvider.getNumberOfMembersList(widget.formUsers??[], widget.categoryForm.members!), onChange: (val){
                         print(val);
                         numberOfMember = val;
-                      }, hintText: 'chose number',),
+                      }, hintText: tr('choose_number'), validator: Validator(
+                        rules: [
+                          RequiredRule(
+                            validationMessage: tr('number_validation'),
+                          ),
+                        ],
+                      ),),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 60,
                       ),
 
                       if(widget.categoryForm.formData != null
                           && formProvider.containsInputType(widget.categoryForm.formData!, 'photo'))
-                      const AddAttachmentWidget(),
+                      AddAttachmentWidget(onFetchImage: (val){
+_imageFile = val;
+                      },),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           GestureDetector(
-                            onTap: _cancel,
+                            onTap: ()=> Navigator.pop(context),
                             child: Container(
                               height: 50,
                               width: 160,
@@ -635,19 +610,19 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                                   borderRadius: BorderRadius.circular(15),
                                 border: Border.all(color: Colors.red)
                               ),
-                              child: const Center(
+                              child: Center(
                                   child: Text(
-                                "Cancel",
-                                style: TextStyle(
+                                tr("cancel"),
+                                style: const TextStyle(
                                   color: Colors.red,
                                   fontSize: 18,
                                 ),
                               )),
                             ),
                           ),
-                          Button(
+                          formProvider.formLoad ? const Center(child: CircularProgressIndicator()) : Button(
                               onpress: _submit,
-                              buttonText: "Done",
+                              buttonText: tr("done"),
                               textColor: Colors.white,
                               buttonColor: p1,
                               buttonRadius: 18,
@@ -665,5 +640,39 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
         )
       ]),
     );
+  }
+
+  void showBottomSheetResponse(String img, String msg, {Function? then}){
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext builder) {
+        return SizedBox(
+          height:
+          MediaQuery.of(context).size.height / 2,
+          child: Column(
+            children: [
+              SizedBox(
+                height:
+                MediaQuery.of(context).size.height /
+                    60,
+              ),
+
+              SizedBox(
+                height:
+                MediaQuery.of(context).size.height /
+                    3,
+                child: Lottie.asset(img),
+              ),
+              SizedBox(
+                height:
+                MediaQuery.of(context).size.height /
+                    60,
+              ),
+              Text(msg),
+            ],
+          ),
+        );
+      },
+    ).then((value) => then != null ? then() : null);
   }
 }

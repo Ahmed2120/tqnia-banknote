@@ -14,7 +14,7 @@ class AddAttachmentWidget extends StatefulWidget {
 
   final bool isImage;
 
-  final Function(File)? onFetchImage;
+  final Function? onFetchImage;
 
   @override
   State<AddAttachmentWidget> createState() => _AddAttachmentWidgetState();
@@ -36,7 +36,7 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            "Choose Profile Photo",
+            tr("choose_att_photo"),
             style: Theme.of(context)
                 .textTheme
                 .displayLarge
@@ -54,7 +54,7 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
                 onPressed: () {
                   _getImage(ImageSource.camera);
                 },
-                label: const Text("camera"),
+                label: Text(tr("camera")),
               ),
               TextButton.icon(
                 icon: const Icon(
@@ -63,7 +63,7 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
                 onPressed: () {
                   _getImage(ImageSource.gallery);
                 },
-                label: const Text("Gallery"),
+                label: Text(tr("gallery")),
               ),
             ],
           )
@@ -78,6 +78,7 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
     setState(() {
       if (pickedFile != null) {
         _imageFile = File(pickedFile.path);
+        widget.onFetchImage!(_imageFile);
         Navigator.pop(context);
       }
     });

@@ -1,4 +1,5 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flrx_validator/flrx_validator.dart';
 import 'package:flutter/material.dart';
 
 
@@ -7,6 +8,7 @@ class CustomDropDown extends StatelessWidget {
   CustomDropDown(
       {required this.list,
         required this.onChange,
+        required this.validator,
         this.item,
         this.hintText,
         Key? key}) :
@@ -14,6 +16,7 @@ class CustomDropDown extends StatelessWidget {
 
   List<int> list; Function onChange;
   int ? item; String? hintText;
+  Validator validator;
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +26,7 @@ class CustomDropDown extends StatelessWidget {
         showSearchBox: true
       ),
       items: list,
+      validator: validator,
       // itemAsString: (CustomModel customModel) => customModel.Name,
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(

@@ -134,9 +134,11 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                                   ),
                                 );
                               }else if(hasData == 2){
-                                final categoryModel = categoriesProvider
+                                final categoryFormModel = categoriesProvider
                                     .categories!.listCategory![index].categoryFormModel;
-                                if(categoryModel!.formUsers != null && categoryModel.members != categoryModel.formUsers!.length) {
+                                final categoryModel = categoriesProvider
+                                    .categories!.listCategory![index];
+                                if(categoryModel.formUsers != null && categoryFormModel!.members != categoryModel.formUsers!.length) {
                                     GlobalMethods.navigate(
                                         context,
                                         SubmitFormPage(
@@ -144,6 +146,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                                               .subCategories!
                                               .listCategory![index]
                                               .categoryFormModel!,
+                                          formUsers: categoryModel.formUsers,
                                         ));
                                   }else{
                                   ShowMyDialog.showMsg('sorry! Members are complete', isError: true);

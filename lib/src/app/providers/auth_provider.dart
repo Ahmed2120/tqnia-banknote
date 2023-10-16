@@ -21,6 +21,9 @@ class AuthProvider extends ChangeNotifier {
 
   DataStatus? updateProfileStatus;
 
+  bool _logout_load = false;
+  bool get logoutLoad => _logout_load;
+
   Future<void> updateProfile(String firstName, String lastName, String email,
       {String? password, File? image}) async {
     try {
@@ -102,12 +105,23 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> logout() async {
-    await _api.logout().then((value) async {
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      // currentUser = null;
-      clearUserData();
-    });
+    _logout_load = true;
     notifyListeners();
+
+    try{
+      await _api.logout().then((value) async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        // currentUser = null;
+        clearUserData();
+      });
+
+      _logout_load = false;
+      notifyListeners();
+    }catch(e){
+      _logout_load = false;
+      notifyListeners();
+      rethrow;
+    }
   }
 
   changeRemember(bool? val){

@@ -38,6 +38,44 @@ class ShowMyDialog  {
           );
         } );
   }
+
+  static  void showMore(msg,){
+    showDialog<void>(
+        context: NavigationService.navigatorKey.currentContext!,
+        barrierDismissible: false, // user must tap button!
+        builder: (BuildContext context) {
+          return AlertDialog(
+// title: const Text('يوجد خطأ ما'),
+            content: Container(
+              height: 200,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '${msg}',
+                      style: const TextStyle
+                        (
+                          fontWeight: FontWeight.w900,
+                          fontSize: 18
+                      ),
+
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('ok'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        } );
+  }
   static void showSnack(context , String msg){
     ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
