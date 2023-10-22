@@ -98,5 +98,9 @@
   "done": "Done",
   "news": "News",
   "gifts": "Gifts",
-  "show_more": "Show more"
+  "show_more": "Show more",
+  "remember": "Remember",
+  "forget_password": "Forget password",
+  "or": "OR",
+  "not_have_account": "Not have an account ?"
 }

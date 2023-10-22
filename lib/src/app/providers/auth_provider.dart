@@ -5,6 +5,7 @@ import 'package:banknote/src/app/data/dio/dio_client.dart';
 import 'package:banknote/src/app/data/models/user_model.dart';
 import 'package:banknote/src/app/utils/data_status.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 export 'package:provider/provider.dart';
@@ -69,6 +70,9 @@ class AuthProvider extends ChangeNotifier {
 
   Future<void> register(UserModel user, String password) async {
     currentUser = await _api.register(user, password);
+    if(currentUser != null){
+      updateDeviceToken();
+    }
     notifyListeners();
   }
 
@@ -81,10 +85,26 @@ class AuthProvider extends ChangeNotifier {
       password,
     );
 
+    if(currentUser != null){
+      updateDeviceToken();
+    }
+
     if(_remember) {
       storeUserData();
     }
     notifyListeners();
+  }
+
+  Future<void> updateDeviceToken(
+  ) async {
+    try{
+      await _api.updateDeviceToken(currentUser!.id.toString());
+    }on DioException catch(e){
+      final error = e.response == null ? e.message : e.response!.data;
+      throw error;
+    }catch(e){
+      rethrow;
+    }
   }
 
   Future<UserModel?> autoLogin() async {
@@ -139,6 +159,7 @@ class AuthProvider extends ChangeNotifier {
     prefs.setString('fname', currentUser!.fName!);
     prefs.setString('lname', currentUser!.lName!);
     prefs.setString('email', currentUser!.email!);
+    prefs.setString('device_token', currentUser!.deviceToken!);
     prefs.setString('phone', currentUser!.phone!);
     prefs.setString('photo', currentUser!.photo!);
   }
@@ -151,6 +172,7 @@ class AuthProvider extends ChangeNotifier {
       fName: prefs.getString('fname'),
       lName: prefs.getString('lname'),
       email: prefs.getString('email'),
+      deviceToken: prefs.getString('device_token'),
       phone: prefs.getString('phone'),
       photo: prefs.getString('photo'),
     );
@@ -165,6 +187,7 @@ class AuthProvider extends ChangeNotifier {
     prefs.remove('fname');
     prefs.remove('lname');
     prefs.remove('email');
+    prefs.remove('device_token');
     prefs.remove('phone');
     prefs.remove('photo');
 

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "513034986481",
+    "project_id": "banknote-5f6be",
+    "storage_bucket": "banknote-5f6be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:513034986481:android:b835fb2bf445f9fe6eda50",
+        "android_client_info": {
+          "package_name": "com.tqniait.banknote"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH73pg6lSX9EAfGuCs6zbgldzMrcMX7hk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

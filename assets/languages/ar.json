@@ -101,5 +101,9 @@
   "cancel": "الغاء",
   "news": "اخبار قد تهمك",
   "gifts": "الهدايا",
-  "show_more": "رؤية المزيد"
+  "show_more": "رؤية المزيد",
+  "remember": "تذكرني",
+  "forget_password": "نسيت كلمة المرور",
+  "or": "أو",
+  "not_have_account": "ليس لديك حساب ؟"
 }

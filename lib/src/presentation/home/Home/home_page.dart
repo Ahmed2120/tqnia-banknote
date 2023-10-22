@@ -1,19 +1,24 @@
 import 'package:banknote/src/app/data/dio/exception/dio_error_extention.dart';
 import 'package:banknote/src/app/localization/app_localization.dart';
 import 'package:banknote/src/app/providers/categories_provider.dart';
+import 'package:banknote/src/app/providers/gift_provider.dart';
+import 'package:banknote/src/app/providers/notification_provider.dart';
 import 'package:banknote/src/app/utils/color.dart';
 import 'package:banknote/src/app/widgets/custom_snackbar.dart';
 import 'package:banknote/src/presentation/home/Category/our_category.dart';
 import 'package:banknote/src/presentation/home/Category/widget/category_cont.dart';
 import 'package:banknote/src/presentation/home/SubmitForm/submit_form.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 import '../../../app/providers/auth_provider.dart';
 import '../../../app/providers/category_provider.dart';
+import '../../../app/providers/news_provider.dart';
 import '../../../app/utils/global_methods.dart';
 import '../../../app/widgets/alert_dialog.dart';
 import '../subCategory/sub_category.dart';
@@ -32,14 +37,45 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getCategoryData();
+      _getNews();
+      _getGift();
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        print('----------notification-----------');
+        print(message.notification?.body);
+        Provider.of<NotificationProvider>(context, listen: false).changeUnreadNoti(true);
+      });
+
+      FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
 
       //
     });
   }
 
+  Future<dynamic> myBackgroundMessageHandler(RemoteMessage message) async {
+    Provider.of<NotificationProvider>(context, listen: false).changeUnreadNoti(true);
+    if (kDebugMode) {
+      print('==================================');
+      print("onBackground: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
+    }
+  }
+
   _getCategoryData() async {
     try {
       await context.read<CategoriesProvider>().getCategoryhData();
+    } catch (e) {
+      showCustomSnackBar(readableError(e), context, isError: true);
+    }
+  }
+  _getNews() async {
+    try {
+      await context.read<NewsProvider>().getNews();
+    } catch (e) {
+      showCustomSnackBar(readableError(e), context, isError: true);
+    }
+  }
+  _getGift() async {
+    try {
+      await context.read<GiftProvider>().getGift();
     } catch (e) {
       showCustomSnackBar(readableError(e), context, isError: true);
     }
@@ -85,21 +121,30 @@ class _HomePageState extends State<HomePage> {
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
 
-                SizedBox(
-                  height: 120,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    separatorBuilder: (context, index)=>const SizedBox(width: 20,),
-                    itemBuilder: (context, index)=>NewsWidget(
-                      newsText: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+                // SizedBox(
+                //   height: 120,
+                //   child: ListView.separated(
+                //     shrinkWrap: true,
+                //     scrollDirection: Axis.horizontal,
+                //     itemCount: 5,
+                //     separatorBuilder: (context, index)=>const SizedBox(width: 20,),
+                //     itemBuilder: (context, index)=>NewsWidget(
+                //       newsText: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
+                //       onTap: (){
+                //       ShowMyDialog.showMore("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum");
+                //     },),
+                //   ),
+                // ),
+                Consumer<NewsProvider>(
+                  builder: (context, newsProvider, _) {
+                    return NewsWidget(
+                      loading: newsProvider.news_load,
+                      newsText: newsProvider.news?.newsTxt,
                       onTap: (){
-                      ShowMyDialog.showMore("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum");
-                    },),
-                  ),
+                        ShowMyDialog.showMore(newsProvider.news?.newsTxt);
+                      },);
+                  }
                 ),
-
                 SizedBox(
               height: MediaQuery.of(context).size.height / 30,
             ),
@@ -109,20 +154,15 @@ class _HomePageState extends State<HomePage> {
                   style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
 
-                SizedBox(
-                  height: 120,
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 5,
-                    separatorBuilder: (context, index)=>const SizedBox(width: 20,),
-                    itemBuilder: (context, index)=>NewsWidget(
-                      newsText: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum",
-                      onTap: (){
-                        ShowMyDialog.showMore("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum");
-                      },
-                     ),
-                  ),
+                Consumer<GiftProvider>(
+                    builder: (context, giftProvider, _) {
+                      return NewsWidget(
+                        loading: giftProvider.gift_load,
+                        newsText: giftProvider.gift?.giftTxt,
+                        onTap: (){
+                          ShowMyDialog.showMore(giftProvider.gift?.giftTxt);
+                        },);
+                    }
                 ),
                 SizedBox(
                   height: MediaQuery.of(context).size.height / 70,

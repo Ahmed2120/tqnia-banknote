@@ -2,18 +2,37 @@ import 'package:banknote/src/app/providers/app_provider.dart';
 import 'package:banknote/src/app/providers/auth_provider.dart';
 import 'package:banknote/src/app/providers/categories_provider.dart';
 import 'package:banknote/src/app/providers/form_provider.dart';
+import 'package:banknote/src/app/providers/gift_provider.dart';
+import 'package:banknote/src/app/providers/news_provider.dart';
 import 'package:banknote/src/presentation/welcome_page/splash_page.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
+import 'notification/my_notification.dart';
 import 'src/app/providers/category_provider.dart';
 import 'src/app/providers/lang_provider.dart';
+import 'firebase_options.dart';
+import 'src/app/providers/notification_provider.dart';
+
+final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 void main() async{
   print('---------- main ------------');
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
+
+  final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+
+
+  await MyNotification.initialize(flutterLocalNotificationsPlugin);
+
 
   runApp(
     EasyLocalization(
@@ -30,9 +49,6 @@ void main() async{
           ChangeNotifierProvider<AuthProvider>(
             create: (_) => AuthProvider(),
           ),
-          ChangeNotifierProvider<AuthProvider>(
-            create: (_) => AuthProvider(),
-          ),
           ChangeNotifierProvider<CategoriesProvider>(
             create: (_) => CategoriesProvider(),
           ),
@@ -41,6 +57,15 @@ void main() async{
           ),
            ChangeNotifierProvider<CreateFormProvider>(
             create: (_) => CreateFormProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => NewsProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => GiftProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => NotificationProvider(),
           ),
 
         ],

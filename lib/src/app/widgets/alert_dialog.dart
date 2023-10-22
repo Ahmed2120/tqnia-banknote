@@ -39,7 +39,7 @@ class ShowMyDialog  {
         } );
   }
 
-  static  void showMore(msg,){
+  static  void showMore(String? msg,){
     showDialog<void>(
         context: NavigationService.navigatorKey.currentContext!,
         barrierDismissible: false, // user must tap button!
@@ -53,7 +53,7 @@ class ShowMyDialog  {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      '${msg}',
+                      msg??'',
                       style: const TextStyle
                         (
                           fontWeight: FontWeight.w900,

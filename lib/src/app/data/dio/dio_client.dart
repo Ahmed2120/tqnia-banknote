@@ -3,11 +3,17 @@ import 'package:banknote/main.dart';
 import 'package:banknote/src/app/data/models/category_model.dart';
 import 'package:banknote/src/app/data/models/form_model.dart';
 import 'package:banknote/src/app/data/models/user_model.dart';
+import 'package:banknote/src/app/providers/auth_provider.dart';
 import 'package:banknote/src/app/utils/app_constants.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+import '../models/gift.dart';
+import '../models/news.dart';
+import '../models/notification_model.dart';
 
 class DioClient {
   //Singleton
@@ -38,9 +44,14 @@ class DioClient {
   ////////////////////////////// END POINTS ///////////////////////////////////
   static const String _registerEndPoint = "auth/register";
   static const String _loginEndPoint = "auth/login";
+  static const String _device_token = "auth/device_token";
   static const String _logoutEndPoint = "logout";
   static const String _updateProfileEndPoint = "editProfile";
   static const String _createFormEndPoint = "forms/user-form";
+  static const String _news = "sitting/news_for_you";
+  static const String _gift = "sitting/gifts";
+  static const String _getNotification = "notifications/show";
+  static const String _deleteNotification = "notifications/deleteAll";
   static final String _categoriesPoint =
       "categories/allCategories_";
   static final String _subCategoriesPoint =
@@ -150,6 +161,56 @@ class DioClient {
     }
   }
 
+  Future updateDeviceToken(
+      String userId,
+      ) async {
+    final deviceToken = await _getDeviceToken();
+
+    final response = await _dio.post(
+      '${Connection.baseURL}$_device_token',
+      data: {
+        'device_token': deviceToken,
+        'user_id': userId,
+      },
+      options: Options(
+        headers: _apiHeaders,
+      ),
+    );
+    if (response.data['status'] == true && response.data['data'].isNotEmpty) {
+      print(response.data);
+    } else {
+      throw response.data;
+    }
+  }
+
+  Future deleteNotification(
+      int userId,
+      ) async {
+
+    final token = await _getUserToken();
+
+
+      final response = await _dio.get(
+        '${Connection.baseURL}$_deleteNotification',
+        queryParameters: {
+          'user_id': userId,
+        },
+        options: Options(
+          headers: {
+            ..._apiHeaders,
+            'Authorization': token,
+          },
+        ),
+      );
+      if (response.data['status'] == true && response.data['data'].isNotEmpty) {
+        return response.data['message'];
+      } else {
+        throw response.data;
+      }
+
+  }
+
+
   Future<CategoryModel> getCategories() async {
     final token = await _getUserToken();
     try{
@@ -175,6 +236,29 @@ class DioClient {
     catch(e){
       rethrow;
     }
+  }
+
+  Future<List<NotificationModel>> getNotifications(int userId) async {
+    final token = await _getUserToken();
+
+      final response = await _dio.get(
+        '${Connection.baseURL}$_getNotification',
+        queryParameters: {
+          'user_id': userId,
+        },
+        options: Options(
+          headers: {
+            ..._apiHeaders,
+            'Authorization': token,
+          },
+        ),
+      );
+      if (response.data['status'] == true) {
+        final notificationList = response.data['data'].map<NotificationModel>((e)=> NotificationModel.fromJson(e)).toList();
+        return notificationList;
+      } else {
+        throw response.data;
+      }
   }
 
   Future<CategoryModel> getSubCategories(int id) async {
@@ -214,6 +298,44 @@ class DioClient {
       throw response.data;
     }
   }
+
+  Future<NewsModel> getNews() async {
+    final token = await _getUserToken();
+    final response = await _dio.get(
+      '${Connection.baseURL}$_news',
+      options: Options(
+        headers: {
+          ..._apiHeaders,
+          'Authorization': token,
+        },
+      ),
+    );
+    print(response.data);
+    if (response.data['status'] == true) {
+      return NewsModel.fromJson(response.data);
+    } else {
+      throw response.data;
+    }
+  }
+
+  Future<GiftModel> getGift() async {
+    final token = await _getUserToken();
+    final response = await _dio.get(
+      '${Connection.baseURL}$_gift',
+      options: Options(
+        headers: {
+          ..._apiHeaders,
+          'Authorization': token,
+        },
+      ),
+    );
+    if (response.data['status'] == true) {
+      return GiftModel.fromJson(response.data);
+    } else {
+      throw response.data;
+    }
+  }
+
 Future<FormModel> createForm({
     required int? id,
     required String? firstName,
@@ -265,4 +387,20 @@ Future<FormModel> createForm({
   ///////////////////////////////// UTILS /////////////////////////////////////
   // Getting User Token.
   Future<String?> _getUserToken() async => await UserModel.getToken;
+
+  Future<String?> _getDeviceToken() async {
+    String? deviceToken;
+    if(Platform.isIOS) {
+      deviceToken = await FirebaseMessaging.instance.getAPNSToken();
+    }else {
+      deviceToken = await FirebaseMessaging.instance.getToken();
+    }
+
+    if (deviceToken != null) {
+      if (kDebugMode) {
+        print('--------Device Token---------- $deviceToken');
+      }
+    }
+    return deviceToken;
+  }
 }

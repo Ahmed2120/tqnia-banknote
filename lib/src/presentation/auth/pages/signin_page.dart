@@ -88,10 +88,10 @@ class _SignInPageState extends State<SignInPage> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 35,
                     ),
-                    const Text(
-                      "Login To Your Account",
+                    Text(
+                      tr('login_desc'),
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 16,
@@ -146,7 +146,7 @@ class _SignInPageState extends State<SignInPage> {
                               onChanged: authProvider.changeRemember,),),
 
 
-                          const Text('Remember'),]),
+                          Text(tr('remember')),]),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -156,9 +156,9 @@ class _SignInPageState extends State<SignInPage> {
                               ),
                             );
                           },
-                          child: const Text(
-                            "Forget password",
-                            style: TextStyle(
+                          child: Text(
+                            tr("forget_password"),
+                            style: const TextStyle(
                               fontSize: 13,
                               decoration: TextDecoration.underline,
                             ),
@@ -171,7 +171,7 @@ class _SignInPageState extends State<SignInPage> {
                     ),
                     Button(
                         onpress: _submit,
-                        buttonText: "Login",
+                        buttonText: tr('login'),
                         textColor: Colors.white,
                         buttonColor: p1,
                         buttonRadius: 20,
@@ -181,18 +181,18 @@ class _SignInPageState extends State<SignInPage> {
                     const SizedBox(
                       height: 30,
                     ),
-                    const Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
+                        const Text(
                           "______________     ",
                           style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
                         Text(
-                          "OR",
-                          style: TextStyle(color: Colors.grey, fontSize: 14),
+                          tr("or"),
+                          style: const TextStyle(color: Colors.grey, fontSize: 14),
                         ),
-                        Text(
+                        const Text(
                           "   ______________",
                           style: TextStyle(color: Colors.grey, fontSize: 14),
                         ),
@@ -231,10 +231,10 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         );
                       },
-                      child: const Center(
+                      child: Center(
                           child: Text(
-                        "Not have an account ?",
-                        style: TextStyle(color: Colors.blue),
+                        tr("not_have_account"),
+                        style: const TextStyle(color: Colors.blue),
                       )),
                     )
                   ],

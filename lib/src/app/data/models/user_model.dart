@@ -8,6 +8,7 @@ class UserModel {
   String? lName;
   String? phone;
   String? email;
+  String? deviceToken;
   bool? emailVerifiedAt;
   String? photo;
   bool? isDelete;
@@ -19,6 +20,7 @@ class UserModel {
       this.lName,
       this.phone,
       this.email,
+      this.deviceToken,
       this.emailVerifiedAt,
       this.photo 
       });
@@ -29,6 +31,7 @@ class UserModel {
     lName = json['last_name'];
     phone = json['phone'];
     email = json['email'];
+    deviceToken = json['device_token'];
     emailVerifiedAt = json['email_verified_at'];
     if (json["photo"] != null) {
       photo = json["photo"].startsWith('http')
@@ -44,6 +47,7 @@ class UserModel {
         'last_name': lName,
         'phone': phone,
         'email': email,
+        'device_token': deviceToken,
         'photo': photo,
       };
 

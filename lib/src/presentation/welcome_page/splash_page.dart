@@ -28,7 +28,9 @@ class _SplashPageState extends State<SplashPage> {
           if(!mounted) return;
           GlobalMethods.navigateReplaceALL(context, const ControlView());
 
-          Provider.of<AuthProvider>(context, listen: false).getUserData();
+          await Provider.of<AuthProvider>(context, listen: false).getUserData();
+          if(!mounted) return;
+          Provider.of<AuthProvider>(context, listen: false).updateDeviceToken();
         }
         else{
           if(!mounted) return;

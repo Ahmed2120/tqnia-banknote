@@ -20,56 +20,65 @@ class _CategoryWidgetState extends State<CategoryWidget> {
     return GestureDetector(
       child: Container(
         // height: MediaQuery.of(context).size.height / 9,
+        padding: EdgeInsets.symmetric(horizontal: 10),
         width: MediaQuery.of(context).size.width / 0.6,
         decoration:
             BoxDecoration(color: p3, borderRadius: BorderRadius.circular(30)),
-        child: ListTile(
-           leading: CircleAvatar(
-            backgroundColor: p7,
-          radius: 25,
-            backgroundImage:  AssetImage(
-              widget.iconImage,
+        child: Row(
+          children: [
+            Expanded(
+              child: ListTile(
+                 leading: CircleAvatar(
+                  backgroundColor: p7,
+                radius: 25,
+                  backgroundImage:  AssetImage(
+                    widget.iconImage,
+                  ),
+                ),
+                title: Text(
+                  widget.category.titl ?? ' ',
+                  style: const TextStyle(fontSize: 16, color: Colors.black),
+                ),
+                subtitle: Text(
+                  widget.category.desc ?? ' ',
+                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                ),
+              minVerticalPadding: 0,
+              dense: true,
+                visualDensity: VisualDensity(horizontal: 0, vertical: 3),
+              contentPadding: EdgeInsets.symmetric(horizontal: 7),),
             ),
-          ),
-          title: Text(
-            widget.category.titl ?? ' ',
-            style: const TextStyle(fontSize: 16, color: Colors.black),
-          ),
-          subtitle: Text(
-            widget.category.desc ?? ' ',
-            style: const TextStyle(fontSize: 12, color: Colors.grey),
-          ),
-         trailing: Container(
-              height: MediaQuery.of(context).size.height / 5,
-              width: MediaQuery.of(context).size.width / 4,
-              decoration: BoxDecoration(
-                  color: p7, borderRadius: BorderRadius.circular(20)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    widget.category.date ?? ' ',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 13,
+            Container(
+              height: 70,
+                width: MediaQuery.of(context).size.width / 4,
+                decoration: BoxDecoration(
+                    color: p7, borderRadius: BorderRadius.circular(20)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      widget.category.date ?? ' ',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                      ),
                     ),
-                  ),
-                  Text(
-                    widget.category.price ?? ' ',
-                    style:
-                        const TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                  // const SizedBox(height: 10,),
-                  if(widget.category.isActive == 0) Text(
-                    tr('soon'),
-                    style:
-                        TextStyle(color: Color(0x6F4D566B), fontSize: 11),
-                  ),
-                ],
-              )),
-        minVerticalPadding: 0,
-        contentPadding: EdgeInsets.symmetric(horizontal: 7),),
+                    Text(
+                      widget.category.price ?? ' ',
+                      style:
+                      const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                    // const SizedBox(height: 10,),
+                    if(widget.category.isActive == 0) Text(
+                      tr('soon'),
+                      style:
+                      TextStyle(color: Color(0x6F4D566B), fontSize: 11),
+                    ),
+                  ],
+                )),
+          ],
+        ),
       ),
     );
   }
