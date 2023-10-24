@@ -42,9 +42,13 @@ class DioClient {
   };
 
   ////////////////////////////// END POINTS ///////////////////////////////////
+  static const String _createPhone = "auth/createPhone";
   static const String _registerEndPoint = "auth/register";
   static const String _loginEndPoint = "auth/login";
   static const String _device_token = "auth/device_token";
+  static const String _store_otp = "auth/storeOtpCode";
+  static const String _checkotp = "auth/checkCode";
+  static const String _resetPassword = "auth/resetPassword";
   static const String _logoutEndPoint = "logout";
   static const String _updateProfileEndPoint = "editProfile";
   static const String _createFormEndPoint = "forms/user-form";
@@ -204,6 +208,106 @@ class DioClient {
       );
       if (response.data['status'] == true && response.data['data'].isNotEmpty) {
         return response.data['message'];
+      } else {
+        throw response.data;
+      }
+
+  }
+
+  Future createPhone(
+      String phone,
+      ) async {
+
+
+      final response = await _dio.post(
+        '${Connection.baseURL}$_createPhone',
+        data: {
+          'phone': phone,
+        },
+        options: Options(
+          headers: {
+            ..._apiHeaders,
+          },
+        ),
+      );
+      if (response.data['status'] == true) {
+        return true;
+      } else {
+        throw response.data;
+      }
+
+  }
+
+  Future storeOtp(
+      String phone,
+      ) async {
+
+
+      final response = await _dio.get(
+        '${Connection.baseURL}$_store_otp',
+        queryParameters: {
+          'phone': phone,
+        },
+        options: Options(
+          headers: {
+            ..._apiHeaders,
+          },
+        ),
+      );
+      if (response.data['status'] == true) {
+        return true;
+      } else {
+        throw response.data;
+      }
+
+  }
+
+  Future checkOtp(
+      String phone,
+      int code,
+      ) async {
+
+
+      final response = await _dio.get(
+        '${Connection.baseURL}$_checkotp',
+        queryParameters: {
+          'phone': phone,
+          'code': code,
+        },
+        options: Options(
+          headers: {
+            ..._apiHeaders,
+          },
+        ),
+      );
+      if (response.data['status'] == true) {
+        return true;
+      } else {
+        throw response.data;
+      }
+
+  }
+
+  Future resetPassword(
+      String phone,
+      String password,
+      ) async {
+
+
+      final response = await _dio.get(
+        '${Connection.baseURL}$_resetPassword',
+        queryParameters: {
+          'phone': phone,
+          'password': password,
+        },
+        options: Options(
+          headers: {
+            ..._apiHeaders,
+          },
+        ),
+      );
+      if (response.data['status'] == true) {
+        return true;
       } else {
         throw response.data;
       }

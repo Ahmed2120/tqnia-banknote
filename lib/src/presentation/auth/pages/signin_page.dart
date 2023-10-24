@@ -16,6 +16,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/strings.dart';
 
+import 'phone_signup.dart';
+
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
 
@@ -152,7 +154,7 @@ class _SignInPageState extends State<SignInPage> {
                             Navigator.push(
                               context,
                               CupertinoPageRoute(
-                                builder: (_) => const RecoveryPasswordPage(),
+                                builder: (_) => RecoveryPasswordPage(),
                               ),
                             );
                           },
@@ -227,7 +229,7 @@ class _SignInPageState extends State<SignInPage> {
                         Navigator.push(
                           context,
                           CupertinoPageRoute(
-                            builder: (_) => const CreateAccountPage(),
+                            builder: (_) => PhoneSignupPage(),
                           ),
                         );
                       },

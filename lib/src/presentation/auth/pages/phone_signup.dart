@@ -1,4 +1,5 @@
 import 'package:banknote/src/app/data/dio/exception/dio_error_extention.dart';
+import 'package:banknote/src/app/providers/auth_provider.dart';
 import 'package:banknote/src/app/providers/reset_password_provider.dart';
 import 'package:banknote/src/app/utils/color.dart';
 import 'package:banknote/src/app/widgets/button.dart';
@@ -15,8 +16,8 @@ import 'package:provider/provider.dart';
 
 import '../../../app/utils/global_methods.dart';
 
-class RecoveryPasswordPage extends StatelessWidget {
-  RecoveryPasswordPage({super.key});
+class PhoneSignupPage extends StatelessWidget {
+  PhoneSignupPage({super.key});
 
   final _phoneController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -55,18 +56,13 @@ class RecoveryPasswordPage extends StatelessWidget {
               SizedBox(
                 height: MediaQuery.of(context).size.height / 22,
               ),
-              const Text(
-                "recovery Your \nPassword  ",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              Text(
+                tr('signup'),
+                style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, ),
+                textAlign: TextAlign.center,
               ),
               const SizedBox(
                 height: 10,
-              ),
-              const Text(
-                "Enter Your Phone To get otp to reset \nPassword  ",
-                style: TextStyle(
-                  fontSize: 12,
-                ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 20,
@@ -90,29 +86,29 @@ class RecoveryPasswordPage extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.bottomRight,
-                child: Consumer<ResetPasswordProvider>(
-                  builder: (context, resetPasswordProvider, _) {
-                    return resetPasswordProvider.storeOtpLoading ? const CircularProgressIndicator() : Button(
-                        onpress: () async{
-                          try{
-                            if(!_formKey.currentState!.validate()) return;
-                          final isSuccess = await resetPasswordProvider.storeOtp(_phoneController.text);
-                          if(isSuccess){
-                            GlobalMethods.navigate(
-                                context, OtpPage(phoneNum: _phoneController.text));
-                          }
-                        }catch(e){
-                            showCustomSnackBar(readableError(e), context);
-                          }
-                      },
-                        buttonText: "Next",
-                        textColor: Colors.white,
-                        buttonColor: p1,
-                        buttonRadius: 20,
-                        buttonHight: 50,
-                        buttonWidth: 130,
-                        textSize: 16);
-                  }
+                child: Consumer<AuthProvider>(
+                    builder: (context, authProvider, _) {
+                      return authProvider.createPhoneLoading ? const CircularProgressIndicator() : Button(
+                          onpress: () async{
+                            try{
+                              if(!_formKey.currentState!.validate()) return;
+                              final isSuccess = await authProvider.createPhone(_phoneController.text);
+                              if(isSuccess){
+                                GlobalMethods.navigate(
+                                    context, OtpPage(phoneNum: _phoneController.text, flag: 1,));
+                              }
+                            }catch(e){
+                              showCustomSnackBar(readableError(e), context);
+                            }
+                          },
+                          buttonText: "Next",
+                          textColor: Colors.white,
+                          buttonColor: p1,
+                          buttonRadius: 20,
+                          buttonHight: 50,
+                          buttonWidth: 130,
+                          textSize: 16);
+                    }
                 ),
               ),
             ],

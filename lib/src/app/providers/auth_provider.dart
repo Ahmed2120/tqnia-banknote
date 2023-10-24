@@ -25,6 +25,9 @@ class AuthProvider extends ChangeNotifier {
   bool _logout_load = false;
   bool get logoutLoad => _logout_load;
 
+  bool _createPhone_load = false;
+  bool get createPhoneLoading => _createPhone_load;
+
   Future<void> updateProfile(String firstName, String lastName, String email,
       {String? password, File? image}) async {
     try {
@@ -93,6 +96,31 @@ class AuthProvider extends ChangeNotifier {
       storeUserData();
     }
     notifyListeners();
+  }
+
+  Future<bool> createPhone( String phone
+  ) async {
+    try{
+      _createPhone_load = true;
+      notifyListeners();
+
+      final isSuccess = await _api.createPhone(phone);
+      _createPhone_load = false;
+      notifyListeners();
+
+      return isSuccess;
+    }on DioException catch(e){
+      final error = e.response == null ? e.message : e.response!.data;
+      _createPhone_load = false;
+      notifyListeners();
+
+      throw error;
+    }catch(e){
+      _createPhone_load = false;
+      notifyListeners();
+
+      rethrow;
+    }
   }
 
   Future<void> updateDeviceToken(

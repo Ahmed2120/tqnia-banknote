@@ -4,6 +4,7 @@ import 'package:banknote/src/app/providers/categories_provider.dart';
 import 'package:banknote/src/app/providers/form_provider.dart';
 import 'package:banknote/src/app/providers/gift_provider.dart';
 import 'package:banknote/src/app/providers/news_provider.dart';
+import 'package:banknote/src/presentation/auth/pages/otp_page.dart';
 import 'package:banknote/src/presentation/welcome_page/splash_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,6 +17,7 @@ import 'src/app/providers/category_provider.dart';
 import 'src/app/providers/lang_provider.dart';
 import 'firebase_options.dart';
 import 'src/app/providers/notification_provider.dart';
+import 'src/app/providers/reset_password_provider.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -66,6 +68,9 @@ void main() async{
           ),
           ChangeNotifierProvider(
             create: (_) => NotificationProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ResetPasswordProvider(),
           ),
 
         ],

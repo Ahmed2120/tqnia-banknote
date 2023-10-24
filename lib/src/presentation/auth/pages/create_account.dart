@@ -18,7 +18,9 @@ import 'package:quiver/strings.dart';
 import '../../../app/widgets/button.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage({super.key});
+  const CreateAccountPage({super.key, required this.phoneNum});
+
+  final String phoneNum;
 
   @override
   State<CreateAccountPage> createState() => _CreateAccountPageState();
@@ -32,7 +34,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   String? _email;
   String? _password;
   String? _confirmPass;
-  String? _phone;
   bool _obscurePass = true;
   bool _obscureConfirm = true;
   bool _keep = false;
@@ -51,7 +52,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       LoadingScreen.show(context);
 
       final UserModel user = UserModel(
-          email: _email, fName: _firstname, lName: _lastname, phone: _phone);
+          email: _email, fName: _firstname, lName: _lastname, phone: widget.phoneNum);
       await context.read<AuthProvider>().register(user, _password!);
       if (!mounted) return;
       Navigator.pushAndRemoveUntil(
@@ -151,9 +152,10 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       height: MediaQuery.of(context).size.height / 25,
                     ),
                     InputFormField(
+                      controller: TextEditingController(text: widget.phoneNum),
                       hintText: tr('phone'),
                       prefixIcon: Image.asset('assets/icon/Calling.png'),
-                      onSaved: (phone) => _phone = phone,
+                      enabled: false,
                       validator: Validator(
                         rules: [
                           MinLengthRule(8,

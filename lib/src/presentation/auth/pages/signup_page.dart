@@ -60,7 +60,7 @@ class SignUpPage extends StatelessWidget {
                       Navigator.push(
                         context,
                         CupertinoPageRoute(
-                          builder: (_) => const CreateAccountPage(),
+                          builder: (_) => const CreateAccountPage(phoneNum: '',),
                         ),
                       );
                     },
