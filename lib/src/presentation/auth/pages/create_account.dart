@@ -276,10 +276,10 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       height: 7,
                     ),
                     Button(
-                        onpress: _submit,
+                        onpress: _keep ? _submit : (){},
                         buttonText: "Sign up",
                         textColor: Colors.white,
-                        buttonColor: p1,
+                        buttonColor: _keep ? p1 : Colors.grey,
                         buttonRadius: 20,
                         buttonHight: 60,
                         buttonWidth: 320,
