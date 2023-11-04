@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:banknote/main.dart';
 import 'package:banknote/src/app/data/models/category_model.dart';
 import 'package:banknote/src/app/data/models/form_model.dart';
+import 'package:banknote/src/app/data/models/message.dart';
 import 'package:banknote/src/app/data/models/user_model.dart';
 import 'package:banknote/src/app/providers/auth_provider.dart';
 import 'package:banknote/src/app/utils/app_constants.dart';
@@ -56,6 +57,7 @@ class DioClient {
   static const String _gift = "sitting/gifts";
   static const String _getNotification = "notifications/show";
   static const String _deleteNotification = "notifications/deleteAll";
+  static const String _getOrSendMessages = "chat"; // if get => get all msgs else if post => send msg
   static final String _categoriesPoint =
       "categories/allCategories_";
   static final String _subCategoriesPoint =
@@ -363,6 +365,53 @@ class DioClient {
       } else {
         throw response.data;
       }
+  }
+
+  Future<List<MessageModel>> getMessages() async {
+    final token = await _getUserToken();
+
+      final response = await _dio.get(
+        '${Connection.baseURL}$_getOrSendMessages',
+        options: Options(
+          headers: {
+            ..._apiHeaders,
+            'Authorization': token,
+          },
+        ),
+      );
+      if (response.data['status'] == true) {
+        final notificationList = response.data['data'].map<MessageModel>((e)=> MessageModel.fromJson(e)).toList();
+        return notificationList;
+      } else {
+        throw response.data;
+      }
+  }
+
+  Future sendMessage(
+      String message,
+      ) async {
+
+    final token = await _getUserToken();
+
+
+    final response = await _dio.post(
+      '${Connection.baseURL}$_getOrSendMessages',
+      data: {
+        'message': message,
+      },
+      options: Options(
+        headers: {
+          ..._apiHeaders,
+          'Authorization': token,
+        },
+      ),
+    );
+    if (response.data['status'] == true && response.data['data'].isNotEmpty) {
+      return response.data['status'];
+    } else {
+      throw response.data;
+    }
+
   }
 
   Future<CategoryModel> getSubCategories(int id) async {

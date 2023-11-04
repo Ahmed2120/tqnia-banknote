@@ -13,7 +13,9 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 
 import 'notification/my_notification.dart';
+import 'pusher/pusher_config.dart';
 import 'src/app/providers/category_provider.dart';
+import 'src/app/providers/chat_provider.dart';
 import 'src/app/providers/lang_provider.dart';
 import 'firebase_options.dart';
 import 'src/app/providers/notification_provider.dart';
@@ -28,6 +30,9 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
+  // print('=====================================');
+  // await PusherConfig().initialize();
+  // print('=====================================');
 
   final NotificationAppLaunchDetails? notificationAppLaunchDetails =
   await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
@@ -68,6 +73,9 @@ void main() async{
           ),
           ChangeNotifierProvider(
             create: (_) => NotificationProvider(),
+          ),
+          ChangeNotifierProvider(
+            create: (_) => ChatProvider(),
           ),
           ChangeNotifierProvider(
             create: (_) => ResetPasswordProvider(),
