@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 
 import '../../../app/utils/global_methods.dart';
 import '../../../app/widgets/custom_snackbar.dart';
+import '../../../app/widgets/pages_background.dart';
 import 'create_account.dart';
 
 class OtpPage extends StatefulWidget {
@@ -66,154 +67,156 @@ startTimer();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Stack(children: [
-        Image.asset(
-          "assets/images/Screen.jpg",
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          fit: BoxFit.cover,
-        ),
-        Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 14,
-              ),
-              Row(
-                children: [
-                  ArrowBackContainer(
-                    onpress: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                  const SizedBox(
-                    width: 110,
-                  ),
-                  Image.asset("assets/images/logodark.png"),
-                ],
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 22,
-              ),
-              const Text(
-                "OTP Code",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Text(
-                "Enter OTP code that sent \n to +20 ${widget.phoneNum}",
-                style: const TextStyle(
-                  fontSize: 12,
+      body:  PagesBackground(
+        child:  Stack(children: [
+          // Image.asset(
+          //   "assets/images/Screen.jpg",
+          //   height: MediaQuery.of(context).size.height,
+          //   width: MediaQuery.of(context).size.width,
+          //   fit: BoxFit.cover,
+          // ),
+          Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: ListView(
+              children: [
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 14,
                 ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 20,
-              ),
-              Form(
-                key: _formKey,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                Row(
                   children: [
-                    buildSizedBox(context, first: true, last: false, controller: _1Controller),
-                    const SizedBox(width: 25,),
-                    buildSizedBox(context, first: false, last: false, controller: _2Controller),
-                    const SizedBox(width: 25,),
-                    buildSizedBox(context, first: false, last: false, controller: _3Controller),
-                    const SizedBox(width: 25,),
-                    buildSizedBox(context, first: false, last: true, controller: _4Controller),
+                    ArrowBackContainer(
+                      onpress: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    const SizedBox(
+                      width: 110,
+                    ),
+                    Image.asset("assets/images/logodark.png"),
                   ],
                 ),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Text('$timerText Sec', style: TextStyle(fontWeight: FontWeight.bold),),
-              ),
-              SizedBox(
-                height: 40,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Consumer<ResetPasswordProvider>(
-                  builder: (context, resetPasswordProvider, _) {
-                    return RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                            text: 'Don’t receive code ? ',
-                            style:
-                            TextStyle(color: const Color(0xFF000000).withOpacity(0.6), fontSize: 18),
-                            children: [
-                              TextSpan(
-                                  text: resetPasswordProvider.storeOtpLoading
-                                      ? '...' : 'Re-send',
-                                  style: TextStyle(
-                                      color: p1,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = remainTimer.inSeconds > 0 ? null : () async{
-                                      try{
-                                      final isSuccess = await resetPasswordProvider
-                                          .storeOtp(widget.phoneNum);
-                                      if(isSuccess){
-                                        remainTimer = const Duration(minutes: 1);
-
-                                        setState(() {});
-                                        if(!mounted) return;
-                                        showCustomSnackBar('otp resent successfully', context, isError: false);
-                                      }
-                                    }catch(e){
-                                        showCustomSnackBar(readableError(e), context);
-                                      }
-                                    // GlobalMethods.navigate(context, const RolePage());
-                                    }),
-                            ]));
-                  }
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 22,
                 ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 3.2,
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Consumer<ResetPasswordProvider>(
+                const Text(
+                  "OTP Code",
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  "Enter OTP code that sent \n to +20 ${widget.phoneNum}",
+                  style: const TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 20,
+                ),
+                Form(
+                  key: _formKey,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildSizedBox(context, first: true, last: false, controller: _1Controller),
+                      const SizedBox(width: 25,),
+                      buildSizedBox(context, first: false, last: false, controller: _2Controller),
+                      const SizedBox(width: 25,),
+                      buildSizedBox(context, first: false, last: false, controller: _3Controller),
+                      const SizedBox(width: 25,),
+                      buildSizedBox(context, first: false, last: true, controller: _4Controller),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text('$timerText Sec', style: TextStyle(fontWeight: FontWeight.bold),),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Consumer<ResetPasswordProvider>(
                     builder: (context, resetPasswordProvider, _) {
-                      return resetPasswordProvider.checkCodeLoading ? const CircularProgressIndicator() : Button(
-                        onpress: () async{
-                          try{
-                            if(!_formKey.currentState!.validate()) return;
-                            int code = int.parse(_1Controller.text + _2Controller.text + _3Controller.text +_4Controller.text);
-                            final isSuccess = await resetPasswordProvider.checkCode(widget.phoneNum, code);
-                            if(isSuccess){
-                              if(!mounted) return;
-                                GlobalMethods.navigate(
-                                    context,
-                                    widget.flag == 1 ? CreateAccountPage(phoneNum: widget.phoneNum,) :
-                                    NewPassword(phoneNum: widget.phoneNum,));
-                              }
-                            }catch(e){
-                            showCustomSnackBar(readableError(e), context);
-                          }
-                          },
-                        buttonText: "Next",
-                        textColor: Colors.white,
-                        buttonColor: p1,
-                        buttonRadius: 20,
-                        buttonHight: 50,
-                        buttonWidth: 130,
-                        textSize: 16);
-                  }
+                      return RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                              text: 'Don’t receive code ? ',
+                              style:
+                              TextStyle(color: const Color(0xFF000000).withOpacity(0.6), fontSize: 18),
+                              children: [
+                                TextSpan(
+                                    text: resetPasswordProvider.storeOtpLoading
+                                        ? '...' : 'Re-send',
+                                    style: TextStyle(
+                                        color: p1,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = remainTimer.inSeconds > 0 ? null : () async{
+                                        try{
+                                        final isSuccess = await resetPasswordProvider
+                                            .storeOtp(widget.phoneNum);
+                                        if(isSuccess){
+                                          remainTimer = const Duration(minutes: 1);
+
+                                          setState(() {});
+                                          if(!mounted) return;
+                                          showCustomSnackBar('otp resent successfully', context, isError: false);
+                                        }
+                                      }catch(e){
+                                          showCustomSnackBar(readableError(e), context);
+                                        }
+                                      // GlobalMethods.navigate(context, const RolePage());
+                                      }),
+                              ]));
+                    }
+                  ),
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 3.2,
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Consumer<ResetPasswordProvider>(
+                      builder: (context, resetPasswordProvider, _) {
+                        return resetPasswordProvider.checkCodeLoading ? const CircularProgressIndicator() : Button(
+                          onpress: () async{
+                            try{
+                              if(!_formKey.currentState!.validate()) return;
+                              int code = int.parse(_1Controller.text + _2Controller.text + _3Controller.text +_4Controller.text);
+                              final isSuccess = await resetPasswordProvider.checkCode(widget.phoneNum, code);
+                              if(isSuccess){
+                                if(!mounted) return;
+                                  GlobalMethods.navigate(
+                                      context,
+                                      widget.flag == 1 ? CreateAccountPage(phoneNum: widget.phoneNum,) :
+                                      NewPassword(phoneNum: widget.phoneNum,));
+                                }
+                              }catch(e){
+                              showCustomSnackBar(readableError(e), context);
+                            }
+                            },
+                          buttonText: "Next",
+                          textColor: Colors.white,
+                          buttonColor: p1,
+                          buttonRadius: 20,
+                          buttonHight: 50,
+                          buttonWidth: 130,
+                          textSize: 16);
+                    }
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 

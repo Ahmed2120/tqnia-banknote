@@ -6,6 +6,7 @@ class NotificationModel {
   int? userId;
   String? title;
   String? body;
+  String? type;
   String? createdAt;
   String? updatedAt;
 
@@ -16,6 +17,7 @@ class NotificationModel {
     this.userId,
     this.title,
     this.body,
+    this.type,
     this.createdAt,
     this.updatedAt});
 
@@ -27,6 +29,7 @@ class NotificationModel {
     userId = json['user_id'];
     title = json['title'];
     body = json['body'];
+    type = json['type'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }

@@ -46,7 +46,7 @@ class PusherConfig{
     log("Connection: $currentState");
   }
 
-  void onError(String message, int? code, dynamic e) {
+  void onError(dynamic message, int? code, dynamic e) {
     print('llllllllllllllllllllllllllllllllllllllllllll');
     log("onError: $message code: $code exception: $e");
   }

@@ -57,13 +57,13 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      widget.category.date ?? ' ',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                      ),
-                    ),
+                    // Text(
+                    //   widget.category.date ?? ' ',
+                    //   style: const TextStyle(
+                    //     color: Colors.white,
+                    //     fontSize: 13,
+                    //   ),
+                    // ),
                     Text(
                       widget.category.price ?? ' ',
                       style:

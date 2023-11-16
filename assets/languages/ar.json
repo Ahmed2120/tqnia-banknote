@@ -105,5 +105,10 @@
   "remember": "تذكرني",
   "forget_password": "نسيت كلمة المرور",
   "or": "أو",
-  "not_have_account": "ليس لديك حساب ؟"
+  "not_have_account": "ليس لديك حساب ؟",
+  "skip": "تخطى",
+  "arabic": "عربي",
+  "english": "انجليزي",
+  "set-Language": "اللغة",
+  "start_app": "ابدأ"
 }

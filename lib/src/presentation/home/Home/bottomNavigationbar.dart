@@ -9,11 +9,14 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import '../../../app/providers/notification_provider.dart';
 
 class ControlView extends StatelessWidget {
-  const ControlView({super.key});
+  const ControlView({super.key, this.initialIndex});
+
+  final int? initialIndex;
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ControlViewModel>(
-      init: Get.put(ControlViewModel()),
+      init: Get.put(ControlViewModel(initialIndex)),
       builder: (controller) => Scaffold(
         body: controller.currentScreen,
         bottomNavigationBar: bottomNavigationBar(context),
@@ -23,7 +26,7 @@ class ControlView extends StatelessWidget {
 
   Widget bottomNavigationBar(context) {
     return GetBuilder<ControlViewModel>(
-      init: ControlViewModel(),
+      init: ControlViewModel(initialIndex),
       builder: (controller) =>
 
           SalomonBottomBar(
@@ -76,7 +79,7 @@ class ControlView extends StatelessWidget {
           title: Text(tr('settings')),
         ),
       ],
-       currentIndex: controller.navigatorValue,
+       currentIndex: controller.navigatorValue!,
         onTap: (index) {
           controller.changeSelectedValue(index);
         },

@@ -8,6 +8,7 @@ import 'package:banknote/src/presentation/auth/pages/otp_page.dart';
 import 'package:banknote/src/presentation/welcome_page/splash_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
@@ -39,7 +40,8 @@ void main() async{
 
 
   await MyNotification.initialize(flutterLocalNotificationsPlugin);
-
+  final RemoteMessage? remoteMessage =
+  await FirebaseMessaging.instance.getInitialMessage();
 
   runApp(
     EasyLocalization(
@@ -82,14 +84,16 @@ void main() async{
           ),
 
         ],
-        child: const MyApp(),
+        child: MyApp(remoteMessage: remoteMessage,),
       ),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.remoteMessage});
+
+  final RemoteMessage? remoteMessage;
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +112,8 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               fontFamily: 'Poppins'
             ),
-            home: const SplashPage());
+
+            home: SplashPage(remoteMessage: remoteMessage,));
       }
     );
   }

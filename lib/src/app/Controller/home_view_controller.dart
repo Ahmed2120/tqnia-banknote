@@ -6,7 +6,35 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ControlViewModel extends GetxController {
-  int navigatorValue = 0;
+  ControlViewModel(int? initialIndex){
+    navigatorValue = 0;
+    if (initialIndex != null ){
+      navigatorValue = initialIndex;
+    }
+    switch (initialIndex) {
+      case 0:
+        {
+          currentScreen =  HomePage();
+          break;
+        }
+      case 1:
+        {
+          currentScreen =  ChatPage();
+          break;
+        }
+      case 2:
+        {
+          currentScreen = NotificationPage();
+          break;
+        }
+      case 3:
+        {
+          currentScreen = SettingPage();
+          break;
+        }
+    }
+  }
+  int? navigatorValue ;
 
   Widget currentScreen = const HomePage();
 

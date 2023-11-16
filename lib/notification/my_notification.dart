@@ -1,11 +1,21 @@
 import 'dart:io';
 
+import 'package:banknote/src/app/data/models/gift.dart';
+import 'package:banknote/src/app/data/models/news.dart';
+import 'package:banknote/src/app/utils/global_methods.dart';
+import 'package:banknote/src/presentation/home/Chat/chatPage.dart';
+import 'package:banknote/src/presentation/home/Notification/Notification_page.dart';
+import 'package:banknote/src/presentation/home/gifts/gifts_page.dart';
+import 'package:banknote/src/presentation/home/news/news.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:path_provider/path_provider.dart';
+
+import '../main.dart';
+import '../src/presentation/home/Home/bottomNavigationbar.dart';
 
 class MyNotification {
 
@@ -36,25 +46,13 @@ class MyNotification {
       print('--------------------000000000000----------------------');
       if (kDebugMode) {
         print("onMessage: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
+        print("----------------------------------------------");
+        print("bode: ${message.notification!.body}");
       }
       showNotification(message, flutterLocalNotificationsPlugin, false);
     });
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print('--------------------000000000000----------------------');
-      if (kDebugMode) {
-        print("onOpenApp: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
-      }
-      try{
-        if(message.notification!.titleLocKey != null && message.notification!.titleLocKey!.isNotEmpty) {
-          // Get.navigator!.push(
-          //     MaterialPageRoute(builder: (context) => OrderDetailsScreen(orderId: int.parse(message.notification!.titleLocKey!),orderType: 'default_type')));
-        }
-      }catch (e) {
-        if (kDebugMode) {
-          print(e);
-        }
-      }
-    });
+    FirebaseMessaging.instance.getInitialMessage().then(handleNavigate);
+    FirebaseMessaging.onMessageOpenedApp.listen(handleNavigate);
     FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
   }
 
@@ -152,5 +150,27 @@ Future<dynamic> myBackgroundMessageHandler(RemoteMessage message) async {
   if (kDebugMode) {
     print('==================================');
     print("onBackground: ${message.notification!.title}/${message.notification!.body}/${message.notification!.titleLocKey}");
+  }
+}
+
+Future<dynamic> handleNavigate(RemoteMessage? message) async {
+  if(message == null) return;
+
+  if(message.data != {}) {
+    if (message.data['type'] == "news") {
+      GlobalMethods.navigate(
+          NavigationService.navigatorKey.currentState!.context,
+          NewsPage());
+    }
+    else if (message.data['type'] == "gifts") {
+      GlobalMethods.navigate(
+          NavigationService.navigatorKey.currentState!.context,
+          GiftsPage());
+    }
+    else if (message.data['type'] == "message") {
+      GlobalMethods.navigate(
+          NavigationService.navigatorKey.currentState!.context,
+          const ControlView(initialIndex: 1));
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:banknote/src/app/utils/color.dart';
 import 'package:banknote/src/app/widgets/button.dart';
 import 'package:banknote/src/presentation/auth/pages/signin_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,7 +32,7 @@ class StartPage extends StatelessWidget {
             buttonColor: p3,
             buttonHight: 52,
             buttonRadius: 25,
-            buttonText: 'Get Start',
+            buttonText: tr('start_app'),
             buttonWidth: 230,
             onpress: () async{
               final prefs = await SharedPreferences.getInstance();

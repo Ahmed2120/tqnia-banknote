@@ -102,5 +102,10 @@
   "remember": "Remember",
   "forget_password": "Forget password",
   "or": "OR",
-  "not_have_account": "Not have an account ?"
+  "not_have_account": "Not have an account ?",
+  "skip": "Skip",
+  "arabic": "Arabic",
+  "english": "English",
+  "set_Language": "Set Language",
+  "start_app": "Get Start"
 }

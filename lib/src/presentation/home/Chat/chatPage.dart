@@ -11,6 +11,7 @@ import '../../../app/providers/auth_provider.dart';
 import '../../../app/providers/chat_provider.dart';
 import '../../../app/utils/global_methods.dart';
 import '../../../app/widgets/custom_snackbar.dart';
+import '../../../app/widgets/pages_background.dart';
 import 'widget/chat_service_cont.dart';
 
 class ChatPage extends StatefulWidget {
@@ -67,147 +68,149 @@ class _ChatPageState extends State<ChatPage> {
           return Future.value(true);
         }
       },
-      child: Stack(
-        children: [
-          Image.asset(
-            "assets/images/Screen.jpg",
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            fit: BoxFit.cover,
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 35,
-                ),
-                Center(child: Image.asset("assets/images/logodark.png")),
-                Text(
-                  e.tr('chat'),
-                  style: const TextStyle(fontSize: 20),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 25,
-                ),
-                const ChatServicCont(),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(child:
-                    Consumer<ChatProvider>(builder: (context, chatProvider, _) {
-                    if(chatProvider.messageList.isNotEmpty)  {
-                    WidgetsBinding.instance
-                        .addPostFrameCallback((_) => _scrollToBottom());
-                  }
-                  return chatProvider.msgLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    shrinkWrap: true,
-                    controller: _scrollController,
-                          itemCount: chatProvider.messageList.length,
-                          itemBuilder: (context, index) =>
-                              chatProvider.messageList[index].receiver == user?.id
-                                  ? receiverContainer(
-                                      chatProvider.messageList[index].message!)
-                                  : senderContainer(
-                                      chatProvider.messageList[index].message!),
-                        );
-                })),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 1.3,
-                      child: TextFormField(
-                        onTap: (){
-                          _showEmoji = false;
-                          setState(() {});
-                        },
-                        controller: _msgController,
-                        decoration: InputDecoration(
-                          prefixIcon: const Icon(
-                            Icons.attach_file_outlined,
-                            size: 30,
-                          ),
-                          suffixIcon: GestureDetector(
-                            onTap: () {
-                              FocusScope.of(context).unfocus();
-                              _showEmoji = true;
-                              setState(() {});
-                              },
-                              child: Image.asset('assets/icon/Emoji.png')),
-                          filled: true,
-                          fillColor: const Color(0xFFF9F9F9),
-                          hintText: e.tr('type_message'),
-                          hintStyle: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide.none,
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Colors.grey, width: 0.0),
-                            borderRadius: BorderRadius.circular(15.0),
+      child:  PagesBackground(
+        child: Stack(
+          children: [
+            // Image.asset(
+            //   "assets/images/Screen.jpg",
+            //   height: MediaQuery.of(context).size.height,
+            //   width: MediaQuery.of(context).size.width,
+            //   fit: BoxFit.cover,
+            // ),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 35,
+                  ),
+                  Center(child: Image.asset("assets/images/logodark.png")),
+                  Text(
+                    e.tr('chat'),
+                    style: const TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 25,
+                  ),
+                  const ChatServicCont(),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(child:
+                      Consumer<ChatProvider>(builder: (context, chatProvider, _) {
+                      if(chatProvider.messageList.isNotEmpty)  {
+                      WidgetsBinding.instance
+                          .addPostFrameCallback((_) => _scrollToBottom());
+                    }
+                    return chatProvider.msgLoading
+                        ? const Center(child: CircularProgressIndicator())
+                        : ListView.builder(
+                      physics: BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      controller: _scrollController,
+                            itemCount: chatProvider.messageList.length,
+                            itemBuilder: (context, index) =>
+                                chatProvider.messageList[index].receiver == user?.id
+                                    ? receiverContainer(
+                                        chatProvider.messageList[index].message!)
+                                    : senderContainer(
+                                        chatProvider.messageList[index].message!),
+                          );
+                  })),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 1.3,
+                        child: TextFormField(
+                          onTap: (){
+                            _showEmoji = false;
+                            setState(() {});
+                          },
+                          controller: _msgController,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(
+                              Icons.attach_file_outlined,
+                              size: 30,
+                            ),
+                            suffixIcon: GestureDetector(
+                              onTap: () {
+                                FocusScope.of(context).unfocus();
+                                _showEmoji = true;
+                                setState(() {});
+                                },
+                                child: Image.asset('assets/icon/Emoji.png')),
+                            filled: true,
+                            fillColor: const Color(0xFFF9F9F9),
+                            hintText: e.tr('type_message'),
+                            hintStyle: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide:
+                                  const BorderSide(color: Colors.grey, width: 0.0),
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      width: 14,
-                    ),
-                    Consumer<ChatProvider>(builder: (context, chatProvider, _) {
-                      return chatProvider.sendMsgLoading ? CircularProgressIndicator() : InkWell(
-                        child: Image.asset('assets/icon/send.png'),
-                        onTap: ()
-                        async{
-                          try{
-                                  if (_msgController.text.trim().isNotEmpty) {
-                                    final isSuccess = await chatProvider
-                                        .sendMessage(_msgController.text);
-                                    if (isSuccess) {
-                                      _msgController.clear();
-                                      if(_showEmoji){
-                                        _showEmoji = false;
-                                        setState(() {});
+                      const SizedBox(
+                        width: 14,
+                      ),
+                      Consumer<ChatProvider>(builder: (context, chatProvider, _) {
+                        return chatProvider.sendMsgLoading ? CircularProgressIndicator() : InkWell(
+                          child: Image.asset('assets/icon/send.png'),
+                          onTap: ()
+                          async{
+                            try{
+                                    if (_msgController.text.trim().isNotEmpty) {
+                                      final isSuccess = await chatProvider
+                                          .sendMessage(_msgController.text);
+                                      if (isSuccess) {
+                                        _msgController.clear();
+                                        if(_showEmoji){
+                                          _showEmoji = false;
+                                          setState(() {});
 
+                                        }
+                                        else{
+                                          FocusScope.of(context).unfocus();
+                                        }
+                                        _scrollToBottom();
                                       }
-                                      else{
-                                        FocusScope.of(context).unfocus();
-                                      }
-                                      _scrollToBottom();
                                     }
-                                  }
-                                }catch(e){
-                            if(!mounted) return;
-                            showCustomSnackBar(readableError(e), context, isError: true);
-                          }
-                              });
-                    })
-                  ],
-                ),
-                if(_showEmoji) SizedBox(
-                  height: dHeight * 0.29,
-                  child: EmojiPicker(
-
-                    textEditingController: _msgController, // pass here the same [TextEditingController] that is connected to your input field, usually a [TextFormField]
-                    config: Config(
-                      columns: 7,
-                      bgColor: Colors.white,
-                      emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0), // Issue: https://github.com/flutter/flutter/issues/28894
-                    ),
+                                  }catch(e){
+                              if(!mounted) return;
+                              showCustomSnackBar(readableError(e), context, isError: true);
+                            }
+                                });
+                      })
+                    ],
                   ),
-                )
-              ],
+                  if(_showEmoji) SizedBox(
+                    height: dHeight * 0.29,
+                    child: EmojiPicker(
+
+                      textEditingController: _msgController, // pass here the same [TextEditingController] that is connected to your input field, usually a [TextFormField]
+                      config: Config(
+                        columns: 7,
+                        bgColor: Colors.white,
+                        emojiSizeMax: 32 * (Platform.isIOS ? 1.30 : 1.0), // Issue: https://github.com/flutter/flutter/issues/28894
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -2,14 +2,24 @@ import 'package:banknote/src/app/utils/color.dart';
 import 'package:banknote/src/app/widgets/button.dart';
 import 'package:banknote/src/presentation/welcome_page/splash_page.dart';
 import 'package:banknote/src/presentation/welcome_page/start_page.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 
+import '../../app/providers/lang_provider.dart';
 import '../../app/utils/global_methods.dart';
 
-class OnBoardingPage3 extends StatelessWidget {
+class OnBoardingPage3 extends StatefulWidget {
   const OnBoardingPage3({super.key});
+
+  @override
+  State<OnBoardingPage3> createState() => _OnBoardingPage3State();
+}
+
+class _OnBoardingPage3State extends State<OnBoardingPage3> {
+  bool _isEnglish = true;
 
   @override
   Widget build(BuildContext context) {
@@ -49,9 +59,9 @@ class OnBoardingPage3 extends StatelessWidget {
                           const SizedBox(
                             height: 10,
                           ),
-                          const Center(
+                          Center(
                             child: Text(
-                              "Set Language",
+                              tr('set_Language'),
                               style: TextStyle(fontSize: 20),
                             ),
                           ),
@@ -59,46 +69,43 @@ class OnBoardingPage3 extends StatelessWidget {
                             height: MediaQuery.of(context).size.height / 25,
                           ),
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.height / 5.5,
-                                width:
-                                    MediaQuery.of(context).size.width / 2.7,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: p3),
-                                child: const Center(
-                                  child: Text(
-                                    "English",
+                              Expanded(
+                                child: RadioListTile(
+                                  groupValue: _isEnglish,
+                                  value: true,
+                                  onChanged: (val){
+                                    _isEnglish = val!;
+                                    context.setLocale(const Locale('en'));
+                                    Provider.of<LangProvider>(context, listen: false).toggleLang(0);
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    tr('english'),
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
                               ),
-                              SizedBox(
-                                width: MediaQuery.of(context).size.width / 10,
-                              ),
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.height / 5.5,
-                                width:
-                                    MediaQuery.of(context).size.width / 2.7,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: p3),
-                                child: const Center(
-                                  child: Text(
-                                    "Arabic",
+                              Expanded(
+                                child: RadioListTile(
+                                  groupValue: _isEnglish,
+                                  value: false,
+                                  onChanged: (val){
+                                    _isEnglish = val!;
+                                    context.setLocale(const Locale('ar'));
+                                    Provider.of<LangProvider>(context, listen: false).toggleLang(1);
+                                    setState(() {});
+                                  },
+                                  title: Text(
+                                    tr('arabic'),
                                     style: TextStyle(color: Colors.grey),
                                   ),
                                 ),
                               )
                             ],
                           ),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height / 25,
-                          ),
+                          const Spacer(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -107,7 +114,7 @@ class OnBoardingPage3 extends StatelessWidget {
                                 buttonWidth: 150,
                                 buttonColor: Colors.white,
                                 buttonRadius: 25,
-                                buttonText: 'Skip',
+                                buttonText: tr('skip'),
                                 onpress: () {
                                   GlobalMethods.navigateReplaceALL(context, const StartPage());
                                 },
@@ -119,7 +126,7 @@ class OnBoardingPage3 extends StatelessWidget {
                                 buttonWidth: 150,
                                 buttonColor: p1,
                                 buttonRadius: 25,
-                                buttonText: 'Next',
+                                buttonText: tr('next'),
                                 onpress: () {
                                   Navigator.push(
                                     context,
