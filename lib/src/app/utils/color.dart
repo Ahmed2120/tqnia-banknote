@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-Color p1 = HexColor('#01D074'); // green
+// Color p1 = HexColor('#01D074'); // green
+Color p1 = HexColor('#568EF8'); // blue
+Color p2 = HexColor('#EFF4FF'); // blue light
 Color p3 = HexColor("#FEFEFF"); // white gry
 Color p4 = HexColor("#3A486F"); // blue dark
 Color p5 = HexColor('#F4F4F4');// green dark

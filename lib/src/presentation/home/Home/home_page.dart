@@ -9,6 +9,7 @@ import 'package:banknote/src/app/widgets/pages_background.dart';
 import 'package:banknote/src/presentation/home/Category/our_category.dart';
 import 'package:banknote/src/presentation/home/Category/widget/category_cont.dart';
 import 'package:banknote/src/presentation/home/SubmitForm/submit_form.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -43,10 +44,7 @@ class _HomePageState extends State<HomePage> {
       _getNews();
       _getGift();
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print('----------notification-----------');
-        print('data: ');
-        print(message.data);
-        print("{id: 2, type: gifts}");
+
         Provider.of<NotificationProvider>(context, listen: false).changeUnreadNoti(true);
       });
 
@@ -96,27 +94,59 @@ class _HomePageState extends State<HomePage> {
       body: PagesBackground(
         child: Stack(
           children: [
-            Positioned(
-              top: MediaQuery.of(context).size.height / 16,
-                left: 10,
-                child:
-            Image.asset("assets/images/logodark.png", width: 40, height: 40,)
-            ),
+            // Positioned(
+            //   top: MediaQuery.of(context).size.height / 16,
+            //     left: 10,
+            //     child:
+            //     CircleAvatar(
+            //         backgroundColor: Colors.black38,
+            //         radius: 30,child: Image.asset("assets/images/logodark.png", width: 40, height: 40,))
+            // ),
             ListView(
               padding: const EdgeInsets.all(15),
                 children: [
-              Image.asset("assets/images/home.png", height: 130,),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 30,
+                  ),
+              // Image.asset("assets/images/home.png", height: 130,),
 
-              Text(
-                "Welcome, ${user!.fName}!",
-                style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10,),
-              const Text(
-                "You’re ready to go, let’s find you a circlet",
-                style: TextStyle(fontSize: 14, color: Colors.grey),
-                textAlign: TextAlign.center,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Welcome, ${user!.fName}!",
+                          style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
+                        const SizedBox(height: 10,),
+                        const Text(
+                          "You’re ready to go, let’s find you a circlet",
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                          // textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10000.0),
+                    child: CachedNetworkImage(
+                      imageUrl: user?.photo ?? '',
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                      // progressIndicatorBuilder:
+                      //     (context, url, downloadProgress) =>
+                      //     CircularProgressIndicator(
+                      //         value: downloadProgress.progress),
+                      errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height / 30,
@@ -124,7 +154,7 @@ class _HomePageState extends State<HomePage> {
 
                   Text(
                     tr('news'),
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
 
                   // SizedBox(
@@ -141,9 +171,11 @@ class _HomePageState extends State<HomePage> {
                   //     },),
                   //   ),
                   // ),
+
+                  const SizedBox(height: 5,),
                   Consumer<NewsProvider>(
                     builder: (context, newsProvider, _) {
-                      return NewsWidget(
+                      return newsProvider.news == null ? SizedBox.shrink() : NewsWidget(
                         loading: newsProvider.news_load,
                         newsText: newsProvider.news?.newsTxt,
                         onTap: (){
@@ -164,12 +196,14 @@ class _HomePageState extends State<HomePage> {
 
                   Text(
                     tr('gifts'),
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
+                    color: Colors.white),
                   ),
 
+                  const SizedBox(height: 5,),
                   Consumer<GiftProvider>(
                       builder: (context, giftProvider, _) {
-                        return NewsWidget(
+                        return  giftProvider.gift == null ? SizedBox.shrink() : NewsWidget(
                           loading: giftProvider.gift_load,
                           newsText: giftProvider.gift?.giftTxt,
                           onTap: (){
@@ -190,7 +224,8 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Text(
                     tr('category'),
-                    style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold,
+                    color: Colors.white),
                   ),
                   GestureDetector(
                     onTap: (){
@@ -208,6 +243,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
+
+                  const SizedBox(height: 5,),
               categoriesProvider.isload
                   ? SizedBox(
                       height: MediaQuery.of(context).size.height / 5,
@@ -272,7 +309,7 @@ class _HomePageState extends State<HomePage> {
                         child: CategoryWidget(
                           category: categoriesProvider
                               .categories!.listCategory![index],
-                          iconImage: "assets/icon/Credit card_light.png",
+                          iconImage: "assets/icon/category-icon.png",
                         ),
                       );
                     }),

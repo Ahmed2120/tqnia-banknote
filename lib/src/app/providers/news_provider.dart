@@ -25,7 +25,7 @@ class NewsProvider with ChangeNotifier{
 
       _news_load=false;
       notifyListeners();
-      rethrow;
+      // rethrow;
     }
 
 

@@ -26,67 +26,65 @@ class PhoneSignupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body:  PagesBackground(
-        child: Stack(children: [
-          // Image.asset(
-          //   "assets/images/Screen.jpg",
-          //   height: MediaQuery.of(context).size.height,
-          //   width: MediaQuery.of(context).size.width,
-          //   fit: BoxFit.cover,
-          // ),
-          Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: ListView(
-              children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 14,
-                ),
-                Row(
+        child: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Column(
+            children: [
+              Expanded(
+                child: ListView(
                   children: [
-                    ArrowBackContainer(
-                      onpress: () {
-                        Navigator.pop(context);
-                      },
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 14,
                     ),
-                    const SizedBox(
-                      width: 110,
-                    ),
-                    Image.asset("assets/images/logodark.png"),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 22,
-                ),
-                Text(
-                  tr('signup'),
-                  style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 20,
-                ),
-                Form(
-                  key: _formKey,
-                  child: InputFormField(
-                    controller: _phoneController,
-                    hintText: tr(' Enter Phone'),
-                    //  onSaved: (firstname) => _firstname = firstname,
-                    prefixIcon: Image.asset('assets/icon/Calling.png'),
-                    validator: Validator(
-                      rules: [
-                        RequiredRule(validationMessage: tr('phone_validation')),
+                    Row(
+                      children: [
+                        ArrowBackContainer(
+                          onpress: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                        const SizedBox(
+                          width: 110,
+                        ),
+                        Center(child: Image.asset("assets/images/logo.png")),
                       ],
                     ),
-                  ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 22,
+                    ),
+                    Text(
+                      tr('signup'),
+                      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 20,
+                    ),
+                    Form(
+                      key: _formKey,
+                      child: InputFormField(
+                        controller: _phoneController,
+                        hintText: tr(' Enter Phone'),
+                        //  onSaved: (firstname) => _firstname = firstname,
+                        prefixIcon: const Icon(Icons.phone),
+                        validator: Validator(
+                          rules: [
+                            RequiredRule(validationMessage: tr('phone_validation')),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 2.5,
-                ),
-                Align(
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Align(
                   alignment: Alignment.bottomRight,
                   child: Consumer<AuthProvider>(
                       builder: (context, authProvider, _) {
@@ -113,10 +111,10 @@ class PhoneSignupPage extends StatelessWidget {
                       }
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ]),
+        ),
       ),
     );
   }

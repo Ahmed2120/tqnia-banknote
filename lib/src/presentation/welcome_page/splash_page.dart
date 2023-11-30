@@ -35,6 +35,11 @@ class _SplashPageState extends State<SplashPage> {
         if(await isLogin){
           if(widget.remoteMessage != null && widget.remoteMessage!.data != {}){
             handleNavigate(widget.remoteMessage!);
+            await Provider.of<AuthProvider>(context, listen: false)
+                .getUserData();
+            if (!mounted) return;
+            Provider.of<AuthProvider>(context, listen: false)
+                .updateDeviceToken();
           }
           else{
             if (!mounted) return;
@@ -100,12 +105,12 @@ class _SplashPageState extends State<SplashPage> {
       if (message.data['type'] == "news") {
         GlobalMethods.navigateReplaceALL(
             NavigationService.navigatorKey.currentState!.context,
-            NewsPage());
+            NewsPage(newsModel: NewsModel(newsTxt: message.notification!.body),));
       }
       else if (message.data['type'] == "gifts") {
         GlobalMethods.navigateReplaceALL(
             NavigationService.navigatorKey.currentState!.context,
-            GiftsPage());
+            GiftsPage(giftModel: GiftModel(giftTxt: message.notification!.body),));
       }
       else if (message.data['type'] == "message") {
         GlobalMethods.navigate(

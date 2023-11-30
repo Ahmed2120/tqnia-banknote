@@ -25,8 +25,9 @@ class GlobalMethods{
     );
   }
 
-  String dateFormat(DateTime dateTime){
-    String format = ' ${getDayName(dateTime)} ${dateTime.day} - ${dateTime.month} - ${dateTime.year}' ;
+  String dateFormat(String dateString){
+    final dateTime = DateTime.parse(dateString);
+    String format = '${dateTime.day} - ${dateTime.month} - ${dateTime.year}' ;
     return format;
   }
 

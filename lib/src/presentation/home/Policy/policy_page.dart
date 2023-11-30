@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 import '../../../app/widgets/pages_background.dart';
+import '../../auth/widget/arrow_back_cont.dart';
 
 class PolicyPage extends StatelessWidget {
   Future<String> _loadJsonData() async {
@@ -30,16 +31,28 @@ class PolicyPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height / 15,
+                height: MediaQuery.of(context).size.height / 35,
               ),
-              Center(child: Image.asset("assets/images/logodark.png")),
+              Row(
+                children: [
+                  ArrowBackContainer(
+                    onpress: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 3.8,
+                  ),
+                  const Text(
+                    "Privacy Policy",
+                    style: TextStyle(fontSize: 24, color: Colors.white),
+                  ),
+                ],
+              ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 20,
+                height: MediaQuery.of(context).size.height / 30,
               ),
-              const Text(
-                "Privacy Policy",
-                style: TextStyle(fontSize: 20),
-              ),
+
               Expanded(
                 child: FutureBuilder(
                   future: _loadData(),
@@ -54,13 +67,15 @@ class PolicyPage extends StatelessWidget {
                             title: Text(
                               data[index]['title'],
                               style: const TextStyle(
-                                fontSize: 18,
+                                fontSize: 19,
+                                color: Colors.white
                               ),
                             ),
                             subtitle: Text(
                               data[index]['description'],
                               style: const TextStyle(
-                                fontSize: 12,
+                                fontSize: 17,
+                                  color: Color(0xffA29EB6)
                               ),
                             ),
                           );

@@ -14,6 +14,7 @@ import 'package:banknote/src/presentation/home/Setting/widget/icon_container.dar
 import 'package:banknote/src/presentation/auth/widget/arrow_back_cont.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flrx_validator/flrx_validator.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -86,7 +87,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child:
                     Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 20,
+                    height: MediaQuery.of(context).size.height / 35,
                   ),
                   Row(
                     children: [
@@ -98,13 +99,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       SizedBox(
                         width: MediaQuery.of(context).size.width / 3.8,
                       ),
-                      Image.asset("assets/images/logodark.png")
+                      Text(tr('edit_profile'), style: TextStyle(color: Colors.white, fontSize: 24),),
+
                     ],
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 33,
                   ),
-                  Text(tr('edit_profile')),
                   Center(
                     child: Stack(
                       alignment: Alignment.bottomRight,
@@ -156,10 +157,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       ],
                     ),
                   ),
+                  const SizedBox(height: 10,),
+                  Center(child: Text('${user?.fName} ${user?.lName}', style: TextStyle(color: Colors.white, fontSize: 20),)),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 33,
                   ),
-                  Text(tr('first_name')),
+                  Text(tr('first_name'), style: TextStyle(color: Colors.white),),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 50,
                   ),
@@ -167,7 +170,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     hintText: tr('username'),
                     onSaved: (firstname) => _firstname = firstname,
                     initialValue: user?.fName ?? '',
-                    prefixIcon: Image.asset('assets/icon/Profile.png'),
+                    prefixIcon: const Icon(Icons.person),
                     validator: Validator(
                       rules: [
                         RequiredRule(
@@ -179,7 +182,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 50,
                   ),
-                  Text(tr('last_name')),
+                  Text(tr('last_name'), style: TextStyle(color: Colors.white),),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 50,
                   ),
@@ -187,7 +190,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     hintText: tr('username'),
                     onSaved: (lastname) => _lastname = lastname,
                     initialValue: user?.lName ?? '',
-                    prefixIcon: Image.asset('assets/icon/Profile.png'),
+                    prefixIcon: const Icon(Icons.person),
                     validator: Validator(
                       rules: [
                         RequiredRule(
@@ -199,14 +202,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 50,
                   ),
-                  Text(tr('email')),
+                  Text(tr('email'), style: TextStyle(color: Colors.white),),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 50,
                   ),
                   InputFormField(
                     hintText: tr('email'),
                     onSaved: (email) => _email = email,
-                    prefixIcon: Image.asset('assets/icon/Message.png'),
+                    prefixIcon: const Icon(Icons.email),
                     initialValue: user?.email ?? '',
                     keyboardType: TextInputType.emailAddress,
                     validator: (email) {
@@ -222,25 +225,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 50,
                   ),
-                  Text(tr('password')),
+                  Text(tr('password'), style: TextStyle(color: Colors.white),),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 50,
                   ),
                   InputFormField(
                     obscure: _obscure,
                     hintText: tr('password'),
-                    prefixIcon: Image.asset('assets/icon/Lock.png'),
+                    prefixIcon: const Icon(Icons.lock),
                     onSaved: (password) => _password = password,
                     suffixIcon: InkWell(
                       onTap: () {
                         _obscure = !_obscure;
                         setState(() {});
                       },
-                      child: Icon(
-                        Icons.remove_red_eye,
-                        color:
-                            _obscure ? null : Theme.of(context).colorScheme.primary,
-                      ),
+                      child: _obscure ? Icon(CupertinoIcons.eye_slash_fill) : Icon(CupertinoIcons.eye_fill)
                     ),
                   ),
                   SizedBox(
@@ -291,7 +290,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             style: Theme.of(context)
                 .textTheme
                 .displayLarge
-                ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                ?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 20,

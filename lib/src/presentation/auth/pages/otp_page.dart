@@ -66,7 +66,7 @@ startTimer();
         .inSeconds.remainder(60).toString().padLeft(2, '0')}';
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body:  PagesBackground(
         child:  Stack(children: [
           // Image.asset(
@@ -77,139 +77,146 @@ startTimer();
           // ),
           Padding(
             padding: const EdgeInsets.all(14.0),
-            child: ListView(
+            child: Column(
               children: [
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 14,
-                ),
-                Row(
-                  children: [
-                    ArrowBackContainer(
-                      onpress: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    const SizedBox(
-                      width: 110,
-                    ),
-                    Image.asset("assets/images/logodark.png"),
-                  ],
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 22,
-                ),
-                const Text(
-                  "OTP Code",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Enter OTP code that sent \n to +20 ${widget.phoneNum}",
-                  style: const TextStyle(
-                    fontSize: 12,
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 20,
-                ),
-                Form(
-                  key: _formKey,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                Expanded(
+                  child: ListView(
                     children: [
-                      buildSizedBox(context, first: true, last: false, controller: _1Controller),
-                      const SizedBox(width: 25,),
-                      buildSizedBox(context, first: false, last: false, controller: _2Controller),
-                      const SizedBox(width: 25,),
-                      buildSizedBox(context, first: false, last: false, controller: _3Controller),
-                      const SizedBox(width: 25,),
-                      buildSizedBox(context, first: false, last: true, controller: _4Controller),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 14,
+                      ),
+                      Row(
+                        children: [
+                          ArrowBackContainer(
+                            onpress: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          const SizedBox(
+                            width: 110,
+                          ),
+                          Image.asset("assets/images/logo.png"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 22,
+                      ),
+                      const Text(
+                        "OTP Code",
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        "Enter OTP code that sent \n to +20 ${widget.phoneNum}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: Colors.white
+                        ),
+                      ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 20,
+                      ),
+                      Form(
+                        key: _formKey,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildSizedBox(context, first: true, last: false, controller: _1Controller),
+                            const SizedBox(width: 25,),
+                            buildSizedBox(context, first: false, last: false, controller: _2Controller),
+                            const SizedBox(width: 25,),
+                            buildSizedBox(context, first: false, last: false, controller: _3Controller),
+                            const SizedBox(width: 25,),
+                            buildSizedBox(context, first: false, last: true, controller: _4Controller),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Text('$timerText Sec', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: Consumer<ResetPasswordProvider>(
+                          builder: (context, resetPasswordProvider, _) {
+                            return RichText(
+                                textAlign: TextAlign.center,
+                                text: TextSpan(
+                                    text: 'Don’t receive code ? ',
+                                    style:
+                                    TextStyle(color: Colors.white, fontSize: 19),
+                                    children: [
+                                      TextSpan(
+                                          text: resetPasswordProvider.storeOtpLoading
+                                              ? '...' : 'Re-send',
+                                          style: TextStyle(
+                                              color: p1,
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.w600),
+                                          recognizer: TapGestureRecognizer()
+                                            ..onTap = remainTimer.inSeconds > 0 ? null : () async{
+                                              try{
+                                              final isSuccess = await resetPasswordProvider
+                                                  .storeOtp(widget.phoneNum);
+                                              if(isSuccess){
+                                                remainTimer = const Duration(minutes: 1);
+
+                                                setState(() {});
+                                                if(!mounted) return;
+                                                showCustomSnackBar('otp resent successfully', context, isError: false);
+                                              }
+                                            }catch(e){
+                                                showCustomSnackBar(readableError(e), context);
+                                              }
+                                            // GlobalMethods.navigate(context, const RolePage());
+                                            }),
+                                    ]));
+                          }
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 40,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Text('$timerText Sec', style: TextStyle(fontWeight: FontWeight.bold),),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Consumer<ResetPasswordProvider>(
-                    builder: (context, resetPasswordProvider, _) {
-                      return RichText(
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                              text: 'Don’t receive code ? ',
-                              style:
-                              TextStyle(color: const Color(0xFF000000).withOpacity(0.6), fontSize: 18),
-                              children: [
-                                TextSpan(
-                                    text: resetPasswordProvider.storeOtpLoading
-                                        ? '...' : 'Re-send',
-                                    style: TextStyle(
-                                        color: p1,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600),
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = remainTimer.inSeconds > 0 ? null : () async{
-                                        try{
-                                        final isSuccess = await resetPasswordProvider
-                                            .storeOtp(widget.phoneNum);
-                                        if(isSuccess){
-                                          remainTimer = const Duration(minutes: 1);
-
-                                          setState(() {});
-                                          if(!mounted) return;
-                                          showCustomSnackBar('otp resent successfully', context, isError: false);
-                                        }
-                                      }catch(e){
-                                          showCustomSnackBar(readableError(e), context);
-                                        }
-                                      // GlobalMethods.navigate(context, const RolePage());
-                                      }),
-                              ]));
-                    }
-                  ),
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height / 3.2,
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: Consumer<ResetPasswordProvider>(
-                      builder: (context, resetPasswordProvider, _) {
-                        return resetPasswordProvider.checkCodeLoading ? const CircularProgressIndicator() : Button(
-                          onpress: () async{
-                            try{
-                              if(!_formKey.currentState!.validate()) return;
-                              int code = int.parse(_1Controller.text + _2Controller.text + _3Controller.text +_4Controller.text);
-                              final isSuccess = await resetPasswordProvider.checkCode(widget.phoneNum, code);
-                              if(isSuccess){
-                                if(!mounted) return;
-                                  GlobalMethods.navigate(
-                                      context,
-                                      widget.flag == 1 ? CreateAccountPage(phoneNum: widget.phoneNum,) :
-                                      NewPassword(phoneNum: widget.phoneNum,));
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Align(
+                    alignment: Alignment.bottomRight,
+                    child: Consumer<ResetPasswordProvider>(
+                        builder: (context, resetPasswordProvider, _) {
+                          return resetPasswordProvider.checkCodeLoading ? const CircularProgressIndicator() : Button(
+                              onpress: () async{
+                                try{
+                                  if(!_formKey.currentState!.validate()) return;
+                                  int code = int.parse(_1Controller.text + _2Controller.text + _3Controller.text +_4Controller.text);
+                                  final isSuccess = await resetPasswordProvider.checkCode(widget.phoneNum, code);
+                                  if(isSuccess){
+                                    if(!mounted) return;
+                                    GlobalMethods.navigate(
+                                        context,
+                                        widget.flag == 1 ? CreateAccountPage(phoneNum: widget.phoneNum,) :
+                                        NewPassword(phoneNum: widget.phoneNum,));
+                                  }
+                                }catch(e){
+                                  showCustomSnackBar(readableError(e), context);
                                 }
-                              }catch(e){
-                              showCustomSnackBar(readableError(e), context);
-                            }
-                            },
-                          buttonText: "Next",
-                          textColor: Colors.white,
-                          buttonColor: p1,
-                          buttonRadius: 20,
-                          buttonHight: 50,
-                          buttonWidth: 130,
-                          textSize: 16);
-                    }
+                              },
+                              buttonText: "Next",
+                              textColor: Colors.white,
+                              buttonColor: p1,
+                              buttonRadius: 20,
+                              buttonHight: 50,
+                              buttonWidth: 130,
+                              textSize: 16);
+                        }
+                    ),
                   ),
                 ),
               ],
@@ -232,22 +239,23 @@ startTimer();
 
           if(val.isEmpty && !first) FocusScope.of(context).previousFocus();
         },
-        style: Theme.of(context).textTheme.titleMedium,
+        style: Theme.of(context).textTheme.titleMedium!.copyWith(color: Colors.white),
+        cursorColor: Colors.white,
         decoration: InputDecoration(
             contentPadding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
             errorStyle: const TextStyle(
               fontSize: 0, // change the font size of the error message
             ),
             filled: true,
-            fillColor: Colors.white,
+            fillColor: Colors.white30,
             focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
                 borderRadius: BorderRadius.circular(10)),
             enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
                 borderRadius: BorderRadius.circular(10)),
             errorBorder: OutlineInputBorder(

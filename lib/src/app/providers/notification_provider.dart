@@ -29,6 +29,7 @@ class NotificationProvider with ChangeNotifier{
 
     try{
       _notificationList = await _api.getNotifications(userId);
+      _notificationList = _notificationList.reversed.toList();
 
       _notification_load=false;
       notifyListeners();

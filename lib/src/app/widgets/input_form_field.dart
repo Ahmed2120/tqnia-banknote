@@ -91,21 +91,23 @@ class InputFormField extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium
-                ?.copyWith(fontWeight: FontWeight.w400, fontSize: 14),
-            cursorColor: Theme.of(context).primaryColor,
+                ?.copyWith(fontWeight: FontWeight.w400, fontSize: 18, color: Colors.white),
+            cursorColor: Colors.white,
             initialValue: initialValue,
             readOnly: readOnly,
             decoration: InputDecoration(
               filled: true,
-              fillColor: fillColor ?? Colors.white,
+              fillColor: fillColor ?? Colors.white30,
+              prefixIconColor: Colors.white,
+              suffixIconColor: Colors.white,
               hintText: hintText,
               labelText: above ? null : labelText,
               hintStyle: isSearch
                   ? Theme.of(context)
                       .textTheme
                       .displaySmall
-                      ?.copyWith(fontWeight: FontWeight.w400, fontSize: 14)
-                  : null,
+                      ?.copyWith(fontWeight: FontWeight.w400, fontSize: 16)
+                  : TextStyle(color: Colors.white),
               prefixIcon: Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: hasConstraints ? 8.0 : 0.0),
@@ -120,7 +122,11 @@ class InputFormField extends StatelessWidget {
               ),
               counterText: "",
               enabledBorder: OutlineInputBorder(
-                borderSide: const BorderSide(color: Colors.grey, width: 0.0),
+                borderSide: const BorderSide(color: Colors.white, width: 0.0),
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.white, width: 0.0),
                 borderRadius: BorderRadius.circular(15.0),
               ),
             ),

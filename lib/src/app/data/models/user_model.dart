@@ -13,6 +13,7 @@ class UserModel {
   String? photo;
   bool? isDelete;
   bool? isActive;
+  String? createdAt;
   UserModel(
       { 
       this.id,
@@ -22,7 +23,8 @@ class UserModel {
       this.email,
       this.deviceToken,
       this.emailVerifiedAt,
-      this.photo 
+      this.photo ,
+      this.createdAt ,
       });
 
   UserModel.fromJson(Map<String, dynamic> json, {String? token}) {
@@ -33,6 +35,7 @@ class UserModel {
     email = json['email'];
     deviceToken = json['device_token'];
     emailVerifiedAt = json['email_verified_at'];
+    createdAt = json['created_at'];
     if (json["photo"] != null) {
       photo = json["photo"].startsWith('http')
           ? json["photo"]

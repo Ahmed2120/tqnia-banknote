@@ -48,13 +48,13 @@ class FileCard extends StatelessWidget {
                   name,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 14),
+                      fontSize: 16),
                 ),
                 Text(
                   '${(size * math.pow(10, -6)).toString()} ${tr('mb')}',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       fontWeight: FontWeight.w400,
-                      fontSize: 18),
+                      fontSize: 19),
                 ),
               ],
             ),

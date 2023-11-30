@@ -25,26 +25,30 @@ class CustomDropDown extends StatelessWidget {
           fit: FlexFit.loose,
         showSearchBox: true
       ),
+      dropdownButtonProps: const DropdownButtonProps(
+        color: Colors.white
+      ),
       items: list,
       validator: validator,
       // itemAsString: (CustomModel customModel) => customModel.Name,
       dropdownDecoratorProps: DropDownDecoratorProps(
         dropdownSearchDecoration: InputDecoration(
-            suffixIconColor: const Color(0xFF00B0BD),
+            suffixIconColor: Colors.black,
             filled: true,
-            fillColor: Colors.white,
+            fillColor: Colors.white38,
             hintText: hintText!,
+            hintStyle: const TextStyle(color: Colors.white),
             isDense: true,
             contentPadding: const EdgeInsets.symmetric(horizontal: 12),
 
             focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
                 borderRadius: BorderRadius.circular(10)),
             enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
-                  color: Colors.grey,
+                  color: Colors.white,
                 ),
                 borderRadius: BorderRadius.circular(10)),
             errorBorder: OutlineInputBorder(

@@ -28,7 +28,7 @@ class ErrorPopUp extends StatelessWidget {
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium
-                ?.copyWith(fontSize: 14, fontWeight: FontWeight.w500),
+                ?.copyWith(fontSize: 16, fontWeight: FontWeight.w500),
           ),
           const SizedBox(height: 36.0),
           GestureDetector(

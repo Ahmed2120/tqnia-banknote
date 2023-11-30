@@ -14,9 +14,11 @@ import '../../../app/providers/notification_provider.dart';
 import '../../../app/utils/global_methods.dart';
 import '../../../app/widgets/custom_snackbar.dart';
 import '../../../app/widgets/pages_background.dart';
+import '../../auth/widget/arrow_back_cont.dart';
 
 class NewsPage extends StatefulWidget {
-  NewsPage({super.key});
+  NewsPage({super.key, this.newsModel});
+  NewsModel? newsModel;
 
 
   @override
@@ -30,7 +32,7 @@ class _NewsPageState extends State<NewsPage> {
 
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
 
-        _getNews();
+        if(widget.newsModel != null )_getNews();
 
       });
 
@@ -64,25 +66,48 @@ class _NewsPageState extends State<NewsPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Image.asset("assets/images/logodark.png")),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 35,
+                  ),
+                  Center(child: CircleAvatar(
+                      backgroundColor: Colors.black38,
+                      radius: 50,
+                      child: Image.asset("assets/images/logodark.png"))),
+
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height / 40,
+                  ),
+                  ArrowBackContainer(
+                    onpress: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 30,
                   ),
                   Text(
                       tr('news'),
-                    style: const TextStyle(fontSize: 20),
+                    style: const TextStyle(fontSize: 22, color: Colors.white),
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 30,
+                    height: MediaQuery.of(context).size.height / 40,
                   ),
                   Consumer<NewsProvider>(
                     builder: (context, newsProvider, _) {
-                      return Expanded(
+                      return widget.newsModel == null ? Expanded(
                         child: newsProvider.news_load ? const Center(child: CircularProgressIndicator(),) : ListView(
                           children: [
-                            Text(newsProvider.news!.newsTxt??'' ,style: const TextStyle(height: 2.5), textAlign: GlobalMethods.rtlLang(newsProvider.news!.newsTxt??'q' ,)
+                            Text(newsProvider.news!.newsTxt??'' ,style: const TextStyle(height: 2.5, color: Colors.white, fontSize: 16), textAlign: GlobalMethods.rtlLang(newsProvider.news!.newsTxt??'q' ,)
                             ? TextAlign.end
-                            : TextAlign.start,)
+                            : TextAlign.start, )
+                          ],
+                        ),
+                      ) : Expanded(
+                        child: ListView(
+                          children: [
+                            Text(widget.newsModel!.newsTxt??'' ,style: const TextStyle(height: 2.5), textAlign: GlobalMethods.rtlLang(widget.newsModel!.newsTxt??'q' ,)
+                                ? TextAlign.end
+                                : TextAlign.start,)
                           ],
                         ),
                       );

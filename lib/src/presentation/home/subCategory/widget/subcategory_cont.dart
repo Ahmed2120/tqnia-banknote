@@ -84,13 +84,13 @@ class _SubCategoryWidgetState extends State<SubCategoryWidget> {
                         '  widget.subcategory.date ??',
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 14,
                         ),
                       ),
                       Text(
                         'widget.subcategory.price ??  ',
                         style:
-                            const TextStyle(color: Colors.white, fontSize: 12),
+                            const TextStyle(color: Colors.white, fontSize: 14),
                       )
                     ],
                   ))

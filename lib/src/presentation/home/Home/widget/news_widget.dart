@@ -25,7 +25,8 @@ class NewsWidget extends StatelessWidget {
       width: dSizeWidth < 570 ? 180 : dSizeWidth * 0.3,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15), color: Colors.white),
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.white30),
       child: loading
           ? Center(
               child: SizedBox(
@@ -42,9 +43,11 @@ class NewsWidget extends StatelessWidget {
               children: [
                 Text(
                   newsText ?? '',
+                  style: const TextStyle(color: Colors.white),
                   overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
+                  maxLines: 2,
                 ),
+                const SizedBox(height: 5,),
                 InkWell(
                   onTap: () => onTap(),
                   child: Align(

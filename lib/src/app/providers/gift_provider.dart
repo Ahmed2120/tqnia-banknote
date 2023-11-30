@@ -26,7 +26,7 @@ class GiftProvider with ChangeNotifier{
       _gift_load=false;
       notifyListeners();
 
-      rethrow;
+      // rethrow;
     }
 
 

@@ -54,121 +54,125 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
         child: Stack(children: [
           // SizedBox(width: double.infinity,
           //     child: Image.asset("assets/images/Screen.jpg", fit: BoxFit.fill,)),
-          Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: MediaQuery
-                      .of(context)
-                      .size
-                      .height / 15,
-                ),
-                Center(child: Image.asset("assets/images/logodark.png")),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: ArrowBackContainer(
-                    onpress: () {
-                      Navigator.pop(context);
-                    },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height / 30,
                   ),
-                ),
 
-                Padding(
-                  padding: EdgeInsets.only(right: 15, left: 15, bottom: 15),
-                  child: Text(
-                    widget.title,
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: ArrowBackContainer(
+                      onpress: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                   ),
-                ),
-                Consumer<CategoriesProvider>(
-                    builder: (context, categoriesProvider, _) {
-                      return categoriesProvider.subCatLoad ? Expanded(
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            height: MediaQuery
-                                .of(context)
-                                .size
-                                .height / 5,
-                            width: MediaQuery
-                                .of(context)
-                                .size
-                                .width / 5,
-                            child: Center(
-                              child: LoadingIndicator(
-                                indicatorType: Indicator.lineScalePulseOutRapid,
-                                colors: [p7],
+
+                  Padding(
+                    padding: EdgeInsets.only(right: 15, left: 15, bottom: 15),
+                    child: Text(
+                      widget.title,
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
+                  Consumer<CategoriesProvider>(
+                      builder: (context, categoriesProvider, _) {
+                        return categoriesProvider.subCatLoad ? Expanded(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
+                              height: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .height / 5,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width / 5,
+                              child: Center(
+                                child: LoadingIndicator(
+                                  indicatorType: Indicator.lineScalePulseOutRapid,
+                                  colors: [p7],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ) : Expanded(
-                        child: ListView.separated(
-                          separatorBuilder: (context, index) =>
-                              SizedBox(
-                                height: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .height / 80,
-                              ),
-                          itemCount: categoriesProvider
-                              .subCategories!.listCategory?.length ??
-                              0,
-                          itemBuilder: ((context, index) {
-                            return InkWell(
-                              onTap: () {
-                                final isActive = categoriesProvider.subCategories!.listCategory![index].isActive;
-                                final hasData = categoriesProvider.subCategories!.listCategory![index].isHasData;
+                        ) : Expanded(
+                          child: ListView.separated(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            separatorBuilder: (context, index) =>
+                                SizedBox(
+                                  height: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .height / 80,
+                                ),
+                            itemCount: categoriesProvider
+                                .subCategories!.listCategory?.length ??
+                                0,
+                            itemBuilder: ((context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  final isActive = categoriesProvider.subCategories!.listCategory![index].isActive;
+                                  final hasData = categoriesProvider.subCategories!.listCategory![index].isHasData;
 
-                                if(isActive == 0 || hasData == 0){
-                                  return;
-                                }else if(hasData == 1){
-                                  Provider.of<CategoryProvider>(context, listen: false).getCategoryDetails(categoriesProvider
-                                      .subCategories!.listCategory![index].id!);
+                                  if(isActive == 0 || hasData == 0){
+                                    return;
+                                  }else if(hasData == 1){
+                                    Provider.of<CategoryProvider>(context, listen: false).getCategoryDetails(categoriesProvider
+                                        .subCategories!.listCategory![index].id!);
 
-                                  Navigator.push(
-                                    context,
-                                    CupertinoPageRoute(
-                                      builder: (_) => SubSubCategoryPage(title: categoriesProvider
-                                          .subCategories!.listCategory![index].titl??'', catId: categoriesProvider
-                                          .subCategories!.listCategory![index].id!,),
-                                    ),
-                                  );
-                                }else if(hasData == 2){
-                                  final categoryFormModel = categoriesProvider
-                                      .subCategories!.listCategory![index].categoryFormModel;
-                                  final categoryModel = categoriesProvider
-                                      .categories!.listCategory![index];
-                                  if(categoryModel.formUsers != null && categoryFormModel!.members != categoryModel.formUsers!.length) {
-                                      GlobalMethods.navigate(
-                                          context,
-                                          SubmitFormPage(
-                                            categoryForm: categoriesProvider
-                                                .subCategories!
-                                                .listCategory![index]
-                                                .categoryFormModel!,
-                                            formUsers: categoryModel.formUsers,
-                                          ));
-                                    }else{
-                                    ShowMyDialog.showMsg('sorry! Members are complete', isError: true);
-                                  }
-                                  }
+                                    Navigator.push(
+                                      context,
+                                      CupertinoPageRoute(
+                                        builder: (_) => SubSubCategoryPage(title: categoriesProvider
+                                            .subCategories!.listCategory![index].titl??'', catId: categoriesProvider
+                                            .subCategories!.listCategory![index].id!,),
+                                      ),
+                                    );
+                                  }else if(hasData == 2){
+                                    final categoryFormModel = categoriesProvider
+                                        .subCategories!.listCategory![index].categoryFormModel;
+                                    final categoryModel = categoriesProvider
+                                        .categories!.listCategory![index];
+                                    if(categoryModel.formUsers != null && categoryFormModel!.members != categoryModel.formUsers!.length) {
+                                        GlobalMethods.navigate(
+                                            context,
+                                            SubmitFormPage(
+                                              categoryForm: categoriesProvider
+                                                  .subCategories!
+                                                  .listCategory![index]
+                                                  .categoryFormModel!,
+                                              formUsers: categoryModel.formUsers,
+                                            ));
+                                      }else{
+                                      ShowMyDialog.showMsg('sorry! Members are complete', isError: true);
+                                    }
+                                    }
 
 
-                                // GlobalMethods.navigate(context, const SubmitFormPage());
-                              },
-                              child: CategoryWidget(
-                                category: categoriesProvider
-                                    .subCategories!.listCategory![index],
-                                iconImage: "assets/icon/Database_light.png",),
-                            );
-                          }),
-                        ),
-                      );
-                    }
-                ),
-              ]),
+                                  // GlobalMethods.navigate(context, const SubmitFormPage());
+                                },
+                                child: CategoryWidget(
+                                  category: categoriesProvider
+                                      .subCategories!.listCategory![index],
+                                  iconImage: "assets/icon/category-icon.png",),
+                              );
+                            }),
+                          ),
+                        );
+                      }
+                  ),
+                ]),
+          ),
 
         ]),
       ),

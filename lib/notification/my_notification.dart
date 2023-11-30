@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:banknote/src/app/data/models/gift.dart';
@@ -12,9 +13,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart' as g;
 import 'package:path_provider/path_provider.dart';
 
 import '../main.dart';
+import '../src/app/Controller/home_view_controller.dart';
 import '../src/presentation/home/Home/bottomNavigationbar.dart';
 
 class MyNotification {
@@ -28,11 +31,27 @@ class MyNotification {
     var androidInitialize = const AndroidInitializationSettings('notification_icon');
     var iOSInitialize = const IOSInitializationSettings();
     var initializationsSettings = InitializationSettings(android: androidInitialize, iOS: iOSInitialize);
-    flutterLocalNotificationsPlugin.initialize(initializationsSettings, onSelectNotification: (String? payload) async {
+    flutterLocalNotificationsPlugin.initialize(
+        initializationsSettings, onSelectNotification: (String? payload) async {
+
       try{
         if(payload != null && payload.isNotEmpty) {
-          // Globa.navigator!.push(
-          //     MaterialPageRoute(builder: (context) => OrderDetailsScreen(orderId: int.parse(payload),orderType: 'default_type')));
+              Map data = jsonDecode(payload);
+
+              if (data['type'] == "news") {
+                GlobalMethods.navigate(
+                    NavigationService.navigatorKey.currentState!.context,
+                    NewsPage(newsModel: NewsModel(newsTxt: data['body']),));
+              }
+              else if (data['type'] == "gifts") {
+                GlobalMethods.navigate(
+                    NavigationService.navigatorKey.currentState!.context,
+                    GiftsPage(giftModel: GiftModel(giftTxt: data['body']),));
+              }
+              else if (data['type'] == "message") {
+                g.Get.find<ControlViewModel>().changeSelectedValue(1);
+              }
+
         }
       }catch (e) {
         if (kDebugMode) {
@@ -51,7 +70,7 @@ class MyNotification {
       }
       showNotification(message, flutterLocalNotificationsPlugin, false);
     });
-    FirebaseMessaging.instance.getInitialMessage().then(handleNavigate);
+    // FirebaseMessaging.instance.getInitialMessage().then(handleNavigate);
     FirebaseMessaging.onMessageOpenedApp.listen(handleNavigate);
     FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
   }
@@ -59,19 +78,21 @@ class MyNotification {
   static Future<void> showNotification(RemoteMessage message, FlutterLocalNotificationsPlugin fln, bool data) async {
     String? title;
     String? body;
-    String? orderID;
+    String? type;
     String? image;
+    Map? bodyData;
     if(data) {
       title = message.data['title'];
       body = message.data['body'];
-      orderID = message.data['order_id'];
+      type = message.data['type'];
       // image = (message.data['image'] != null && message.data['image'].isNotEmpty)
       //     ? message.data['image'].startsWith('http') ? message.data['image']
       //     : '${AppConstants.baseUrl}/storage/app/public/notification/${message.data['image']}' : null;
     }else {
       title = message.notification!.title;
       body = message.notification!.body;
-      orderID = message.notification!.titleLocKey;
+      type = message.data['type'];
+      bodyData = {'body': body, 'type': type};
       if(Platform.isAndroid) {
         // image = (message.notification!.android!.imageUrl != null && message.notification!.android!.imageUrl!.isNotEmpty)
         //     ? message.notification!.android!.imageUrl!.startsWith('http') ? message.notification!.android!.imageUrl
@@ -85,25 +106,25 @@ class MyNotification {
 
     if(image != null && image.isNotEmpty) {
       try{
-        await showBigPictureNotificationHiddenLargeIcon(title, body, orderID, image, fln);
+        await showBigPictureNotificationHiddenLargeIcon(title, body, type, image, fln);
       }catch(e) {
-        await showBigTextNotification(title, body!, orderID, fln);
+        await showBigTextNotification(title, body!, type, fln);
       }
     }else {
-      await showBigTextNotification(title, body!, orderID, fln);
+      await showBigTextNotification(title, body!, jsonEncode(bodyData), fln);
     }
   }
 
-  static Future<void> showTextNotification(String title, String body, String orderID, FlutterLocalNotificationsPlugin fln) async {
+  static Future<void> showTextNotification(String title, String body, String type, FlutterLocalNotificationsPlugin fln) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'your channel id', 'your channel name', playSound: true,
       importance: Importance.max, priority: Priority.max, sound: RawResourceAndroidNotificationSound('notification'),
     );
     const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await fln.show(0, title, body, platformChannelSpecifics, payload: orderID);
+    await fln.show(0, title, body, platformChannelSpecifics, payload: type);
   }
 
-  static Future<void> showBigTextNotification(String? title, String body, String? orderID, FlutterLocalNotificationsPlugin fln) async {
+  static Future<void> showBigTextNotification(String? title, String body, String? payload, FlutterLocalNotificationsPlugin fln) async {
     BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
       body, htmlFormatBigText: true,
       contentTitle: title, htmlFormatContentTitle: true,
@@ -114,7 +135,7 @@ class MyNotification {
       sound: const RawResourceAndroidNotificationSound('notification'),
     );
     NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await fln.show(0, title, body, platformChannelSpecifics, payload: orderID);
+    await fln.show(0, title, body, platformChannelSpecifics, payload: payload);
   }
 
   static Future<void> showBigPictureNotificationHiddenLargeIcon(String? title, String? body, String? orderID, String image, FlutterLocalNotificationsPlugin fln) async {
@@ -168,9 +189,7 @@ Future<dynamic> handleNavigate(RemoteMessage? message) async {
           GiftsPage());
     }
     else if (message.data['type'] == "message") {
-      GlobalMethods.navigate(
-          NavigationService.navigatorKey.currentState!.context,
-          const ControlView(initialIndex: 1));
+      g.Get.find<ControlViewModel>().changeSelectedValue(1);
     }
   }
 }

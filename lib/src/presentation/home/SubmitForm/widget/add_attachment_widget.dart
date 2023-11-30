@@ -40,7 +40,7 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
             style: Theme.of(context)
                 .textTheme
                 .displayLarge
-                ?.copyWith(fontSize: 14, fontWeight: FontWeight.w400),
+                ?.copyWith(fontSize: 16, fontWeight: FontWeight.w400),
           ),
           const SizedBox(
             height: 20,
@@ -96,15 +96,15 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
       },
       child: Container(
         margin: const EdgeInsets.only(bottom: 14),
-        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(24),
-          border: Border.all(
-            color: Theme.of(context).cardColor,
-            width: 0.2,
-          ),
-        ),
+        // padding: EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+        // decoration: BoxDecoration(
+        //   color: Theme.of(context).cardColor,
+        //   borderRadius: BorderRadius.circular(24),
+        //   border: Border.all(
+        //     color: Theme.of(context).cardColor,
+        //     width: 0.2,
+        //   ),
+        // ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -113,13 +113,13 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge
-                  ?.copyWith(fontWeight: FontWeight.w500, fontSize: 18),
+                  ?.copyWith(fontWeight: FontWeight.w500, fontSize: 19, color: Colors.white),
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height / 35,
             ),
             DottedBorder(
-              color: Theme.of(context).primaryColor,
+              color: Colors.white,
               strokeWidth: 1,
               radius: const Radius.circular(10),
               dashPattern: const [10],
@@ -142,8 +142,8 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
                     : Column(
                         children: [
                           Image.asset(
-                            'assets/icon/Upload.png',
-                            fit: BoxFit.cover,
+                            'assets/icon/document-upload.png',
+                            fit: BoxFit.fill,
                             height: MediaQuery.of(context).size.height / 15,
                             width: MediaQuery.of(context).size.width / 5.8,
                           ),
@@ -156,7 +156,7 @@ class _AddAttachmentWidgetState extends State<AddAttachmentWidget> {
                                 .textTheme
                                 .labelSmall
                                 ?.copyWith(
-                                    fontSize: 14, fontWeight: FontWeight.w400),
+                                    fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white),
                           ),
                         ],
                       ),

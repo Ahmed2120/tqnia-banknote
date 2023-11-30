@@ -36,11 +36,11 @@ class WelcomeContainer extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 22),
                 ),
                 Text(
                   supText,
-                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  style: const TextStyle(fontSize: 16, color: Colors.grey),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -55,7 +55,7 @@ class WelcomeContainer extends StatelessWidget {
                         child: const Center(
                           child: Text(
                             "Skip",
-                            style: TextStyle(fontSize: 18, color: Colors.grey),
+                            style: TextStyle(fontSize: 19, color: Colors.grey),
                           ),
                         ),
                       ),

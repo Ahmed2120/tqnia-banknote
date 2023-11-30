@@ -11,7 +11,7 @@ class ControlViewModel extends GetxController {
     if (initialIndex != null ){
       navigatorValue = initialIndex;
     }
-    switch (initialIndex) {
+    switch (navigatorValue) {
       case 0:
         {
           currentScreen =  HomePage();

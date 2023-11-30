@@ -13,42 +13,43 @@ class StartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: p4,
-      body: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          const SizedBox(
-            height: 80,
-          ),
-          Image.asset("assets/images/startLOGO.png"),
-          SizedBox(
-            height: MediaQuery.of(context).size.height / 10,
-          ),
-          Expanded(child: Image.asset("assets/images/startImage.png")),
-          Image.asset("assets/images/startText.png"),
-          SizedBox(
-            height: 20,
-          ),
-          Button(
-            buttonColor: p3,
-            buttonHight: 52,
-            buttonRadius: 25,
-            buttonText: tr('start_app'),
-            buttonWidth: 230,
-            onpress: () async{
-              final prefs = await SharedPreferences.getInstance();
-              prefs.setBool('opened', true);
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            const SizedBox(
+              height: 80,
+            ),
+            Image.asset("assets/images/start.png"),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 10,
+            ),
+            Image.asset("assets/images/startText.png"),
+            SizedBox(
+              height: 20,
+            ),
+            Button(
+              buttonColor: p3,
+              buttonHight: 52,
+              buttonRadius: 25,
+              buttonText: tr('start_app'),
+              buttonWidth: 230,
+              onpress: () async{
+                final prefs = await SharedPreferences.getInstance();
+                prefs.setBool('opened', true);
 
-              Navigator.push(
-                context,
-                CupertinoPageRoute(
-                  builder: (_) => const SignInPage(),
-                ),
-              );
-            },
-            textColor: Colors.black,
-            textSize: 18,
-          ),
-        ]),
+                Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (_) => const SignInPage(),
+                  ),
+                );
+              },
+              textColor: Colors.black,
+              textSize: 18,
+            ),
+          ]),
+        ),
       ),
     );
   }

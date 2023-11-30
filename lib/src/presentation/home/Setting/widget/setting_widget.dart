@@ -6,31 +6,59 @@ class InformationWidget extends StatelessWidget {
   final VoidCallback onpress;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-         SizedBox(
-          height: MediaQuery.of(context).size.height/30
+    // return Column(
+    //   children: [
+    //      SizedBox(
+    //       height: MediaQuery.of(context).size.height/30
+    //     ),
+    //     const Divider(
+    //       height: 20,
+    //       color: Colors.black54,
+    //       thickness: 1,
+    //     ),
+    //      SizedBox(
+    //       height: MediaQuery.of(context).size.height/30
+    //     ),
+    //     Row(
+    //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    //       children: [
+    //         Text(infoText, style: TextStyle(fontSize: 16,
+    //         color: Colors.white, fontWeight: FontWeight.w600),),
+    //         GestureDetector(
+    //           onTap: onpress,
+    //           child: const Icon(
+    //             Icons.arrow_forward_ios,
+    //             color: Colors.grey,
+    //           ),
+    //         )
+    //       ],
+    //     ),
+    //   ],
+    // );
+
+    return InkWell(
+      onTap: onpress,
+      child: Container(
+        padding: EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white38,
+          borderRadius: BorderRadius.circular(15)
         ),
-        const Divider(
-          height: 5,
-        ),
-         SizedBox(
-          height: MediaQuery.of(context).size.height/30
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(infoText, style: TextStyle(fontSize: 16),),
-            GestureDetector(
-              onTap: onpress,
-              child: const Icon(
-                Icons.arrow_forward_ios,
-                color: Colors.grey,
-              ),
-            )
-          ],
-        ),
-      ],
+        child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(infoText, style: TextStyle(fontSize: 18,
+                color: Colors.white, fontWeight: FontWeight.w600),),
+                GestureDetector(
+                  onTap: onpress,
+                  child: const Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.white,
+                  ),
+                )
+              ],
+            ),
+      ),
     );
   }
 }

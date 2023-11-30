@@ -12,6 +12,7 @@ import 'package:loading_indicator/loading_indicator.dart';
 
 import '../../app/utils/global_methods.dart';
 import '../../app/widgets/alert_dialog.dart';
+import '../../app/widgets/pages_background.dart';
 import '../home/SubmitForm/submit_form.dart';
 
 
@@ -49,108 +50,111 @@ class _SubSubCategoryPageState extends State<SubSubCategoryPage> {
   Widget build(BuildContext context) {
     // final instancOfCategoryProvider = Provider.of<CategoryProvider>(context);
     return Scaffold(
-      body: Stack(children: [
-        SizedBox(width: double.infinity,
-            child: Image.asset("assets/images/Screen.jpg", fit: BoxFit.fill,)),
-        Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: MediaQuery
-                    .of(context)
-                    .size
-                    .height / 15,
-              ),
-              Center(child: Image.asset("assets/images/logodark.png")),
-              Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: ArrowBackContainer(
-                  onpress: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
+      body: PagesBackground(
+        child: Stack(children: [
+           Padding(
+             padding: const EdgeInsets.symmetric(horizontal: 8.0),
+             child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: MediaQuery
+                        .of(context)
+                        .size
+                        .height / 30,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: ArrowBackContainer(
+                      onpress: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
 
-              Padding(
-                padding: EdgeInsets.only(right: 15, left: 15, bottom: 15),
-                child: Text(
-                  widget.title,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-              ),
-              Consumer<CategoryProvider>(
-                  builder: (context, categoryProvider, _) {
-                    return categoryProvider.isload ? Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: SizedBox(
-                          height: MediaQuery
-                              .of(context)
-                              .size
-                              .height / 5,
-                          width: MediaQuery
-                              .of(context)
-                              .size
-                              .width / 5,
-                          child: Center(
-                            child: LoadingIndicator(
-                              indicatorType: Indicator.lineScalePulseOutRapid,
-                              colors: [p7],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ) : Expanded(
-                      child: ListView.separated(
-                        separatorBuilder: (context, index) =>
-                            SizedBox(
+                  Padding(
+                    padding: EdgeInsets.only(right: 15, left: 15, bottom: 15),
+                    child: Text(
+                      widget.title,
+                      style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                    ),
+                  ),
+                  Consumer<CategoryProvider>(
+                      builder: (context, categoryProvider, _) {
+                        return categoryProvider.isload ? Expanded(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: SizedBox(
                               height: MediaQuery
                                   .of(context)
                                   .size
-                                  .height / 80,
+                                  .height / 5,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width / 5,
+                              child: Center(
+                                child: LoadingIndicator(
+                                  indicatorType: Indicator.lineScalePulseOutRapid,
+                                  colors: [p7],
+                                ),
+                              ),
                             ),
-                        itemCount: categoryProvider
-                            .category!.listCategory?.length ??
-                            0,
-                        itemBuilder: ((context, index) {
-                          return InkWell(
-                            onTap: () {
-                              final isActive = categoryProvider.category!.listCategory![index].isActive;
-                              final hasData = categoryProvider.category!.listCategory![index].isHasData;
+                          ),
+                        ) : Expanded(
+                          child: ListView.separated(
+                            padding: const EdgeInsets.symmetric(horizontal: 10),
+                            separatorBuilder: (context, index) =>
+                                SizedBox(
+                                  height: MediaQuery
+                                      .of(context)
+                                      .size
+                                      .height / 80,
+                                ),
+                            itemCount: categoryProvider
+                                .category!.listCategory?.length ??
+                                0,
+                            itemBuilder: ((context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  final isActive = categoryProvider.category!.listCategory![index].isActive;
+                                  final hasData = categoryProvider.category!.listCategory![index].isHasData;
 
-                              if(isActive == 0 || hasData == 0){
-                                return;
-                              }
-                              else if(hasData == 2){
-                                final categoryFormModel = categoryProvider
-                                    .category!.listCategory![index].categoryFormModel;
-                                final categoryModel = categoryProvider
-                                    .category!.listCategory![index];
-                                if(categoryModel!.formUsers != null && categoryFormModel!.members != categoryModel.formUsers!.length) {
-                                    GlobalMethods.navigate(
-                                        context,
-                                        SubmitFormPage(
-                                            categoryForm: categoryFormModel,
-                                        formUsers: categoryModel.formUsers,));
-                                  }else{
-                                  ShowMyDialog.showMsg('sorry! Members are complete', isError: true);
-                                }
-                                }
-                            },
-                            child: CategoryWidget(
-                              category: categoryProvider
-                                  .category!.listCategory![index],
-                              iconImage: "assets/icon/Database_light.png",),
-                          );
-                        }),
-                      ),
-                    );
-                  }
-              ),
-            ]),
+                                  if(isActive == 0 || hasData == 0){
+                                    return;
+                                  }
+                                  else if(hasData == 2){
+                                    final categoryFormModel = categoryProvider
+                                        .category!.listCategory![index].categoryFormModel;
+                                    final categoryModel = categoryProvider
+                                        .category!.listCategory![index];
+                                    if(categoryModel!.formUsers != null && categoryFormModel!.members != categoryModel.formUsers!.length) {
+                                        GlobalMethods.navigate(
+                                            context,
+                                            SubmitFormPage(
+                                                categoryForm: categoryFormModel,
+                                            formUsers: categoryModel.formUsers,));
+                                      }else{
+                                      ShowMyDialog.showMsg('sorry! Members are complete', isError: true);
+                                    }
+                                    }
+                                },
+                                child: CategoryWidget(
+                                  category: categoryProvider
+                                      .category!.listCategory![index],
+                                  iconImage: "assets/icon/category-icon.png",),
+                              );
+                            }),
+                          ),
+                        );
+                      }
+                  ),
+                ]),
+           ),
 
-      ]),
+        ]),
+      ),
     );
   }
 }

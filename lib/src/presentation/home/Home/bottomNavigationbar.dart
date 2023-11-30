@@ -36,14 +36,14 @@ class ControlView extends StatelessWidget {
           icon: SizedBox(
               height: 30,
               width: 30,
-              child: Image.asset("assets/icon/Icon Home Active.png")),
+              child: Image.asset("assets/icon/Home.png")),
           title: Text(tr('home')),
         ),
           SalomonBottomBarItem(
           icon: SizedBox(
               height: 30,
               width: 30,
-              child: Image.asset("assets/icon/Chat.png")),
+              child: Image.asset("assets/icon/Chat.png", color: p1,)),
           title: Text(tr('chat')),
         ),
           SalomonBottomBarItem(

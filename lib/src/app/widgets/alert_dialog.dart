@@ -21,7 +21,7 @@ class ShowMyDialog  {
                   style: const TextStyle
                     (
                       fontWeight: FontWeight.w900,
-                      fontSize: 18
+                      fontSize: 19
                   ),
 
                 ),
@@ -57,7 +57,7 @@ class ShowMyDialog  {
                       style: const TextStyle
                         (
                           fontWeight: FontWeight.w900,
-                          fontSize: 18
+                          fontSize: 19
                       ),
 
                     ),

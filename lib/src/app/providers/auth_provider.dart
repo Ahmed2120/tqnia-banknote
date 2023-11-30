@@ -187,9 +187,10 @@ class AuthProvider extends ChangeNotifier {
     prefs.setString('fname', currentUser!.fName!);
     prefs.setString('lname', currentUser!.lName!);
     prefs.setString('email', currentUser!.email!);
-    prefs.setString('device_token', currentUser!.deviceToken!);
+    prefs.setString('device_token', currentUser!.deviceToken??"");
     prefs.setString('phone', currentUser!.phone!);
     prefs.setString('photo', currentUser!.photo!);
+    prefs.setString('created_at', currentUser!.createdAt!);
   }
 
   getUserData() async{
@@ -203,6 +204,7 @@ class AuthProvider extends ChangeNotifier {
       deviceToken: prefs.getString('device_token'),
       phone: prefs.getString('phone'),
       photo: prefs.getString('photo'),
+      createdAt: prefs.getString('created_at'),
     );
   }
 

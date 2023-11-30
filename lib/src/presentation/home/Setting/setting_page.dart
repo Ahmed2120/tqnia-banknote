@@ -31,24 +31,30 @@ class _SettingPageState extends State<SettingPage> {
         child: SingleChildScrollView(
           child: Stack(children: [
             Padding(
-              padding: EdgeInsets.all(15.0),
+              padding: const EdgeInsets.all(15.0),
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // SizedBox(
+                    //   height: MediaQuery.of(context).size.height / 30,
+                    // ),
+                    // Center(child: CircleAvatar(
+                    //     backgroundColor: Colors.black38,
+                    //     radius: 50,
+                    //     child: Image.asset("assets/images/logodark.png"))),
+                    // SizedBox(
+                    //   height: MediaQuery.of(context).size.height / 60,
+                    // ),
+                    // Text(
+                    //   tr('settings'),
+                    //   style: TextStyle(fontSize: 22, color: Colors.white),
+                    // ),
+                    // const SizedBox(
+                    //   height: 25,
+                    // ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 30,
-                    ),
-                    Center(child: Image.asset("assets/images/logodark.png")),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height / 60,
-                    ),
-                    Text(
-                      tr('settings'),
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(
-                      height: 25,
                     ),
                     Row(
                       children: [
@@ -68,57 +74,56 @@ class _SettingPageState extends State<SettingPage> {
                           ),
                         ),
                         SizedBox(
-                          width: MediaQuery.of(context).size.width / 5,
+                          width: MediaQuery.of(context).size.width / 10,
                         ),
                         Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              tr('joined'),
-                              style: TextStyle(color: Colors.grey),
+                              "${user!.fName} ${user.lName}",
+                              style: const TextStyle(
+                                  fontSize: 24, fontWeight: FontWeight.bold,
+                                  color: Colors.white),
                             ),
-                            Text("2 month ago")
+const SizedBox(height: 10,),
+                            Text(
+                              tr('joined ${user!.createdAt != null ?GlobalMethods().dateFormat(user!.createdAt!) : ''}'),
+                              style: const TextStyle(color: Colors.white, fontSize: 14),
+                            )
                           ],
-                        )
+                        ),
+
                       ],
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Text(
-                      "${user!.fName} " "\n${user.lName}",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
+                    const SizedBox(height: 20,),
                     InformationWidget(
                       infoText: tr('edit_profile'),
                       onpress: () {
                         GlobalMethods.navigate(context, const EditProfilePage());
                       },
                     ),
+                    const SizedBox(height: 10,),
                     InformationWidget(
                       infoText: tr('my_service'),
                       onpress: () {
                         GlobalMethods.navigate(context, const OurCategory());
                       },
                     ),
+
+                    const SizedBox(height: 10,),
                     InformationWidget(
                       infoText: tr('privacy_policy'),
                       onpress: () {
                         GlobalMethods.navigate(context, PolicyPage());
                       },
                     ),
+
+                    const SizedBox(height: 10,),
                     InformationWidget(
                       infoText: tr('language'),
                       onpress: () {
                         GlobalMethods.navigate(context, LanguagePage(), then: (){setState(() {print(',,,,,,,sett........');});});
                       },
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Divider(
-                      height: 5,
                     ),
                     const SizedBox(
                       height: 20,
@@ -137,8 +142,8 @@ class _SettingPageState extends State<SettingPage> {
                       },
                       child: Text(
                         tr('sign_out'),
-                        style: TextStyle(
-                            color: Colors.red,
+                        style: const TextStyle(
+                            color: Colors.white,
                             fontSize: 22,
                             fontWeight: FontWeight.bold),
                       ),

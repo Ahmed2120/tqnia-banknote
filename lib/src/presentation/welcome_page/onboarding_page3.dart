@@ -45,7 +45,7 @@ class _OnBoardingPage3State extends State<OnBoardingPage3> {
               Padding(
                 padding: const EdgeInsets.only(right: 10, left: 10),
                 child: Container(
-                  height: MediaQuery.of(context).size.height / 2.3,
+                  height: MediaQuery.of(context).size.height / 4.3,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -62,49 +62,49 @@ class _OnBoardingPage3State extends State<OnBoardingPage3> {
                           Center(
                             child: Text(
                               tr('set_Language'),
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(fontSize: 22),
                             ),
                           ),
                           SizedBox(
                             height: MediaQuery.of(context).size.height / 25,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                child: RadioListTile(
-                                  groupValue: _isEnglish,
-                                  value: true,
-                                  onChanged: (val){
-                                    _isEnglish = val!;
-                                    context.setLocale(const Locale('en'));
-                                    Provider.of<LangProvider>(context, listen: false).toggleLang(0);
-                                    setState(() {});
-                                  },
-                                  title: Text(
-                                    tr('english'),
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: RadioListTile(
-                                  groupValue: _isEnglish,
-                                  value: false,
-                                  onChanged: (val){
-                                    _isEnglish = val!;
-                                    context.setLocale(const Locale('ar'));
-                                    Provider.of<LangProvider>(context, listen: false).toggleLang(1);
-                                    setState(() {});
-                                  },
-                                  title: Text(
-                                    tr('arabic'),
-                                    style: TextStyle(color: Colors.grey),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          //   children: [
+                          //     Expanded(
+                          //       child: RadioListTile(
+                          //         groupValue: _isEnglish,
+                          //         value: true,
+                          //         onChanged: (val){
+                          //           _isEnglish = val!;
+                          //           context.setLocale(const Locale('en'));
+                          //           Provider.of<LangProvider>(context, listen: false).toggleLang(0);
+                          //           setState(() {});
+                          //         },
+                          //         title: Text(
+                          //           tr('english'),
+                          //           style: TextStyle(color: Colors.grey),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //     Expanded(
+                          //       child: RadioListTile(
+                          //         groupValue: _isEnglish,
+                          //         value: false,
+                          //         onChanged: (val){
+                          //           _isEnglish = val!;
+                          //           context.setLocale(const Locale('ar'));
+                          //           Provider.of<LangProvider>(context, listen: false).toggleLang(1);
+                          //           setState(() {});
+                          //         },
+                          //         title: Text(
+                          //           tr('arabic'),
+                          //           style: TextStyle(color: Colors.grey),
+                          //         ),
+                          //       ),
+                          //     )
+                          //   ],
+                          // ),
                           const Spacer(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,22 +112,14 @@ class _OnBoardingPage3State extends State<OnBoardingPage3> {
                               Button(
                                 buttonHight: 52,
                                 buttonWidth: 150,
-                                buttonColor: Colors.white,
+                                buttonColor: context.locale.languageCode == 'en' ? p2 : p1,
                                 buttonRadius: 25,
-                                buttonText: tr('skip'),
+                                buttonText: tr('arabic'),
                                 onpress: () {
-                                  GlobalMethods.navigateReplaceALL(context, const StartPage());
-                                },
-                                textColor: Colors.grey,
-                                textSize: 18,
-                              ),
-                              Button(
-                                buttonHight: 52,
-                                buttonWidth: 150,
-                                buttonColor: p1,
-                                buttonRadius: 25,
-                                buttonText: tr('next'),
-                                onpress: () {
+                                  context.setLocale(const Locale('ar'));
+                                  Provider.of<LangProvider>(context, listen: false).toggleLang(1);
+                                  setState(() {});
+                                  // GlobalMethods.navigateReplaceALL(context, const StartPage());
                                   Navigator.push(
                                     context,
                                     CupertinoPageRoute(
@@ -135,7 +127,27 @@ class _OnBoardingPage3State extends State<OnBoardingPage3> {
                                     ),
                                   );
                                 },
-                                textColor: Colors.white,
+                                textColor: context.locale.languageCode == 'en' ? p1 : Colors.white,
+                                textSize: 18,
+                              ),
+                              Button(
+                                buttonHight: 52,
+                                buttonWidth: 150,
+                                buttonColor: context.locale.languageCode == 'en' ? p1 : p2,
+                                buttonRadius: 25,
+                                buttonText: tr('english'),
+                                onpress: () {
+                                  context.setLocale(const Locale('en'));
+                                  Provider.of<LangProvider>(context, listen: false).toggleLang(0);
+                                  setState(() {});
+                                  Navigator.push(
+                                    context,
+                                    CupertinoPageRoute(
+                                      builder: (_) => const StartPage(),
+                                    ),
+                                  );
+                                },
+                                textColor: context.locale.languageCode == 'en' ? Colors.white : p1,
                                 textSize: 18,
                               )
                             ],

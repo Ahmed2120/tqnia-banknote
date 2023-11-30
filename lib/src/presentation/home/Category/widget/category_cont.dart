@@ -29,19 +29,23 @@ class _CategoryWidgetState extends State<CategoryWidget> {
             Expanded(
               child: ListTile(
                  leading: CircleAvatar(
-                  backgroundColor: p7,
+                  backgroundColor: p1,
                 radius: 25,
-                  backgroundImage:  AssetImage(
+                  child:  Image.asset(
                     widget.iconImage,
                   ),
                 ),
                 title: Text(
                   widget.category.titl ?? ' ',
-                  style: const TextStyle(fontSize: 16, color: Colors.black),
+                  style: const TextStyle(fontSize: 18, color: Colors.black),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
                 ),
                 subtitle: Text(
                   widget.category.desc ?? ' ',
-                  style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  style: const TextStyle(fontSize: 16, color: Colors.grey),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
               minVerticalPadding: 0,
               dense: true,
@@ -52,7 +56,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
               height: 70,
                 width: MediaQuery.of(context).size.width / 4,
                 decoration: BoxDecoration(
-                    color: p7, borderRadius: BorderRadius.circular(20)),
+                    color: p1, borderRadius: BorderRadius.circular(20)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,7 +71,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                     Text(
                       widget.category.price ?? ' ',
                       style:
-                      const TextStyle(color: Colors.white, fontSize: 12),
+                      const TextStyle(color: Colors.white, fontSize: 14),
                     ),
                     // const SizedBox(height: 10,),
                     if(widget.category.isActive == 0) Text(

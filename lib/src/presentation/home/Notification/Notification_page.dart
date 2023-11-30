@@ -17,6 +17,7 @@ import '../../../app/providers/notification_provider.dart';
 import '../../../app/utils/global_methods.dart';
 import '../../../app/widgets/custom_snackbar.dart';
 import '../../../app/widgets/pages_background.dart';
+import '../../auth/widget/arrow_back_cont.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
@@ -65,13 +66,14 @@ class _NotificationPageState extends State<NotificationPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Center(child: Image.asset("assets/images/logodark.png")),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 30,
+                    height: MediaQuery.of(context).size.height / 35,
                   ),
-                  Text(
-                    tr('notification'),
-                    style: const TextStyle(fontSize: 20),
+                  Center(
+                    child: Text(
+                      tr('notification'),
+                      style: TextStyle(fontSize: 24, color: Colors.white),
+                    ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 30,
@@ -79,8 +81,9 @@ class _NotificationPageState extends State<NotificationPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // Text(tr('recent'),
                       Text(tr('recent'),
-                          style: TextStyle(fontSize: 20, color: p4)),
+                          style: TextStyle(fontSize: 22, color: Colors.white)),
                       Consumer<NotificationProvider>(
                           builder: (context, notificationProvider, _) {
                         return notificationProvider.deleteNotificationLoad
@@ -103,7 +106,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                 },
                                 child: Text(
                                   tr('clear_all'),
-                                  style: TextStyle(color: p1),
+                                  style: TextStyle(color: p1, fontSize: 16),
                                 ),
                               );
                       })
@@ -122,6 +125,7 @@ class _NotificationPageState extends State<NotificationPage> {
                           separatorBuilder: (context, index) => const SizedBox(
                                 height: 20,
                               ),
+
                           itemBuilder: (context, index) {
                             // return Column(
                             //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,20 +176,20 @@ class _NotificationPageState extends State<NotificationPage> {
 
                             return ListTile(
                               onTap: (){
-                                print(notificationProvider.notificationList[index]
-                                    .type);
                                 if(notificationProvider.notificationList[index]
                                     .type == 'news'){
                                       GlobalMethods.navigate(
                                           context,
-                                          NewsPage(
+                                          NewsPage(newsModel: NewsModel(newsTxt: notificationProvider.notificationList[index].body),
                                               ));
                                     }
                                 else if(notificationProvider.notificationList[index]
                                     .type == 'gifts'){
                                       GlobalMethods.navigate(
                                           context,
-                                          GiftsPage());
+                                          GiftsPage(
+                                            giftModel: GiftModel(giftTxt: notificationProvider.notificationList[index].body),
+                                          ));
                                     }
                                 else if(notificationProvider.notificationList[index]
                                     .type == 'message'){
@@ -194,15 +198,19 @@ class _NotificationPageState extends State<NotificationPage> {
                                           const ChatPage());
                                     }
                                   },
-                              title: Text(notificationProvider
-                                                    .notificationList[index]
-                                                    .title ??
-                                                '', textAlign: GlobalMethods.rtlLang(notificationProvider
-                                  .notificationList[index]
-                                  .title ??
-                                  'q')
-                                  ? TextAlign.end
-                                  : TextAlign.start,),
+                              title: Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: Text(notificationProvider
+                                                      .notificationList[index]
+                                                      .title ??
+                                                  '', textAlign: GlobalMethods.rtlLang(notificationProvider
+                                    .notificationList[index]
+                                    .title ??
+                                    'q')
+                                    ? TextAlign.end
+                                    : TextAlign.start, style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600,
+                                fontSize: 19),),
+                              ),
                               subtitle: Text(notificationProvider
                                   .notificationList[index]
                                   .body ?? '', textAlign: GlobalMethods.rtlLang(notificationProvider
@@ -210,8 +218,9 @@ class _NotificationPageState extends State<NotificationPage> {
                                   .body ??
                                   'q',)
                                   ? TextAlign.end
-                                  : TextAlign.start, style: const TextStyle(overflow: TextOverflow.ellipsis),),
-                            leading: Image.asset("assets/icon/recivmessage.png"),
+                                  : TextAlign.start, style: const TextStyle(overflow: TextOverflow.ellipsis,
+                                  color: Colors.white, fontSize: 16),),
+                            leading: Image.asset("assets/icon/notification (2).png"),
 
                             );
                           });

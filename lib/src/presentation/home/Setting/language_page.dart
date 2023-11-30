@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../app/widgets/pages_background.dart';
+import '../../auth/widget/arrow_back_cont.dart';
 
 class LanguagePage extends StatefulWidget {
   LanguagePage({super.key});
@@ -48,15 +49,26 @@ class _LanguagePageState extends State<LanguagePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 15,
+                        height: MediaQuery.of(context).size.height / 35,
                       ),
-                      Center(child: Image.asset("assets/images/logodark.png")),
+                      Row(
+                        children: [
+                          ArrowBackContainer(
+                            onpress: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width / 3.8,
+                          ),
+                          Text(
+                            tr("language"),
+                            style: const TextStyle(fontSize: 22, color: Colors.white),
+                          ),
+                        ],
+                      ),
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 20,
-                      ),
-                      Text(
-                        tr("language"),
-                        style: const TextStyle(fontSize: 20),
+                        height: MediaQuery.of(context).size.height / 30,
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 20,
@@ -70,23 +82,30 @@ class _LanguagePageState extends State<LanguagePage> {
                           Provider.of<LangProvider>(context, listen: false).toggleLang(0);
                           setState(() {});
                         },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(tr('en'),style: const TextStyle(color: Colors.black),),
-                            _keep1
-                                ? Image.asset('assets/icon/Check List Icon.png')
-                                : Container(
-                                    height: 22,
-                                    width: 22,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                     color: p7,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                            color: Colors.white38,
+                            borderRadius: BorderRadius.circular(15)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(tr('en'),style: const TextStyle(color: Colors.white),),
+                              _keep1
+                                  ? Image.asset('assets/icon/Check List Icon.png')
+                                  : Container(
+                                      height: 22,
+                                      width: 22,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                       color: p7,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       TextButton(
@@ -97,23 +116,30 @@ class _LanguagePageState extends State<LanguagePage> {
                           Provider.of<LangProvider>(context, listen: false).toggleLang(1);
                           setState(() {});
                         },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(tr('ar'),style: const TextStyle(color: Colors.black),),
-                            _keep2
-                                ? Image.asset('assets/icon/Check List Icon.png')
-                                : Container(
-                                    height: 22,
-                                    width: 22,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      border: Border.all(
-                                        color: p7,
+                        child: Container(
+                          padding: EdgeInsets.all(15),
+                          decoration: BoxDecoration(
+                              color: Colors.white38,
+                              borderRadius: BorderRadius.circular(15)
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(tr('ar'),style: const TextStyle(color: Colors.white),),
+                              _keep2
+                                  ? Image.asset('assets/icon/Check List Icon.png')
+                                  : Container(
+                                      height: 22,
+                                      width: 22,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        border: Border.all(
+                                          color: p7,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ])),

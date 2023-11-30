@@ -7,6 +7,7 @@ import 'package:banknote/src/app/utils/utils.dart';
 import 'package:banknote/src/app/widgets/custom_snackbar.dart';
 import 'package:banknote/src/app/widgets/input_form_field.dart';
 import 'package:banknote/src/app/widgets/loading.dart';
+import 'package:banknote/src/app/widgets/pages_background.dart';
 import 'package:banknote/src/presentation/auth/pages/signin_page.dart';
 import 'package:banknote/src/presentation/auth/widget/face&google_cont.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -16,6 +17,7 @@ import 'package:get/get.dart';
 import 'package:flrx_validator/flrx_validator.dart';
 import 'package:quiver/strings.dart';
 import '../../../app/widgets/button.dart';
+import '../widget/arrow_back_cont.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({super.key, required this.phoneNum});
@@ -71,27 +73,34 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   Widget build(BuildContext context) {
     bool? checkedValue = false;
     return Scaffold(
-      body: Form(
-        key: _formKey,
-        autovalidateMode:
-            _autoValidate ? AutovalidateMode.always : AutovalidateMode.disabled,
-        child: SingleChildScrollView(
-          child: Column(
+      body: PagesBackground(
+        child: Form(
+          key: _formKey,
+          autovalidateMode:
+              _autoValidate ? AutovalidateMode.always : AutovalidateMode.disabled,
+          child: ListView(
             children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 14,
+              ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Image.asset("assets/images/logodark.png"),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width / 11,
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: ArrowBackContainer(
+                      onpress: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                   ),
-                  Image.asset(
-                    "assets/images/rightLogo.png",
-                    width: MediaQuery.of(context).size.width / 3.2,
-                    height: MediaQuery.of(context).size.height / 5.5,
-                    fit: BoxFit.cover,
+                  const SizedBox(
+                    width: 110,
                   ),
+                  Image.asset("assets/images/logo.png"),
                 ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height / 22,
               ),
               Padding(
                 padding:
@@ -101,7 +110,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     const Text(
                       "Create Account ",
                       style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 25,
@@ -109,7 +118,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     InputFormField(
                       hintText: tr('firstname'),
                       onSaved: (firstname) => _firstname = firstname,
-                      prefixIcon: Image.asset('assets/icon/Profile.png'),
+                      prefixIcon: const Icon(Icons.person),
                       validator: Validator(
                         rules: [
                           RequiredRule(
@@ -123,7 +132,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     InputFormField(
                       hintText: tr('lastname'),
                       onSaved: (lastname) => _lastname = lastname,
-                      prefixIcon: Image.asset('assets/icon/Profile.png'),
+                      prefixIcon:  const Icon(Icons.person),
                       validator: Validator(
                         rules: [
                           RequiredRule(
@@ -137,7 +146,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     InputFormField(
                       hintText: tr('email'),
                       onSaved: (email) => _email = email,
-                      prefixIcon: Image.asset('assets/icon/Message.png'),
+                      prefixIcon:  const Icon(Icons.email),
                       validator: (email) {
                         if (isBlank(email)) {
                           return tr('email_validation');
@@ -154,7 +163,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     InputFormField(
                       controller: TextEditingController(text: widget.phoneNum),
                       hintText: tr('phone'),
-                      prefixIcon: Image.asset('assets/icon/Calling.png'),
+                      prefixIcon:  const Icon(Icons.phone),
                       enabled: false,
                       validator: Validator(
                         rules: [
@@ -171,7 +180,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     InputFormField(
                       obscure: _obscurePass,
                       hintText: tr('password'),
-                      prefixIcon: Image.asset('assets/icon/Lock.png'),
+                      prefixIcon:  const Icon(Icons.lock),
                       onSaved: (password) => _password = password,
                       onChanged: (val){
                         _password = val;
@@ -181,12 +190,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           _obscurePass = !_obscurePass;
                           setState(() {});
                         },
-                        child: Icon(
-                          Icons.remove_red_eye_outlined,
-                          color: _obscurePass
-                              ? null
-                              : Theme.of(context).colorScheme.primary,
-                        ),
+                        child: _obscurePass ? const Icon(CupertinoIcons.eye_slash_fill) : const Icon(
+                      Icons.remove_red_eye_outlined,
+                    ),
                       ),
                       validator: Validator(
                         rules: [
@@ -203,18 +209,15 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     InputFormField(
                       obscure: _obscureConfirm,
                       hintText: tr('confirm_password'),
-                      prefixIcon: Image.asset('assets/icon/Lock.png'),
+                      prefixIcon:  const Icon(Icons.lock),
                       onSaved: (confirmPass) => _confirmPass = confirmPass,
                       suffixIcon: InkWell(
                         onTap: () {
                           _obscureConfirm = !_obscureConfirm;
                           setState(() {});
                         },
-                        child: Icon(
+                        child: _obscureConfirm ? const Icon(CupertinoIcons.eye_slash_fill) : const Icon(
                           Icons.remove_red_eye_outlined,
-                          color: _obscureConfirm
-                              ? null
-                              : Theme.of(context).colorScheme.primary,
                         ),
                       ),
                       validator: (val){
@@ -235,40 +238,29 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     ),
                     Row(
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            _keep = !_keep;
-                            setState(() {});
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              _keep
-                                  ? Image.asset(
-                                      'assets/icon/Check List Icon.png')
-                                  : Container(
-                                      height: 22,
-                                      width: 22,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        border: Border.all(
-                                          color: Theme.of(context).primaryColor,
-                                        ),
-                                      ),
-                                    ),
-                              4.pw,
-                              Text(
-                                tr('I accept all the Terms & Conditions'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                        color: Colors.grey),
-                              ),
-                            ],
-                          ),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Checkbox(
+                              // checkColor: ColorResources.white,
+                              side: const BorderSide(color: Colors.white),
+                              activeColor: Theme.of(context).primaryColor,
+                              value: _keep,
+                              onChanged: (val){
+                                _keep = val!;
+                                setState(() {});},),
+                            // 4.pw,
+                            Text(
+                              tr('I accept all the Terms & Conditions'),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge
+                                  ?.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                      color: Colors.white),
+                            ),
+                          ],
                         ),
                       ],
                     ),
@@ -284,47 +276,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         buttonHight: 60,
                         buttonWidth: 320,
                         textSize: 14),
-                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 40,
-                    ),
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "______________     ",
-                          style: TextStyle(color: Colors.grey, fontSize: 14),
-                        ),
-                        Text(
-                          "OR",
-                          style: TextStyle(color: Colors.grey, fontSize: 14),
-                        ),
-                        Text(
-                          "   ______________",
-                          style: TextStyle(color: Colors.grey, fontSize: 14),
-                        ),
-                      ],
-                    ),
-                     SizedBox(
-                     height: MediaQuery.of(context).size.height / 40,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SinInMethod(
-                          methodImage: "assets/icon/google.png",
-                          methodText: "google",
-                          onpress: () {},
-                        ),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        SinInMethod(
-                          methodImage: 'assets/icon/facebook.png',
-                          methodText: 'Facebook',
-                          onpress: () {},
-                        )
-                      ],
-                    ),
+
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 40,
                     ),
@@ -332,10 +284,10 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       onTap: () {
                         GlobalMethods.navigate(context, const SignInPage());
                       },
-                      child: const Center(
+                      child: Center(
                           child: Text(
                         " have an account ?",
-                        style: TextStyle(color: Colors.blue),
+                        style: TextStyle(color: p1),
                       )),
                     )
                   ],
