@@ -36,14 +36,14 @@ class ControlView extends StatelessWidget {
           icon: SizedBox(
               height: 30,
               width: 30,
-              child: Image.asset("assets/icon/Home.png")),
+              child: Image.asset("assets/icon/Icon Home Active.png")),
           title: Text(tr('home')),
         ),
           SalomonBottomBarItem(
           icon: SizedBox(
               height: 30,
               width: 30,
-              child: Image.asset("assets/icon/Chat.png", color: p1,)),
+              child: Image.asset("assets/icon/Chat.png", color: p7,)),
           title: Text(tr('chat')),
         ),
           SalomonBottomBarItem(
@@ -52,7 +52,7 @@ class ControlView extends StatelessWidget {
               width: 30,
               child: Stack(
                 children: [
-                  Image.asset("assets/icon/Notification.png"),
+                  Image.asset("assets/icon/Notification.png", color: p7,),
                   if(Provider.of<NotificationProvider>(context).unReadNoti)
                     Positioned(
                       right: 0,
@@ -74,7 +74,7 @@ class ControlView extends StatelessWidget {
           icon: SizedBox(
             height: 30,
             width: 30,
-            child: Image.asset("assets/icon/Setting.png"),
+            child: Image.asset("assets/icon/Setting.png", color: p7,),
           ),
           title: Text(tr('settings')),
         ),

@@ -49,8 +49,10 @@ class _LanguagePageState extends State<LanguagePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: MediaQuery.of(context).size.height / 35,
+                        height: MediaQuery.of(context).size.height / 15,
                       ),
+                      Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+                      const SizedBox(height: 20,),
                       Row(
                         children: [
                           ArrowBackContainer(

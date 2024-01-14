@@ -5,9 +5,12 @@ import 'package:banknote/src/app/data/dio/dio_client.dart';
 import 'package:banknote/src/app/data/models/user_model.dart';
 import 'package:banknote/src/app/utils/data_status.dart';
 import 'package:dio/dio.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../main.dart';
 export 'package:provider/provider.dart';
 
 class AuthProvider extends ChangeNotifier {
@@ -72,9 +75,23 @@ class AuthProvider extends ChangeNotifier {
   }
 
   Future<void> register(UserModel user, String password) async {
-    currentUser = await _api.register(user, password);
-    if(currentUser != null){
-      updateDeviceToken();
+    try{
+      currentUser = await _api.register(user, password);
+      if (currentUser != null) {
+        updateDeviceToken();
+      }
+    }on DioException catch (e){
+      final error = e.response == null ? e.error : e.response!.data;
+
+      updateProfileStatus = DataStatus.error;
+      notifyListeners();
+      throw NavigationService.currentContext.locale.languageCode == 'en' ? error
+      : 'البريد الإلكتروني تم أخذه.';
+    } catch (e) {
+      log(e.toString());
+      updateProfileStatus = DataStatus.error;
+      notifyListeners();
+      rethrow;
     }
     notifyListeners();
   }
@@ -83,17 +100,32 @@ class AuthProvider extends ChangeNotifier {
     String email,
     String password,
   ) async {
-    currentUser = await _api.login(
-      email,
-      password,
-    );
+    try{
+      currentUser = await _api.login(
+        email,
+        password,
+      );
 
-    if(currentUser != null){
-      updateDeviceToken();
-    }
+      if (currentUser != null) {
+        updateDeviceToken();
+      }
 
-    if(_remember) {
-      storeUserData();
+      if (_remember) {
+        storeUserData();
+      }
+    }on DioException catch(e){
+      print('sdsdsdsd');
+      final error = e.response == null ? e.message : e.response!.data;
+      _createPhone_load = false;
+      notifyListeners();
+
+      throw NavigationService.currentContext.locale.languageCode == 'en' ? error
+          : 'البريد الإلكتروني وكلمة المرور لا يتطابقان مع سجلنا';
+    }catch(e){
+      _createPhone_load = false;
+      notifyListeners();
+
+      rethrow;
     }
     notifyListeners();
   }
@@ -110,11 +142,13 @@ class AuthProvider extends ChangeNotifier {
 
       return isSuccess;
     }on DioException catch(e){
+      print('sdsdsdsd');
       final error = e.response == null ? e.message : e.response!.data;
       _createPhone_load = false;
       notifyListeners();
 
-      throw error;
+      throw NavigationService.currentContext.locale.languageCode == 'en' ? error
+          : 'رقم الهاتف تم أخذه.';
     }catch(e){
       _createPhone_load = false;
       notifyListeners();
@@ -167,6 +201,28 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
     }catch(e){
       _logout_load = false;
+      notifyListeners();
+      rethrow;
+    }
+  }
+
+  Future<void> deleteAccount() async {
+    // _logout_load = true;
+    notifyListeners();
+print('llllllllllllllllllllllllll');
+print(currentUser!.phone!);
+    try{
+      await _api.deleteAccount(currentUser!.phone!).then((value) async {
+        print(value);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        // currentUser = null;
+        clearUserData();
+      });
+
+      // _logout_load = false;
+      notifyListeners();
+    }catch(e){
+      // _logout_load = false;
       notifyListeners();
       rethrow;
     }

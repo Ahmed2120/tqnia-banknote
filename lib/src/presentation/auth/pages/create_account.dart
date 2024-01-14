@@ -107,8 +107,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     const EdgeInsets.only(left: 14.0, right: 14.0, bottom: 20),
                 child: Column(
                   children: [
-                    const Text(
-                      "Create Account ",
+                    Text(
+                      tr("create_acc"),
                       style:
                           TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
@@ -269,9 +269,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                     ),
                     Button(
                         onpress: _keep ? _submit : (){},
-                        buttonText: "Sign up",
+                        buttonText: tr("signup"),
                         textColor: Colors.white,
-                        buttonColor: _keep ? p1 : Colors.grey,
+                        buttonColor: _keep ? p7 : Colors.grey,
                         buttonRadius: 20,
                         buttonHight: 60,
                         buttonWidth: 320,
@@ -286,8 +286,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                       },
                       child: Center(
                           child: Text(
-                        " have an account ?",
-                        style: TextStyle(color: p1),
+                        tr("have_acc"),
+                        style: TextStyle(color: p7),
                       )),
                     )
                   ],

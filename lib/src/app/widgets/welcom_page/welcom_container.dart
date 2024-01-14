@@ -66,7 +66,7 @@ class WelcomeContainer extends StatelessWidget {
                         height: 50,
                         width: 130,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20), color: p1),
+                            borderRadius: BorderRadius.circular(20), color: p7),
                         child: const Center(
                           child: Text(
                             "Next",

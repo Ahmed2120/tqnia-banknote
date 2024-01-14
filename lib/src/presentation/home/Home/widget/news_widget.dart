@@ -58,7 +58,7 @@ class NewsWidget extends StatelessWidget {
                           : Alignment.topLeft,
                       child: Text(
                         tr('show_more'),
-                        style: TextStyle(color: p1),
+                        style: TextStyle(color: p7),
                       )),
                 ),
               ],

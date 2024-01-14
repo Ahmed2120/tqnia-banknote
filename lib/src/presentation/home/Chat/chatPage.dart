@@ -96,8 +96,10 @@ class _ChatPageState extends State<ChatPage> {
                   //   style: const TextStyle(fontSize: 22, color: Colors.white),
                   // ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 30,
+                    height: MediaQuery.of(context).size.height / 15,
                   ),
+                  Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+                  const SizedBox(height: 20,),
                   Center(child: const ChatServicCont()),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 25,
@@ -233,7 +235,7 @@ cursorColor: Colors.white,
         padding: const EdgeInsets.all(10),
         margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
-            color: p1,
+            color: p7,
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(15),
                 topRight: Radius.circular(15),

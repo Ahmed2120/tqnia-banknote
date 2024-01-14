@@ -78,14 +78,20 @@ class CreateFormProvider extends ChangeNotifier {
     return false;
   }
 
-  List<int> getNumberOfMembersList(List<FormUsers> formUsers, int members) {
+  List<int> getNumberOfMembersList(List<FormUsers> formUsers, int members, List<int>? privateMembers) {
     final List<int> NumMembers = [];
     for (int i = 1; i <= members; i++) {
       NumMembers.add(i);
     }
     for (var i in formUsers) {
-
       NumMembers.remove(i.number);
+    }
+    print('lllllllllllllllllllllllll;;;;;;;;;;;;;;');
+    print(privateMembers.runtimeType);
+    if(privateMembers != null) {
+      for (var i in privateMembers) {
+        NumMembers.remove(i);
+      }
     }
 
     return NumMembers;

@@ -51,6 +51,7 @@ class DioClient {
   static const String _checkotp = "auth/checkCode";
   static const String _resetPassword = "auth/resetPassword";
   static const String _logoutEndPoint = "logout";
+  static const String _deleteAccount = "auth/delete-account";
   static const String _updateProfileEndPoint = "editProfile";
   static const String _createFormEndPoint = "forms/user-form";
   static const String _news = "sitting/news_for_you";
@@ -82,7 +83,7 @@ class DioClient {
       return UserModel.fromJson(response.data['data'],
           token: response.data['token']);
     } else {
-      throw response.data;
+      return response.data;
     }
   }
 
@@ -113,6 +114,28 @@ class DioClient {
 
     final response = await _dio.post(
       '${Connection.baseURL}$_logoutEndPoint',
+      options: Options(
+        headers: {
+          ..._apiHeaders,
+          'Authorization': token,
+        },
+      ),
+    );
+    if (response.data['error'] == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> deleteAccount(String phone) async {
+    final token = await _getUserToken();
+
+    final response = await _dio.post(
+      '${Connection.baseURL}$_deleteAccount',
+      data: {
+        'phone': phone
+      },
       options: Options(
         headers: {
           ..._apiHeaders,

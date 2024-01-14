@@ -1,8 +1,8 @@
 abstract class Connection {
   Connection._();
-  static const base = 'banknote.dev.tqnia.me';
+  static const base = 'banknoteegypt.com';
   static const baseURL = 'https://$base/api/';
-  static const storage = 'https://banknote.dev.tqnia.me/admin/images/';
+  static const storage = 'https://banknoteegypt.com/admin/images/';
   
 }
 

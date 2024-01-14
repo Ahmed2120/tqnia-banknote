@@ -6,36 +6,33 @@ class ChatServicCont extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-
-        Column(
-          // mainAxisAlignment: MainAxisAlignment.center,
-          // crossAxisAlignment: CrossAxisAlignment.start,
+        Text(tr('customer_service'), style: TextStyle(fontSize: 22, color: Colors.white),),
+        const SizedBox(
+          height: 8,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(tr('customer_service'), style: TextStyle(fontSize: 22, color: Colors.white),),
-            const SizedBox(
-              height: 8,
+            Container(
+              width: 5,
+              height: 5,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.green
+              ),
             ),
-            Row(
-              children: [
-                Container(
-                  width: 5,
-                  height: 5,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.green
-                  ),
-                ),
-                const SizedBox(width: 3,),
-                Text(
-                  tr('online'),
-                  style: TextStyle(fontSize: 16, color: Colors.white,),
-                ),
-              ],
-            )
+            const SizedBox(width: 3,),
+            Text(
+              tr('online'),
+              style: TextStyle(fontSize: 16, color: Colors.white,),
+            ),
           ],
-        ),],
+        )
+      ],
     );
   }
 }

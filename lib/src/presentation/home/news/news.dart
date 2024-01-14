@@ -58,7 +58,7 @@ class _NewsPageState extends State<NewsPage> {
           //   fit: BoxFit.cover,
           // ),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 30,
+            height: MediaQuery.of(context).size.height / 15,
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
@@ -67,12 +67,9 @@ class _NewsPageState extends State<NewsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 35,
+                    height: MediaQuery.of(context).size.height / 15,
                   ),
-                  Center(child: CircleAvatar(
-                      backgroundColor: Colors.black38,
-                      radius: 50,
-                      child: Image.asset("assets/images/logodark.png"))),
+                  Center(child: Image.asset("assets/images/logo.png")),
 
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 40,
@@ -97,9 +94,7 @@ class _NewsPageState extends State<NewsPage> {
                       return widget.newsModel == null ? Expanded(
                         child: newsProvider.news_load ? const Center(child: CircularProgressIndicator(),) : ListView(
                           children: [
-                            Text(newsProvider.news!.newsTxt??'' ,style: const TextStyle(height: 2.5, color: Colors.white, fontSize: 16), textAlign: GlobalMethods.rtlLang(newsProvider.news!.newsTxt??'q' ,)
-                            ? TextAlign.end
-                            : TextAlign.start, )
+                            Text(newsProvider.news!.newsTxt??'' ,style: const TextStyle(height: 2.5, color: Colors.white, fontSize: 16))
                           ],
                         ),
                       ) : Expanded(

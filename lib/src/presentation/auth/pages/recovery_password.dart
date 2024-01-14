@@ -47,24 +47,21 @@ class RecoveryPasswordPage extends StatelessWidget {
                         const SizedBox(
                           width: 110,
                         ),
-                        Center(child: CircleAvatar(
-                            backgroundColor: Colors.black38,
-                            radius: 50,
-                            child: Image.asset("assets/images/logodark.png"))),
+                        Center(child: Image.asset("assets/images/logo.png")),
                       ],
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 22,
                     ),
-                    const Text(
-                      "recovery Your \nPassword  ",
+                    Text(
+                      tr("recovery_password"),
                       style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      "Enter Your Phone To get otp to reset \nPassword  ",
+                    Text(
+                      tr("recovery_password_body"),
                       style: TextStyle(
                         fontSize: 16,
                         color: Color(0xffA29EB6)
@@ -77,7 +74,7 @@ class RecoveryPasswordPage extends StatelessWidget {
                       key: _formKey,
                       child: InputFormField(
                         controller: _phoneController,
-                        hintText: tr(' Enter Phone'),
+                        hintText: tr('enter_phone'),
                         //  onSaved: (firstname) => _firstname = firstname,
                         prefixIcon: Image.asset('assets/icon/Calling.png'),
                         validator: Validator(
@@ -110,9 +107,9 @@ class RecoveryPasswordPage extends StatelessWidget {
                               showCustomSnackBar(readableError(e), context);
                             }
                           },
-                          buttonText: "Next",
+                          buttonText: tr("next"),
                           textColor: Colors.white,
-                          buttonColor: p1,
+                          buttonColor: p7,
                           buttonRadius: 20,
                           buttonHight: 50,
                           buttonWidth: 130,

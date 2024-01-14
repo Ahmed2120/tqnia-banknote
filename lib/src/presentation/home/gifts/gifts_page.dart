@@ -61,12 +61,9 @@ class _GiftsPageState extends State<GiftsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 35,
+                    height: MediaQuery.of(context).size.height / 15,
                   ),
-                  Center(child: CircleAvatar(
-                      backgroundColor: Colors.black38,
-                      radius: 50,
-                      child: Image.asset("assets/images/logodark.png"))),
+                  Center(child: Image.asset("assets/images/logo.png")),
 
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 40,
@@ -91,9 +88,7 @@ class _GiftsPageState extends State<GiftsPage> {
                       return widget.giftModel == null ? Expanded(
                         child: giftProvider.gift_load ? const Center(child: CircularProgressIndicator(),) : ListView(
                           children: [
-                            Text(giftProvider.gift!.giftTxt??'' ,style: const TextStyle(height: 2.5, fontSize: 16, color: Colors.white), textAlign: GlobalMethods.rtlLang(giftProvider.gift!.giftTxt??'q' ,)
-                            ? TextAlign.end
-                            : TextAlign.start )
+                            Text(giftProvider.gift!.giftTxt??'' ,style: const TextStyle(height: 2.5, fontSize: 16, color: Colors.white) )
                           ],
                         ),
                       ) : Expanded(

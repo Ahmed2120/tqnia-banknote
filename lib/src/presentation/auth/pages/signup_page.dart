@@ -74,7 +74,7 @@ class SignUpPage extends StatelessWidget {
                         },
                         buttonText: "Next",
                         textColor: Colors.white,
-                        buttonColor: p1,
+                        buttonColor: p7,
                         buttonRadius: 20,
                         buttonHight: 50,
                         buttonWidth: 130,

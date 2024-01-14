@@ -151,7 +151,7 @@ class _SignInPageState extends State<SignInPage> {
                             style: TextStyle(
                               // fontSize: 15,
                               decoration: TextDecoration.underline,
-                              color: p1
+                              color: p7
                             ),
                           ),
                         ),
@@ -164,7 +164,7 @@ class _SignInPageState extends State<SignInPage> {
                         onpress: _submit,
                         buttonText: tr('login'),
                         textColor: Colors.white,
-                        buttonColor: p1,
+                        buttonColor: p7,
                         buttonRadius: 20,
                         buttonHight: 60,
                         buttonWidth: 320,
@@ -225,7 +225,7 @@ class _SignInPageState extends State<SignInPage> {
                       child: Center(
                           child: Text(
                         tr("not_have_account"),
-                        style: TextStyle(color: p1, fontSize: 16),
+                        style: TextStyle(color: p7, fontSize: 16),
                       )),
                     )
                   ],

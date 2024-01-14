@@ -23,7 +23,7 @@ import '../src/presentation/home/Home/bottomNavigationbar.dart';
 class MyNotification {
 
   static Future<void> initialize(FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
-    await FirebaseMessaging.instance.requestPermission();
+    FirebaseMessaging.instance.requestPermission();
 
     print('-----------FirebaseMessaging.instance.getToken()------------');
     print(await FirebaseMessaging.instance.getToken());

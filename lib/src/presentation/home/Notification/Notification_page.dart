@@ -58,7 +58,7 @@ class _NotificationPageState extends State<NotificationPage> {
           //   fit: BoxFit.cover,
           // ),
           SizedBox(
-            height: MediaQuery.of(context).size.height / 30,
+            height: MediaQuery.of(context).size.height / 15,
           ),
           Padding(
             padding: const EdgeInsets.all(15.0),
@@ -67,8 +67,10 @@ class _NotificationPageState extends State<NotificationPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 35,
+                    height: MediaQuery.of(context).size.height / 15,
                   ),
+                  Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+                  const SizedBox(height: 20,),
                   Center(
                     child: Text(
                       tr('notification'),
@@ -106,7 +108,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                 },
                                 child: Text(
                                   tr('clear_all'),
-                                  style: TextStyle(color: p1, fontSize: 16),
+                                  style: TextStyle(color: p7, fontSize: 16),
                                 ),
                               );
                       })
@@ -220,7 +222,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   ? TextAlign.end
                                   : TextAlign.start, style: const TextStyle(overflow: TextOverflow.ellipsis,
                                   color: Colors.white, fontSize: 16),),
-                            leading: Image.asset("assets/icon/notification (2).png"),
+                            leading: Image.asset("assets/icon/noti.png", height: 30,),
 
                             );
                           });

@@ -39,6 +39,7 @@ dependencies:
   cloud_firestore: ^4.12.0
   pusher_channels_flutter: ^2.2.0
   emoji_picker_flutter: ^1.6.3
+  upgrader: ^8.4.0
 
 dev_dependencies:
   flutter_test:

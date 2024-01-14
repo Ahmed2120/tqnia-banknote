@@ -64,25 +64,21 @@ class _NewPasswordState extends State<NewPassword> {
                           const SizedBox(
                             width: 110,
                           ),
-                          Center(child: CircleAvatar(
-                              backgroundColor: Colors.black38,
-                              radius: 50,
-                              child: Image.asset("assets/images/logodark.png"))),
-                        ],
+                          Image.asset("assets/images/logo.png"),],
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 25,
                       ),
-                      const Text(
-                        "Reset your password \nhere  ",
-                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+                      Text(
+                        tr("reset_your_password"),
+                        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-                      const Text(
-                        "Enter New Password and don’t forget it",
-                        style: TextStyle(
+                      Text(
+                        tr("reset_your_password_body"),
+                        style: const TextStyle(
                           fontSize: 16,
                           color: Color(0xffA29EB6)
                         ),
@@ -177,9 +173,9 @@ class _NewPasswordState extends State<NewPassword> {
                                   showCustomSnackBar(readableError(e), context);
                                 }
                               },
-                              buttonText: "Next",
+                              buttonText: tr("next"),
                               textColor: Colors.white,
-                              buttonColor: p1,
+                              buttonColor: p7,
                               buttonRadius: 20,
                               buttonHight: 50,
                               buttonWidth: 130,

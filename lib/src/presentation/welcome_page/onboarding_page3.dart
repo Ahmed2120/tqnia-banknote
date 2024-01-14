@@ -112,7 +112,7 @@ class _OnBoardingPage3State extends State<OnBoardingPage3> {
                               Button(
                                 buttonHight: 52,
                                 buttonWidth: 150,
-                                buttonColor: context.locale.languageCode == 'en' ? p2 : p1,
+                                buttonColor: context.locale.languageCode == 'en' ? p2 : p7,
                                 buttonRadius: 25,
                                 buttonText: tr('arabic'),
                                 onpress: () {
@@ -127,13 +127,13 @@ class _OnBoardingPage3State extends State<OnBoardingPage3> {
                                     ),
                                   );
                                 },
-                                textColor: context.locale.languageCode == 'en' ? p1 : Colors.white,
+                                textColor: context.locale.languageCode == 'en' ? p7 : Colors.white,
                                 textSize: 18,
                               ),
                               Button(
                                 buttonHight: 52,
                                 buttonWidth: 150,
-                                buttonColor: context.locale.languageCode == 'en' ? p1 : p2,
+                                buttonColor: context.locale.languageCode == 'en' ? p7 : p2,
                                 buttonRadius: 25,
                                 buttonText: tr('english'),
                                 onpress: () {
@@ -147,7 +147,7 @@ class _OnBoardingPage3State extends State<OnBoardingPage3> {
                                     ),
                                   );
                                 },
-                                textColor: context.locale.languageCode == 'en' ? Colors.white : p1,
+                                textColor: context.locale.languageCode == 'en' ? Colors.white : p7,
                                 textSize: 18,
                               )
                             ],

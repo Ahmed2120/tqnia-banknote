@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../main.dart';
 import '../../../app/utils/global_methods.dart';
 import '../../../app/widgets/pages_background.dart';
 
@@ -69,7 +70,7 @@ class PhoneSignupPage extends StatelessWidget {
                       key: _formKey,
                       child: InputFormField(
                         controller: _phoneController,
-                        hintText: tr(' Enter Phone'),
+                        hintText: tr('enter_phone'),
                         //  onSaved: (firstname) => _firstname = firstname,
                         prefixIcon: const Icon(Icons.phone),
                         validator: Validator(
@@ -98,12 +99,13 @@ class PhoneSignupPage extends StatelessWidget {
                                       context, OtpPage(phoneNum: _phoneController.text, flag: 1,));
                                 }
                               }catch(e){
-                                showCustomSnackBar(readableError(e), context);
+                                showCustomSnackBar(readableError(NavigationService.currentContext.locale.languageCode == 'en' ? e
+                                    : 'رقم الهاتف تم أخذه.'), context);
                               }
                             },
-                            buttonText: "Next",
+                            buttonText: tr("next"),
                             textColor: Colors.white,
-                            buttonColor: p1,
+                            buttonColor: p7,
                             buttonRadius: 20,
                             buttonHight: 50,
                             buttonWidth: 130,

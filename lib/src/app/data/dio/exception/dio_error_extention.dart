@@ -11,6 +11,8 @@ String readableError(e) {
       return '${e.values.first.first}';
     }
     return '${e.values.first}';
+  }else if(e is String){
+    return e;
   }
   // IDK what the wrong is this. so something weird happened;
   return tr('something_wrong');

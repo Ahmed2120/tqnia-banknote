@@ -20,6 +20,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quiver/strings.dart';
 
+import '../../../../main.dart';
 import '../../../app/widgets/pages_background.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -58,7 +59,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
       );
 
       if(!mounted) return;
-      showCustomSnackBar('User Updated Successfully', context, isError: false);
+      showCustomSnackBar(NavigationService.currentContext.locale.languageCode == 'en' ? 'User Updated Successfully'
+          : 'تم تحديث البيانات بنجاح', context, isError: false);
     } catch (e) {
       showCustomSnackBar(readableError(e), context, isError: true);
     }
@@ -87,8 +89,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 child:
                     Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 35,
+                    height: MediaQuery.of(context).size.height / 15,
                   ),
+                      Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+                      const SizedBox(height: 20,),
                   Row(
                     children: [
                       ArrowBackContainer(
@@ -136,7 +140,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                                             CircularProgressIndicator(
                                                 value: downloadProgress.progress),
                                     errorWidget: (context, url, error) =>
-                                        const Icon(Icons.error),
+                                        Image.asset('assets/images/default-person.png'),
                                   ),
                                 ),
                         ),
@@ -241,6 +245,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       },
                       child: _obscure ? Icon(CupertinoIcons.eye_slash_fill) : Icon(CupertinoIcons.eye_fill)
                     ),
+                    validator: Validator(
+                      rules: [
+                        MinLengthRule(8,
+                            validationMessage: tr('password_length')),
+                        RequiredRule(
+                            validationMessage: tr('password_validation')),
+                      ],
+                    ),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height / 33,
@@ -259,7 +271,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         onpress: _submit,
                         buttonText: tr('save'),
                         textColor: Colors.white,
-                        buttonColor: p1,
+                        buttonColor: p7,
                         buttonRadius: 20,
                         buttonHight: 60,
                         buttonWidth: 350,

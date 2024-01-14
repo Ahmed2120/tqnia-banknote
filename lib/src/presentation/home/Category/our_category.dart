@@ -30,8 +30,10 @@ class OurCategory extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height / 35,
+                height: MediaQuery.of(context).size.height / 15,
               ),
+              Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+              const SizedBox(height: 20,),
 
               Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -59,7 +61,7 @@ class OurCategory extends StatelessWidget {
                     child: ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       separatorBuilder: (context, index) => SizedBox(
-                        height: MediaQuery.of(context).size.height / 80,
+                        height: MediaQuery.of(context).size.height / 50,
                       ),
                       itemCount:
                           category.categories?.listCategory?.length ?? 0,

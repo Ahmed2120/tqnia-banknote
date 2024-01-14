@@ -9,6 +9,7 @@ class CategoryFormModel{
   int? price;
   String? date;
   int? members;
+  List<int>? privateMembers;
   List<FormData>? formData;
 
 
@@ -19,6 +20,7 @@ class CategoryFormModel{
     price = json['price'];
     date = json['date'];
     members = json['members'];
+    privateMembers = json['private_members']?.map<int>((e)=> int.parse(e)).toList();
     formData = json['forms']?.map<FormData>((e)=> FormData.fromJson(e)).toList();
   }
 }

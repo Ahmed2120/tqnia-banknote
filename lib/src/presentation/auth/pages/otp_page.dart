@@ -8,13 +8,14 @@ import 'package:banknote/src/app/widgets/input_form_field.dart';
 import 'package:banknote/src/presentation/auth/pages/new_password.dart';
 import 'package:banknote/src/presentation/auth/pages/signup_page.dart';
 import 'package:banknote/src/presentation/auth/widget/arrow_back_cont.dart';
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' as e;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../main.dart';
 import '../../../app/utils/global_methods.dart';
 import '../../../app/widgets/custom_snackbar.dart';
 import '../../../app/widgets/pages_background.dart';
@@ -109,7 +110,7 @@ startTimer();
                         height: 10,
                       ),
                       Text(
-                        "Enter OTP code that sent \n to +20 ${widget.phoneNum}",
+                        e.tr("enter_otp_phone") + "${widget.phoneNum}",
                         style: const TextStyle(
                           fontSize: 16,
                           color: Colors.white
@@ -118,19 +119,22 @@ startTimer();
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 20,
                       ),
-                      Form(
-                        key: _formKey,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            buildSizedBox(context, first: true, last: false, controller: _1Controller),
-                            const SizedBox(width: 25,),
-                            buildSizedBox(context, first: false, last: false, controller: _2Controller),
-                            const SizedBox(width: 25,),
-                            buildSizedBox(context, first: false, last: false, controller: _3Controller),
-                            const SizedBox(width: 25,),
-                            buildSizedBox(context, first: false, last: true, controller: _4Controller),
-                          ],
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Form(
+                          key: _formKey,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              buildSizedBox(context, first: true, last: false, controller: _1Controller),
+                              const SizedBox(width: 25,),
+                              buildSizedBox(context, first: false, last: false, controller: _2Controller),
+                              const SizedBox(width: 25,),
+                              buildSizedBox(context, first: false, last: false, controller: _3Controller),
+                              const SizedBox(width: 25,),
+                              buildSizedBox(context, first: false, last: true, controller: _4Controller),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -138,7 +142,7 @@ startTimer();
                       ),
                       Align(
                         alignment: Alignment.center,
-                        child: Text('$timerText Sec', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+                        child: Text('$timerText' + e.tr("Sec"), style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
                       ),
                       SizedBox(
                         height: 40,
@@ -150,15 +154,15 @@ startTimer();
                             return RichText(
                                 textAlign: TextAlign.center,
                                 text: TextSpan(
-                                    text: 'Don’t receive code ? ',
+                                    text: e.tr('dont_receive_code'),
                                     style:
                                     TextStyle(color: Colors.white, fontSize: 19),
                                     children: [
-                                      TextSpan(
+                                      if(remainTimer.inSeconds <= 0)TextSpan(
                                           text: resetPasswordProvider.storeOtpLoading
-                                              ? '...' : 'Re-send',
+                                              ? '...' : e.tr('resend'),
                                           style: TextStyle(
-                                              color: p1,
+                                              color: p7,
                                               fontSize: 19,
                                               fontWeight: FontWeight.w600),
                                           recognizer: TapGestureRecognizer()
@@ -168,10 +172,10 @@ startTimer();
                                                   .storeOtp(widget.phoneNum);
                                               if(isSuccess){
                                                 remainTimer = const Duration(minutes: 1);
-
+                                                startTimer();
                                                 setState(() {});
                                                 if(!mounted) return;
-                                                showCustomSnackBar('otp resent successfully', context, isError: false);
+                                                showCustomSnackBar(e.tr('otp_resent_successfully'), context, isError: false);
                                               }
                                             }catch(e){
                                                 showCustomSnackBar(readableError(e), context);
@@ -205,12 +209,13 @@ startTimer();
                                         NewPassword(phoneNum: widget.phoneNum,));
                                   }
                                 }catch(e){
-                                  showCustomSnackBar(readableError(e), context);
+                                  showCustomSnackBar(readableError(NavigationService.currentContext.locale.languageCode == 'en' ? e
+                                      : 'الكود غير صحيح'), context);
                                 }
                               },
-                              buttonText: "Next",
+                              buttonText: e.tr("next"),
                               textColor: Colors.white,
-                              buttonColor: p1,
+                              buttonColor: p7,
                               buttonRadius: 20,
                               buttonHight: 50,
                               buttonWidth: 130,

@@ -106,12 +106,15 @@ class _HomePageState extends State<HomePage> {
               padding: const EdgeInsets.all(15),
                 children: [
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 30,
+                    height: MediaQuery.of(context).size.height / 15,
                   ),
               // Image.asset("assets/images/home.png", height: 130,),
+                  Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+                  const SizedBox(height: 20,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.6,
@@ -119,13 +122,13 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Welcome, ${user!.fName}!",
+                          "${tr("home_welcome")} ,${user!.fName}!",
                           style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                         const SizedBox(height: 10,),
-                        const Text(
-                          "You’re ready to go, let’s find you a circlet",
-                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        Text(
+                          tr("home_welcome_desc"),
+                          style: const TextStyle(fontSize: 16, color: Colors.white),
                           // textAlign: TextAlign.center,
                         ),
                       ],
@@ -135,15 +138,15 @@ class _HomePageState extends State<HomePage> {
                     borderRadius: BorderRadius.circular(10000.0),
                     child: CachedNetworkImage(
                       imageUrl: user?.photo ?? '',
-                      width: 50,
-                      height: 50,
+                      width: 70,
+                      height: 70,
                       fit: BoxFit.cover,
                       // progressIndicatorBuilder:
                       //     (context, url, downloadProgress) =>
                       //     CircularProgressIndicator(
                       //         value: downloadProgress.progress),
                       errorWidget: (context, url, error) =>
-                      const Icon(Icons.error),
+                          Image.asset('assets/images/default-person.png'),
                     ),
                   ),
                 ],
@@ -175,7 +178,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 5,),
                   Consumer<NewsProvider>(
                     builder: (context, newsProvider, _) {
-                      return newsProvider.news == null ? SizedBox.shrink() : NewsWidget(
+                      return newsProvider.news == null ? const SizedBox.shrink() : NewsWidget(
                         loading: newsProvider.news_load,
                         newsText: newsProvider.news?.newsTxt,
                         onTap: (){
@@ -203,7 +206,7 @@ class _HomePageState extends State<HomePage> {
                   const SizedBox(height: 5,),
                   Consumer<GiftProvider>(
                       builder: (context, giftProvider, _) {
-                        return  giftProvider.gift == null ? SizedBox.shrink() : NewsWidget(
+                        return  giftProvider.gift == null ? const SizedBox.shrink() : NewsWidget(
                           loading: giftProvider.gift_load,
                           newsText: giftProvider.gift?.giftTxt,
                           onTap: (){
@@ -217,7 +220,7 @@ class _HomePageState extends State<HomePage> {
                       }
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height / 70,
+                    height: MediaQuery.of(context).size.height / 30,
                   ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -238,13 +241,13 @@ class _HomePageState extends State<HomePage> {
                     },
                     child: Text(
                       tr('see_all'),
-                      style: TextStyle(fontSize: 15, color: p1),
+                      style: TextStyle(fontSize: 15, color: p7),
                     ),
                   ),
                 ],
               ),
 
-                  const SizedBox(height: 5,),
+                  // const SizedBox(height: 5,),
               categoriesProvider.isload
                   ? SizedBox(
                       height: MediaQuery.of(context).size.height / 5,
@@ -260,7 +263,7 @@ class _HomePageState extends State<HomePage> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                     separatorBuilder: (context, index) => SizedBox(
-                      height: MediaQuery.of(context).size.height / 80,
+                      height: MediaQuery.of(context).size.height / 50,
                     ),
                     itemCount: categoriesProvider
                             .categories?.listCategory?.length ??

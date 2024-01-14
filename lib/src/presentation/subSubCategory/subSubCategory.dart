@@ -62,8 +62,12 @@ class _SubSubCategoryPageState extends State<SubSubCategoryPage> {
                     height: MediaQuery
                         .of(context)
                         .size
-                        .height / 30,
+                        .height / 15,
                   ),
+
+                  Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+                  const SizedBox(height: 20,),
+
                   Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: ArrowBackContainer(
@@ -110,7 +114,7 @@ class _SubSubCategoryPageState extends State<SubSubCategoryPage> {
                                   height: MediaQuery
                                       .of(context)
                                       .size
-                                      .height / 80,
+                                      .height / 50,
                                 ),
                             itemCount: categoryProvider
                                 .category!.listCategory?.length ??

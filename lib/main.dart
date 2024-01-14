@@ -12,6 +12,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'notification/my_notification.dart';
 import 'pusher/pusher_config.dart';
@@ -113,7 +114,9 @@ class MyApp extends StatelessWidget {
               fontFamily: context.locale.languageCode == 'en' ? 'Tajawal' : 'Bahij'
             ),
 
-            home: SplashPage(remoteMessage: remoteMessage,));
+            home: UpgradeAlert(
+                upgrader: Upgrader(dialogStyle: UpgradeDialogStyle.cupertino),
+                child: SplashPage(remoteMessage: remoteMessage,)));
       }
     );
   }

@@ -20,7 +20,7 @@ class StartPage extends StatelessWidget {
             const SizedBox(
               height: 80,
             ),
-            Image.asset("assets/images/start.png"),
+            Expanded(child: Image.asset("assets/images/start.png")),
             SizedBox(
               height: MediaQuery.of(context).size.height / 10,
             ),

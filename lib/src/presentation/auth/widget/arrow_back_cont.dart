@@ -16,7 +16,7 @@ class ArrowBackContainer extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(5),
         decoration:
-            BoxDecoration(color: p1, borderRadius: BorderRadius.circular(12)),
+            BoxDecoration(color: p7, borderRadius: BorderRadius.circular(12)),
         child: Icon(Icons.arrow_forward_ios_sharp,
           size: 25,
           color: Colors.white,

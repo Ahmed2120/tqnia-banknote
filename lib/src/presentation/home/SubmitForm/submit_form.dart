@@ -415,7 +415,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                                         onpress: () {},
                                         buttonText: "Confirm Date",
                                         textColor: Colors.white,
-                                        buttonColor: p1,
+                                        buttonColor: p7,
                                         buttonRadius: 18,
                                         buttonHight: 80,
                                         buttonWidth: 300,
@@ -487,7 +487,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                                                           },
                                                         buttonText: "Confirm Date",
                                                         textColor: Colors.white,
-                                                        buttonColor: p1,
+                                                        buttonColor: p7,
                                                         buttonRadius: 18,
                                                         buttonHight: 50,
                                                         buttonWidth: 300,
@@ -569,7 +569,7 @@ class _SubmitFormPageState extends State<SubmitFormPage> {
                       SizedBox(
                         height: MediaQuery.of(context).size.height / 70,
                       ),
-                      CustomDropDown(list: formProvider.getNumberOfMembersList(widget.formUsers??[], widget.categoryForm.members!), onChange: (val){
+                      CustomDropDown(list: formProvider.getNumberOfMembersList(widget.formUsers??[], widget.categoryForm.members!, widget.categoryForm.privateMembers), onChange: (val){
                         print(val);
                         numberOfMember = val;
                       }, hintText: tr('choose_number'), validator: Validator(
@@ -615,7 +615,7 @@ _imageFile = val;
                               onpress: _submit,
                               buttonText: tr("done"),
                               textColor: Colors.white,
-                              buttonColor: p1,
+                              buttonColor: p7,
                               buttonRadius: 18,
                               buttonHight: 50,
                               buttonWidth: 160,

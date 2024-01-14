@@ -29,7 +29,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
             Expanded(
               child: ListTile(
                  leading: CircleAvatar(
-                  backgroundColor: p1,
+                  backgroundColor: p7,
                 radius: 25,
                   child:  Image.asset(
                     widget.iconImage,
@@ -56,7 +56,7 @@ class _CategoryWidgetState extends State<CategoryWidget> {
               height: 70,
                 width: MediaQuery.of(context).size.width / 4,
                 decoration: BoxDecoration(
-                    color: p1, borderRadius: BorderRadius.circular(20)),
+                    color: p7, borderRadius: BorderRadius.circular(20)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,13 +71,13 @@ class _CategoryWidgetState extends State<CategoryWidget> {
                     Text(
                       widget.category.price ?? ' ',
                       style:
-                      const TextStyle(color: Colors.white, fontSize: 14),
+                      const TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     // const SizedBox(height: 10,),
                     if(widget.category.isActive == 0) Text(
                       tr('soon'),
                       style:
-                      TextStyle(color: Color(0x6F4D566B), fontSize: 11),
+                      TextStyle(color: Color(0x6F222631), fontSize: 16),
                     ),
                   ],
                 )),

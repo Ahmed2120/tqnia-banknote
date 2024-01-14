@@ -1,13 +1,15 @@
 import 'dart:convert';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
+import '../../../../main.dart';
 import '../../../app/widgets/pages_background.dart';
 import '../../auth/widget/arrow_back_cont.dart';
 
 class PolicyPage extends StatelessWidget {
   Future<String> _loadJsonData() async {
-    return await rootBundle.loadString('assets/JSON/policy.json');
+    return NavigationService.currentContext.locale.languageCode == "en" ? await rootBundle.loadString('assets/JSON/policy.json') : await rootBundle.loadString('assets/JSON/policyAr.json');
   }
 
   Future<List<dynamic>> _loadData() async {
@@ -31,8 +33,10 @@ class PolicyPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height / 35,
+                height: MediaQuery.of(context).size.height / 15,
               ),
+              Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+              const SizedBox(height: 20,),
               Row(
                 children: [
                   ArrowBackContainer(
@@ -43,8 +47,8 @@ class PolicyPage extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width / 3.8,
                   ),
-                  const Text(
-                    "Privacy Policy",
+                  Text(
+                    tr("privacy_policy"),
                     style: TextStyle(fontSize: 24, color: Colors.white),
                   ),
                 ],

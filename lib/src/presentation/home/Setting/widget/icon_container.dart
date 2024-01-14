@@ -30,7 +30,7 @@ class IconContainer extends StatelessWidget {
         width: width ?? 45,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: p1,
+          color: p7,
         ),
         alignment: Alignment.center,
         child: Icon(

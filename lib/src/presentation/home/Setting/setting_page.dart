@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 
 import '../../../app/widgets/pages_background.dart';
 import '../../auth/pages/signin_page.dart';
+import 'widget/confirm_dialog.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -54,9 +55,13 @@ class _SettingPageState extends State<SettingPage> {
                     //   height: 25,
                     // ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height / 30,
+                      height: MediaQuery.of(context).size.height / 15,
                     ),
+                    Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+                    const SizedBox(height: 20,),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(10000.0),
@@ -70,7 +75,7 @@ class _SettingPageState extends State<SettingPage> {
                                     CircularProgressIndicator(
                                         value: downloadProgress.progress),
                             errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
+                                Image.asset('assets/images/default-person.png'),
                           ),
                         ),
                         SizedBox(
@@ -78,6 +83,7 @@ class _SettingPageState extends State<SettingPage> {
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "${user!.fName} ${user.lName}",
@@ -87,7 +93,7 @@ class _SettingPageState extends State<SettingPage> {
                             ),
 const SizedBox(height: 10,),
                             Text(
-                              tr('joined ${user!.createdAt != null ?GlobalMethods().dateFormat(user!.createdAt!) : ''}'),
+                              tr('joined') + " ${user!.createdAt != null ?GlobalMethods().dateFormat(user!.createdAt!) : ''}",
                               style: const TextStyle(color: Colors.white, fontSize: 14),
                             )
                           ],
@@ -102,7 +108,10 @@ const SizedBox(height: 10,),
                         GlobalMethods.navigate(context, const EditProfilePage());
                       },
                     ),
-                    const SizedBox(height: 10,),
+
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 40,
+                    ),
                     InformationWidget(
                       infoText: tr('my_service'),
                       onpress: () {
@@ -110,7 +119,9 @@ const SizedBox(height: 10,),
                       },
                     ),
 
-                    const SizedBox(height: 10,),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 40,
+                    ),
                     InformationWidget(
                       infoText: tr('privacy_policy'),
                       onpress: () {
@@ -118,7 +129,9 @@ const SizedBox(height: 10,),
                       },
                     ),
 
-                    const SizedBox(height: 10,),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height / 40,
+                    ),
                     InformationWidget(
                       infoText: tr('language'),
                       onpress: () {
@@ -126,7 +139,7 @@ const SizedBox(height: 10,),
                       },
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 30,
                     ),
                     GestureDetector(
                       onTap: () async {
@@ -147,7 +160,36 @@ const SizedBox(height: 10,),
                             fontSize: 22,
                             fontWeight: FontWeight.bold),
                       ),
-                    )
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        showDialog(context: context, builder: (context)=> ConfirmationDialog(
+                          description:tr('are_you_sure'),
+                          onYesPressed: () async{
+                            await context
+                                .read<AuthProvider>()
+                                .deleteAccount()
+                                .then((value) => Navigator.pushAndRemoveUntil(
+                                context,
+                                CupertinoPageRoute(
+                                  builder: (_) => const SignInPage(),
+                                ),
+                                    (route) => false));
+                          },
+                          icon: 'assets/images/logodark.png',));
+
+                      },
+                      child: Text(
+                        tr('delete_account'),
+                        style: const TextStyle(
+                            color: Colors.red,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ]),
             ),
           ]),

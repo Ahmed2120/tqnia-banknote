@@ -64,8 +64,10 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                     height: MediaQuery
                         .of(context)
                         .size
-                        .height / 30,
+                        .height / 15,
                   ),
+                  Align(alignment: Alignment.center,child: Image.asset('assets/images/logo.png'),),
+                  const SizedBox(height: 20,),
 
                   Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -113,7 +115,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                                   height: MediaQuery
                                       .of(context)
                                       .size
-                                      .height / 80,
+                                      .height / 50,
                                 ),
                             itemCount: categoriesProvider
                                 .subCategories!.listCategory?.length ??
@@ -142,7 +144,7 @@ class _SubCategoryPageState extends State<SubCategoryPage> {
                                     final categoryFormModel = categoriesProvider
                                         .subCategories!.listCategory![index].categoryFormModel;
                                     final categoryModel = categoriesProvider
-                                        .categories!.listCategory![index];
+                                        .subCategories!.listCategory![index];
                                     if(categoryModel.formUsers != null && categoryFormModel!.members != categoryModel.formUsers!.length) {
                                         GlobalMethods.navigate(
                                             context,
