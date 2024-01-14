@@ -51,6 +51,7 @@ dev_dependencies:
 flutter_icons:
   android: "ic_launcher"
   ios: true
+  remove_alpha_ios: true
   image_path: "assets/images/logodark.png"
 flutter:
   uses-material-design: true
@@ -61,7 +62,6 @@ flutter:
     - assets/icon/
     - assets/JSON/
     - assets/languages/
-    - assets\JSON\policy.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 
