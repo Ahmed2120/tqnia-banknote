@@ -40,7 +40,7 @@ void main() async{
   await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
 
-  await MyNotification.initialize(flutterLocalNotificationsPlugin);
+  MyNotification.initialize(flutterLocalNotificationsPlugin);
   final RemoteMessage? remoteMessage =
   await FirebaseMessaging.instance.getInitialMessage();
 

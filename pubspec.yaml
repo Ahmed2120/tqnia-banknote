@@ -52,7 +52,7 @@ flutter_icons:
   android: "ic_launcher"
   ios: true
   remove_alpha_ios: true
-  image_path: "assets/images/logodark.png"
+  image_path: "assets/images/app-icon.jpg"
 flutter:
   uses-material-design: true
 
