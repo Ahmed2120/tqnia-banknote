@@ -4,21 +4,17 @@ import 'dart:io';
 import 'package:banknote/src/app/data/models/gift.dart';
 import 'package:banknote/src/app/data/models/news.dart';
 import 'package:banknote/src/app/utils/global_methods.dart';
-import 'package:banknote/src/presentation/home/Chat/chatPage.dart';
-import 'package:banknote/src/presentation/home/Notification/Notification_page.dart';
 import 'package:banknote/src/presentation/home/gifts/gifts_page.dart';
 import 'package:banknote/src/presentation/home/news/news.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart' as g;
 import 'package:path_provider/path_provider.dart';
 
 import '../main.dart';
 import '../src/app/Controller/home_view_controller.dart';
-import '../src/presentation/home/Home/bottomNavigationbar.dart';
 
 class MyNotification {
 
