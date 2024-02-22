@@ -146,7 +146,8 @@ class ChatProvider with ChangeNotifier{
       _sendMsgLoading=false;
 
       notifyListeners();
-      print(e.response!.data);
+      print('llklk-------send');
+      print(e.response!.statusCode);
       throw e.response!.data;
     }
     catch(e){
